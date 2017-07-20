@@ -136,8 +136,8 @@
   <div id="content-inner">
     
 <article id="post">
-  <div class="post-page-title"  style="background-color:#26A69A;background-image:url(/images/random/vateral-5.png)" >
-  <h2>Linux安装</h2>
+  <div class="post-page-title"  style="background-color:#26A69A;background-image:url(/images/random/vateral-16.png)" >
+  <h2>Linux查看历史命令</h2>
     
   <p>作者:WangBinZhou &nbsp&nbsp 发布于:<time datetime="2017-07-20T01:23:20.000Z">
           2017-07-20
@@ -146,7 +146,54 @@
     
   </div>
   <div class="post-page-content">
-  
+  <p>#一、简介</p>
+<p>##1、说明：<br><strong>*<code>history</code></strong>是Shell的内置命令，用来查看以前执行过的命令。*</p>
+<p>##2、配置文件</p>
+<p><em>当登陆Shell时，会读取命令历史文件<strong><code>~/.bash_history</code></strong>中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件<strong><code>~/.bash_history</code></strong>中。</em></p>
+<p>#二、相关参数</p>
+<blockquote>
+<p><strong><code>-c</code></strong>: 清空历史命令；</p>
+<p><strong><code>-d</code></strong>: 删除历史中的第N个命令；</p>
+<p><strong><code>N</code></strong>: 显示最近的N条历史；</p>
+<p><strong><code>-a</code></strong>: 追加本次会话新执行的命令至命令历史文件中</p>
+<p><strong><code>-n</code></strong>: 读命令历史文件中未读过的行到历史列表；</p>
+<p><strong><code>-r</code></strong>: 读命令历史文件附加到历史列表；</p>
+<p><strong><code>-w</code></strong>: 保存历史列表到指定的命令历史文件中；</p>
+<p><strong><code>-p</code></strong>: 展开历史参数成多行，但不存在历史列表中；</p>
+<p><strong><code>-s</code></strong>: 展开历史参数成一行，附加在历史列表后；</p>
+</blockquote>
+<p>#三、history的常用快捷方式</p>
+<p>###1. 重复前一个命令的4个方法：</p>
+<blockquote>
+<ol>
+<li>按<strong><code>↑</code></strong>键并回车执行;</li>
+<li>按 <strong><code>!!</code></strong>并执行回车；</li>
+<li>输入<strong><code>!-1</code></strong>并执行回车;</li>
+<li>按<strong><code>Ctrl+P</code></strong>并执行回车；</li>
+</ol>
+</blockquote>
+<p>###2. 在命令历史中搜索命令：</p>
+<blockquote>
+<p><strong><code>Ctrl + r</code></strong> : 在命令历史中搜索命令；<br><strong><code>Ctrl + g</code></strong> : 从命令历史搜索模式中退出；</p>
+</blockquote>
+<p>###3. 要重新调用前一个命令中最后一个参数：</p>
+<blockquote>
+<p><strong><code>!$</code></strong>: 表示<br><strong><code>Esc, .</code></strong>: 点击Esc键后松开，然后点击 . 键<br><strong><code>Alt+ .</code></strong>:按住Alt键的同时点击 . 键）</p>
+<p>###4. 其他命令历史快捷方式<br><strong><code>!:0</code></strong>  执行前一条命令(去除参数)<br><strong><code>Ctrl + n</code></strong>： 显示当前历史中的下一条命令，但不执行；<br><strong><code>Ctrl + j</code></strong>：执行当前命令；<br><strong><code>!n</code></strong>: 执行history命令输出对应序列号n的命令；<br><strong><code>!-n</code></strong>: 执行history历史中倒数第n个命令；<br><strong><code>!string</code></strong>: 重复前一个以“string”开头的命令；<br><strong><code>!?string</code></strong>: 重复前一个包含string的命令；<br><strong><code>!string:p</code></strong>: 仅打印历史命令而不执行；<br><strong><code>^string</code></strong>: 删除上一条命令中第一个string；<br><strong><code>^string1^string2</code></strong>: 将上一条命令中的第一个string1替换为string2；<br><strong><code>!:gs/string1/string2</code></strong>: 将上一条命令中所有的string1都替换为string2；</p>
+</blockquote>
+<p>###5. 调用历史参数：</p>
+<blockquote>
+<p><strong><code>command !^</code></strong> : 利用上一个命令的第一个参数做cmd的参数<br><strong><code>command !$</code></strong> : 利用上一个命令的最后一个参数做cmd的参数<br><strong><code>command !*</code></strong> : 利用上一个命令的全部参数做cmd的参数<br><strong><code>command !:n</code></strong> : 利用上一个命令的第n个参数做cmd的参数<br><strong><code>command !n:^</code></strong> : 调用第n条命令的第一个参数<br><strong><code>command !n:$</code></strong> : 调用第n条命令的最后一个参数<br><strong><code>command !n:m</code></strong> : 调用第n条命令的第m个参数<br><strong><code>command !n:*</code></strong> : 调用第n条命令的所有参数<br><strong><code>command !string:^</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数<br><strong><code>command !string:$</code></strong> : 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数<br><strong><code>command !string:n</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数<br><strong><code>command !string:*</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的所有参数</p>
+</blockquote>
+<p>#四、命令历史相关环节变量：</p>
+<blockquote>
+<p><strong><code>HISTSIZE</code></strong>：命令历史记录的条数<br><strong><code>HISTFILE</code></strong>：指定历史文件，默认为~/.bash_history<br><strong><code>HISTFILESIZE</code></strong>：命令历史文件记录历史的条数<br><strong><code>HISTTIMEFORMAT=&quot;%F %T&quot;</code></strong> 显示时间<br><strong><code>HISTIGNORE=&quot;str1:str2*:…&quot;</code></strong> 忽略str1命令， str2开头的历史</p>
+</blockquote>
+<p>###控制命令历史的记录方式：</p>
+<blockquote>
+<p><strong>环境变量： HISTCONTROL相关参数</strong><br><strong><code>ignoredups</code></strong> 默认，忽略重复的命令，连续且相同为“重复”<br><strong><code>ignorespace</code></strong> 忽略所有以空白开头的命令<br><strong><code>ignoreboth</code></strong> 相当于<strong><code>ignoredups</code></strong>, <strong><code>ignorespace</code></strong>的组合<br><strong><code>erasedups</code></strong> 删除重复命令<br><strong>修改方式：</strong><br><strong><code>export HISCONTROL=&quot;参数&quot;</code></strong><br><strong>存放在 <code>/etc/profile</code> 或 <code>~/.bash_profile</code></strong></p>
+</blockquote>
+
   </div>
   <!--评论块-->
     
