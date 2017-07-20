@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[Linux查看历史命令]]></title>
+      <url>/2017/07/20/Linux%E5%AE%89%E8%A3%85/</url>
+      <content type="html"><![CDATA[<h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><h2 id="1、说明："><a href="#1、说明：" class="headerlink" title="1、说明："></a>1、说明：</h2><p> <em><code>history</code>是Shell的内置命令，用来查看以前执行过的命令。</em>  </p>
+<h2 id="2、配置文件"><a href="#2、配置文件" class="headerlink" title="2、配置文件"></a>2、配置文件</h2><p>当登陆Shell时，会读取命令历史文件<code>~/.bash_history</code>中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件<code>~/.bash_history</code>中。 </p>
+<h1 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h1><blockquote>
+<p><strong><code>-c</code></strong>: 清空历史命令；<br><strong><code>-d</code></strong>: 删除历史中的第N个命令；<br><strong><code>N</code></strong>: 显示最近的N条历史；<br><strong><code>-a</code></strong>: 追加本次会话新执行的命令至命令历史文件中;<br><strong><code>-n</code></strong> : 读命令历史文件中未读过的行到历史列表；<br><strong><code>-r</code></strong> : 读命令历史文件附加到历史列表；<br><strong><code>-w</code></strong>: 保存历史列表到指定的命令历史文件中；<br><strong><code>-p</code></strong>: 展开历史参数成多行，但不存在历史列表中；<br><strong><code>-s</code></strong>: 展开历史参数成一行，附加在历史列表后；  </p>
+</blockquote>
+<h1 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h1><h3 id="1-重复前一个命令的4个方法："><a href="#1-重复前一个命令的4个方法：" class="headerlink" title="1. 重复前一个命令的4个方法："></a>1. 重复前一个命令的4个方法：</h3><blockquote>
+<ol>
+<li>按<code>↑</code>键并回车执行;</li>
+<li>按 <code>!!</code>并执行回车；</li>
+<li>输入<code>!-1</code>并执行回车;</li>
+<li>按<code>Ctrl+P</code>并执行回车；</li>
+</ol>
+</blockquote>
+<h3 id="2-在命令历史中搜索命令："><a href="#2-在命令历史中搜索命令：" class="headerlink" title="2. 在命令历史中搜索命令："></a>2. 在命令历史中搜索命令：</h3><blockquote>
+<p><strong><code>Ctrl + r</code></strong> : 在命令历史中搜索命令；<br><strong><code>Ctrl + g</code></strong> : 从命令历史搜索模式中退出；</p>
+</blockquote>
+<h3 id="3-要重新调用前一个命令中最后一个参数："><a href="#3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="3. 要重新调用前一个命令中最后一个参数："></a>3. 要重新调用前一个命令中最后一个参数：</h3><blockquote>
+<p><strong><code>!$</code></strong>: 表示<br> <strong><code>Esc, .</code></strong>: 点击Esc键后松开，然后点击 . 键<br> <strong><code>Alt+ .</code></strong>:按住Alt键的同时点击 . 键）</p>
+</blockquote>
+<h3 id="4-其他命令历史快捷方式"><a href="#4-其他命令历史快捷方式" class="headerlink" title="4. 其他命令历史快捷方式"></a>4. 其他命令历史快捷方式</h3><blockquote>
+<p><strong><code>!:0</code></strong>  执行前一条命令(去除参数);<br> <strong><code>Ctrl + n</code></strong>： 显示当前历史中的下一条命令，但不执行；<br> <strong><code>Ctrl + j</code></strong>：执行当前命令；<br> <strong><code>!n</code></strong>: 执行history命令输出对应序列号n的命令；<br> <strong><code>!-n</code></strong>: 执行history历史中倒数第n个命令；<br> <strong><code>!string</code></strong>: 重复前一个以“string”开头的命令；<br> <strong><code>!?string</code></strong>: 重复前一个包含string的命令；<br> <strong><code>!string:p</code></strong>: 仅打印历史命令而不执行；<br> <strong><code>^string</code></strong>: 删除上一条命令中第一个string；<br> <strong><code>^string1^string2</code></strong>: 将上一条命令中的第一个string1替换为string2；<br> <strong><code>!:gs/string1/string2</code></strong>: 将上一条命令中所有的string1都替换为string2;</p>
+</blockquote>
+<h3 id="5-调用历史参数："><a href="#5-调用历史参数：" class="headerlink" title="5. 调用历史参数："></a>5. 调用历史参数：</h3><blockquote>
+<p><strong><code>command !^</code></strong> : 利用上一个命令的第一个参数做cmd的参数;<br> <strong><code>command !$</code></strong>: 利用上一个命令的最后一个参数做cmd的参数;<br> <strong><code>command !*</code></strong> : 利用上一个命令的全部参数做cmd的参数;<br><strong><code>command !:n</code></strong> : 利用上一个命令的第n个参数做cmd的参数;<br><strong><code>command !n:^</code></strong> : 调用第n条命令的第一个参数;<br><strong><code>command !n:$</code></strong> : 调用第n条命令的最后一个参数;<br><strong><code>command !n:m</code></strong> : 调用第n条命令的第m个参数;<br><strong><code>command !n:*</code></strong> : 调用第n条命令的所有参数;<br><strong><code>command !string:^</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数;<br><strong><code>command !string:$</code></strong> : 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;<br><strong><code>command !string:n</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;<br><strong><code>command !string:*</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;  </p>
+</blockquote>
+<h1 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h1><blockquote>
+<p><strong><code>HISTSIZE</code></strong>：命令历史记录的条数;<br><strong><code>HISTFILE</code></strong>：指定历史文件，默认为~/.bash_history;<br><strong><code>HISTFILESIZE</code></strong>：命令历史文件记录历史的条数;<br><strong><code>HISTTIMEFORMAT=&quot;%F %T&quot;</code></strong> 显示时间;<br><strong><code>HISTIGNORE=&quot;str1:str2*:…&quot;</code></strong> 忽略str1命令， str2开头的历史;  </p>
+</blockquote>
+<h3 id="控制命令历史的记录方式："><a href="#控制命令历史的记录方式：" class="headerlink" title="控制命令历史的记录方式："></a>控制命令历史的记录方式：</h3><blockquote>
+<p><strong>环境变量： HISTCONTROL相关参数</strong><br><strong><code>ignoredups</code></strong> 默认，忽略重复的命令，连续且相同为“重复”<br><strong><code>ignorespace</code></strong> 忽略所有以空白开头的命令<br><strong><code>ignoreboth</code></strong> 相当于<strong><code>ignoredups</code></strong>, <strong><code>ignorespace</code></strong>的组合<br><strong><code>erasedups</code></strong> 删除重复命令<br><strong>修改方式：</strong><br><strong><code>export HISCONTROL=&quot;参数&quot;</code></strong><br><strong>存放在 <code>/etc/profile</code> 或 <code>~/.bash_profile</code></strong></p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> Linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> 查看历史命令 </tag>
+            
+            <tag> history </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hello World]]></title>
+      <url>/2017/07/19/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+      
+        
+    </entry>
+    
+  
+  
+    
+    <entry>
+      <title><![CDATA[about]]></title>
+      <url>/about/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[friends]]></title>
+      <url>/friends/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+  
+</search>
