@@ -111,12 +111,6 @@
 
 <!--photo-->
 
-<li class="nav-list">
-    <a href="/photo" class="nopjax" target="_self">
-        <div class="nav-ico"><i class="material-icons">insert_photo</i> </div><p>影集</p>
-    </a>
-</li>
-
 <!--friends-->
 
 <li class="nav-list">
@@ -143,7 +137,7 @@
   <div id="content-inner">
     
 <article id="post">
-  <div class="post-page-title"  style="background-color:#26A69A;background-image:url(/images/random/vateral-13.png)" >
+  <div class="post-page-title"  style="background-color:#26A69A;background-image:url(/images/random/vateral-2.png)" >
   <h2>使用Squid+Stunnel代理上网</h2>
     
   <p>作者:WangBinZhou &nbsp&nbsp 发布于:<time datetime="2017-07-22T06:08:43.000Z">
@@ -153,9 +147,9 @@
     
   </div>
   <div class="post-page-content">
-  <h3 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h3><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
-<h3 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h3><p>&emsp;&emsp;服务端：阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;软件：squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;客户端：stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;原理：当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
-<h3 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h3><h4 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y squid                   //yum安装Squid</span>
+  <h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
+<h5 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h5><p>&emsp;&emsp;<strong>服务端：</strong>阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;<strong>软件：</strong>squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;<strong>客户端：</strong>stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;<strong>原理：</strong>当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
+<h5 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h5><h6 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y squid                   //yum安装Squid</span>
 <span class="token comment" spellcheck="true">#vim /etc/squid/squid.conf              //修改配置文件</span>
     <span class="token comment" spellcheck="true"># And finally deny all other access to this proxy</span>
     <span class="token comment" spellcheck="true">#http_access deny all               //注释掉该行</span>
@@ -163,9 +157,9 @@
     <span class="token comment" spellcheck="true"># Squid normally listens to port 3128</span>
     http_port 127.0.0.1:3128            //在端口前加入本地回环地址，只允许本地访问；
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y stunnel     //yum安装Stunnel</span>
+<h6 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y stunnel     //yum安装Stunnel</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#cd /etc/stunnel</span>
+<h6 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#cd /etc/stunnel</span>
 <span class="token comment" spellcheck="true">#openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem     //生成证书</span>
 Generating a 2048 bit RSA private key
 <span class="token punctuation">..</span><span class="token punctuation">..</span>.+++
@@ -188,7 +182,7 @@ Common Name <span class="token punctuation">(</span>eg, your name or your server
 Email Address <span class="token punctuation">[</span><span class="token punctuation">]</span>:                                               //邮件地址
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>&emsp;结束后会在/etc/stunnel/目录下生成一个stunnel.pem的文件；</p>
-<h4 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span>
+<h6 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span>
 client <span class="token operator">=</span> no
 cert <span class="token operator">=</span> /etc/stunnel/stunnel.pem     //配置加密代理证书
 CAfile <span class="token operator">=</span> /etc/stunnel/stunnel.pem
@@ -196,21 +190,21 @@ CAfile <span class="token operator">=</span> /etc/stunnel/stunnel.pem
 accept <span class="token operator">=</span> 34567                      //服务端口
 connect <span class="token operator">=</span> 127.0.0.1:3128            //指向本地的Squid服务端口
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#systemctl start squid.service      //启动Squid；</span>
+<h6 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#systemctl start squid.service      //启动Squid；</span>
 <span class="token comment" spellcheck="true">#stunnel        //启动Stunnel；</span>
 <span class="token comment" spellcheck="true">#ss -tunlp      //检测端口判断服务是否启动；</span>
 Netid State      Recv-Q Send-Q       Local Address:Port        Peer Address:Port
 tcp   LISTEN     0      128              127.0.0.1:3128                   *:*           //squid服务            
 tcp   LISTEN     0      128                      *:34567                  *:*           //Stunnel服务
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h4><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:</p>
+<h6 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h6><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#firewall-cmd --zone=public --add-port=34567/tcp --permanent</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>&emsp;在阿里云控制台里面添加端口映射后，在客户端上面测试是否能够正常访问Stunnel端口：</p>
-<pre class="line-numbers language-dos"><code class="language-dos">C:\Users\wbz>telnet Service_IP 34567
+<pre class="line-numbers language-dos"><code class="language-dos">C:\Users\wang>telnet Service_IP 34567
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>&emsp;如果命令执行后没有报错，cmd.exe窗口显示的是一个黑屏，说明服务能够正常使用；</p>
-<h3 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h3><h4 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h4><h4 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h4><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:</p>
+<h5 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h5><h6 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h6><h6 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h6><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:</p>
 <pre class="line-numbers language-dos"><code class="language-dos">client=yes
 [https]
 accept=127.0.0.1:8088       //在浏览器里面添加的代理地址和端口号；
@@ -238,7 +232,7 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
 <div class="post-toc-btn"><i class="material-icons">format_list_numbered</i></div>
 <div class="post-toc-none"><p>(无)</p></div>
 <div class="post-toc-box">
-    <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、简介："><span class="post-toc-number">1.</span> <span class="post-toc-text">一、简介：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、安装环境及原理："><span class="post-toc-number">2.</span> <span class="post-toc-text">二、安装环境及原理：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、服务端配置："><span class="post-toc-number">3.</span> <span class="post-toc-text">三、服务端配置：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-1、服务端安装配置Squid："><span class="post-toc-number">3.1.</span> <span class="post-toc-text"> 1、服务端安装配置Squid：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-2、服务端安装Stunnel："><span class="post-toc-number">3.2.</span> <span class="post-toc-text"> 2、服务端安装Stunnel：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-3、生成加密代理证书："><span class="post-toc-number">3.3.</span> <span class="post-toc-text"> 3、生成加密代理证书：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-4、配置Stunnel："><span class="post-toc-number">3.4.</span> <span class="post-toc-text"> 4、配置Stunnel：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-5、启动服务并检查："><span class="post-toc-number">3.5.</span> <span class="post-toc-text"> 5、启动服务并检查：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-6、对公网开放34567端口；"><span class="post-toc-number">3.6.</span> <span class="post-toc-text"> 6、对公网开放34567端口；</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、客户端配置："><span class="post-toc-number">4.</span> <span class="post-toc-text">四、客户端配置：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-1、安装stunnel-exe客户端后直接运行；"><span class="post-toc-number">4.1.</span> <span class="post-toc-text"> 1、安装stunnel.exe客户端后直接运行；</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#emsp-2、配置Stunnel客户端："><span class="post-toc-number">4.2.</span> <span class="post-toc-text"> 2、配置Stunnel客户端：</span></a></li></ol></li></ol>
+    <ol class="post-toc"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#一、简介："><span class="post-toc-number">1.</span> <span class="post-toc-text">一、简介：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#二、安装环境及原理："><span class="post-toc-number">2.</span> <span class="post-toc-text">二、安装环境及原理：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#三、服务端配置："><span class="post-toc-number">3.</span> <span class="post-toc-text">三、服务端配置：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-1、服务端安装配置Squid："><span class="post-toc-number">3.1.</span> <span class="post-toc-text"> 1、服务端安装配置Squid：</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-2、服务端安装Stunnel："><span class="post-toc-number">3.2.</span> <span class="post-toc-text"> 2、服务端安装Stunnel：</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-3、生成加密代理证书："><span class="post-toc-number">3.3.</span> <span class="post-toc-text"> 3、生成加密代理证书：</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-4、配置Stunnel："><span class="post-toc-number">3.4.</span> <span class="post-toc-text"> 4、配置Stunnel：</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-5、启动服务并检查："><span class="post-toc-number">3.5.</span> <span class="post-toc-text"> 5、启动服务并检查：</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-6、对公网开放34567端口；"><span class="post-toc-number">3.6.</span> <span class="post-toc-text"> 6、对公网开放34567端口；</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#四、客户端配置："><span class="post-toc-number">4.</span> <span class="post-toc-text">四、客户端配置：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-1、安装stunnel-exe客户端后直接运行；"><span class="post-toc-number">4.1.</span> <span class="post-toc-text"> 1、安装stunnel.exe客户端后直接运行；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-2、配置Stunnel客户端："><span class="post-toc-number">4.2.</span> <span class="post-toc-text"> 2、配置Stunnel客户端：</span></a></li></ol></li></ol>
 </div>
 <!--<div class="post-back"><i class="material-icons">arrow_back</i></div>-->
 <script type="text/javascript">

@@ -111,12 +111,6 @@
 
 <!--photo-->
 
-<li class="nav-list">
-    <a href="/photo" class="nopjax" target="_self">
-        <div class="nav-ico"><i class="material-icons">insert_photo</i> </div><p>影集</p>
-    </a>
-</li>
-
 <!--friends-->
 
 <li class="nav-list">
@@ -143,7 +137,7 @@
   <div id="content-inner">
     
 <article id="post">
-  <div class="post-page-title"  style="background-color:#26A69A;background-image:url(/images/random/vateral-7.png)" >
+  <div class="post-page-title"  style="background-color:#26A69A;background-image:url(/images/random/vateral-3.png)" >
   <h2>Linux查看历史命令</h2>
     
   <p>作者:WangBinZhou &nbsp&nbsp 发布于:<time datetime="2017-07-20T01:23:20.000Z">
@@ -153,37 +147,65 @@
     
   </div>
   <div class="post-page-content">
-  <h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><h2 id="1、说明："><a href="#1、说明：" class="headerlink" title="1、说明："></a>1、说明：</h2><p> <em><code>history</code>是Shell的内置命令，用来查看以前执行过的命令。</em>  </p>
-<h2 id="2、配置文件"><a href="#2、配置文件" class="headerlink" title="2、配置文件"></a>2、配置文件</h2><p>当登陆Shell时，会读取命令历史文件<code>~/.bash_history</code>中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件<code>~/.bash_history</code>中。 </p>
-<h1 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h1><blockquote>
-<p><strong><code>-c</code></strong>: 清空历史命令；<br><strong><code>-d</code></strong>: 删除历史中的第N个命令；<br><strong><code>N</code></strong>: 显示最近的N条历史；<br><strong><code>-a</code></strong>: 追加本次会话新执行的命令至命令历史文件中;<br><strong><code>-n</code></strong> : 读命令历史文件中未读过的行到历史列表；<br><strong><code>-r</code></strong> : 读命令历史文件附加到历史列表；<br><strong><code>-w</code></strong>: 保存历史列表到指定的命令历史文件中；<br><strong><code>-p</code></strong>: 展开历史参数成多行，但不存在历史列表中；<br><strong><code>-s</code></strong>: 展开历史参数成一行，附加在历史列表后；  </p>
-</blockquote>
-<h1 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h1><h3 id="1-重复前一个命令的4个方法："><a href="#1-重复前一个命令的4个方法：" class="headerlink" title="1. 重复前一个命令的4个方法："></a>1. 重复前一个命令的4个方法：</h3><blockquote>
-<ol>
-<li>按<code>↑</code>键并回车执行;</li>
-<li>按 <code>!!</code>并执行回车；</li>
-<li>输入<code>!-1</code>并执行回车;</li>
-<li>按<code>Ctrl+P</code>并执行回车；</li>
-</ol>
-</blockquote>
-<h3 id="2-在命令历史中搜索命令："><a href="#2-在命令历史中搜索命令：" class="headerlink" title="2. 在命令历史中搜索命令："></a>2. 在命令历史中搜索命令：</h3><blockquote>
-<p><strong><code>Ctrl + r</code></strong> : 在命令历史中搜索命令；<br><strong><code>Ctrl + g</code></strong> : 从命令历史搜索模式中退出；</p>
-</blockquote>
-<h3 id="3-要重新调用前一个命令中最后一个参数："><a href="#3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="3. 要重新调用前一个命令中最后一个参数："></a>3. 要重新调用前一个命令中最后一个参数：</h3><blockquote>
-<p><strong><code>!$</code></strong>: 表示<br> <strong><code>Esc, .</code></strong>: 点击Esc键后松开，然后点击 . 键<br> <strong><code>Alt+ .</code></strong>:按住Alt键的同时点击 . 键）</p>
-</blockquote>
-<h3 id="4-其他命令历史快捷方式"><a href="#4-其他命令历史快捷方式" class="headerlink" title="4. 其他命令历史快捷方式"></a>4. 其他命令历史快捷方式</h3><blockquote>
-<p><strong><code>!:0</code></strong>  执行前一条命令(去除参数);<br> <strong><code>Ctrl + n</code></strong>： 显示当前历史中的下一条命令，但不执行；<br> <strong><code>Ctrl + j</code></strong>：执行当前命令；<br> <strong><code>!n</code></strong>: 执行history命令输出对应序列号n的命令；<br> <strong><code>!-n</code></strong>: 执行history历史中倒数第n个命令；<br> <strong><code>!string</code></strong>: 重复前一个以“string”开头的命令；<br> <strong><code>!?string</code></strong>: 重复前一个包含string的命令；<br> <strong><code>!string:p</code></strong>: 仅打印历史命令而不执行；<br> <strong><code>^string</code></strong>: 删除上一条命令中第一个string；<br> <strong><code>^string1^string2</code></strong>: 将上一条命令中的第一个string1替换为string2；<br> <strong><code>!:gs/string1/string2</code></strong>: 将上一条命令中所有的string1都替换为string2;</p>
-</blockquote>
-<h3 id="5-调用历史参数："><a href="#5-调用历史参数：" class="headerlink" title="5. 调用历史参数："></a>5. 调用历史参数：</h3><blockquote>
-<p><strong><code>command !^</code></strong> : 利用上一个命令的第一个参数做cmd的参数;<br> <strong><code>command !$</code></strong>: 利用上一个命令的最后一个参数做cmd的参数;<br> <strong><code>command !*</code></strong> : 利用上一个命令的全部参数做cmd的参数;<br><strong><code>command !:n</code></strong> : 利用上一个命令的第n个参数做cmd的参数;<br><strong><code>command !n:^</code></strong> : 调用第n条命令的第一个参数;<br><strong><code>command !n:$</code></strong> : 调用第n条命令的最后一个参数;<br><strong><code>command !n:m</code></strong> : 调用第n条命令的第m个参数;<br><strong><code>command !n:*</code></strong> : 调用第n条命令的所有参数;<br><strong><code>command !string:^</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数;<br><strong><code>command !string:$</code></strong> : 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;<br><strong><code>command !string:n</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;<br><strong><code>command !string:*</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;  </p>
-</blockquote>
-<h1 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h1><blockquote>
-<p><strong><code>HISTSIZE</code></strong>：命令历史记录的条数;<br><strong><code>HISTFILE</code></strong>：指定历史文件，默认为~/.bash_history;<br><strong><code>HISTFILESIZE</code></strong>：命令历史文件记录历史的条数;<br><strong><code>HISTTIMEFORMAT=&quot;%F %T&quot;</code></strong> 显示时间;<br><strong><code>HISTIGNORE=&quot;str1:str2*:…&quot;</code></strong> 忽略str1命令， str2开头的历史;  </p>
-</blockquote>
-<h3 id="控制命令历史的记录方式："><a href="#控制命令历史的记录方式：" class="headerlink" title="控制命令历史的记录方式："></a>控制命令历史的记录方式：</h3><blockquote>
-<p><strong>环境变量： HISTCONTROL相关参数</strong><br><strong><code>ignoredups</code></strong> 默认，忽略重复的命令，连续且相同为“重复”<br><strong><code>ignorespace</code></strong> 忽略所有以空白开头的命令<br><strong><code>ignoreboth</code></strong> 相当于<strong><code>ignoredups</code></strong>, <strong><code>ignorespace</code></strong>的组合<br><strong><code>erasedups</code></strong> 删除重复命令<br><strong>修改方式：</strong><br><strong><code>export HISCONTROL=&quot;参数&quot;</code></strong><br><strong>存放在 <code>/etc/profile</code> 或 <code>~/.bash_profile</code></strong></p>
-</blockquote>
+  <h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><h5 id="emsp-1、说明："><a href="#emsp-1、说明：" class="headerlink" title="&emsp;1、说明："></a>&emsp;1、说明：</h5><p>&emsp;&emsp;&emsp;<strong>history是Shell的内置命令，用来查看以前执行过的命令。</strong>  </p>
+<h5 id="emsp-2、配置文件"><a href="#emsp-2、配置文件" class="headerlink" title="&emsp;2、配置文件"></a>&emsp;2、配置文件</h5><p>&emsp;&emsp;&emsp;<strong>当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_history中。</strong></p>
+<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><pre class="line-numbers language-bash"><code class="language-bash">history:
+        -c: 清空历史命令；  
+        -d: 删除历史中的第N个命令；  
+         N: 显示最近的N条历史；  
+        -a: 追加本次会话新执行的命令至命令历史文件中<span class="token punctuation">;</span>  
+        -n: 读命令历史文件中未读过的行到历史列表；  
+        -r: 读命令历史文件附加到历史列表；  
+        -w: 保存历史列表到指定的命令历史文件中；  
+        -p: 展开历史参数成多行，但不存在历史列表中；  
+        -s: 展开历史参数成一行，附加在历史列表后；
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">Alt + .:    按住Alt键的同时点击 . 键
+Esc, . :    点击Esc键后松开，然后点击 . 键
+     !$:    表示
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><pre class="line-numbers language-dos"><code class="language-dos">                  !n:    执行history命令输出对应序列号n的命令；  
+                 !-n:    执行history历史中倒数第n个命令；  
+                 !:0:    执行前一条命令(去除参数);  
+            Ctrl + n:    显示当前历史中的下一条命令，但不执行；  
+            Ctrl + j:    执行当前命令；  
+             !string:    重复前一个以“string”开头的命令；  
+            !?string:    重复前一个包含string的命令；  
+           !string:p:    仅打印历史命令而不执行；  
+             ^string:    删除上一条命令中第一个string；  
+    ^string1^string2:    将上一条命令中的第一个string1替换为string2；  
+!:gs/string1/string2:    将上一条命令中所有的string1都替换为string2;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">command !^: 利用上一个命令的第一个参数做cmd的参数;  
+command !$: 利用上一个命令的最后一个参数做cmd的参数;  
+command !*: 利用上一个命令的全部参数做cmd的参数;  
+command !:n: 利用上一个命令的第n个参数做cmd的参数;  
+command !n:^: 调用第n条命令的第一个参数;  
+command !n:$: 调用第n条命令的最后一个参数;  
+command !n:m: 调用第n条命令的第m个参数;  
+command !n:*: 调用第n条命令的所有参数;  
+command !string:^: 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数;  
+command !string:$: 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;  
+command !string:n: 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;  
+command !string:*: 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h5><pre class="line-numbers language-dos"><code class="language-dos">HISTSIZE：命令历史记录的条数;  
+HISTFILE：指定历史文件，默认为~/.bash_history;  
+HISTFILESIZE：命令历史文件记录历史的条数;  
+HISTTIMEFORMAT="%F %T"：显示时间;  
+HISTIGNORE="str1:str2*:…"：忽略str1命令， str2开头的历史;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="五、控制命令历史的记录方式："><a href="#五、控制命令历史的记录方式：" class="headerlink" title="五、控制命令历史的记录方式："></a>五、控制命令历史的记录方式：</h5><p>&emsp;<strong>通过修改环境变量：HISTCONTROL的相关参数来控制历史命令的记录方式：</strong></p>
+<p>&emsp;&emsp;&emsp;<strong>HISTCONTROL相关参数：</strong></p>
+<pre class="line-numbers language-bash"><code class="language-bash">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  
+ignorespace:忽略所有以空白开头的命令  
+ignoreboth:相当于ignoredups, ignorespace的组合  
+erasedups:删除重复命令
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&emsp;&emsp;&emsp;<strong>修改方式：</strong></p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#export HISCONTROL="参数"  </span>
+文件存放在 /etc/profile 或 ~/.bash_profile
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
   </div>
   <!--评论块-->
@@ -209,7 +231,7 @@
 <div class="post-toc-btn"><i class="material-icons">format_list_numbered</i></div>
 <div class="post-toc-none"><p>(无)</p></div>
 <div class="post-toc-box">
-    <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#一、简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、说明："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1、说明：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、配置文件"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2、配置文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二、相关参数"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、相关参数</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#三、history的常用快捷方式"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、history的常用快捷方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-重复前一个命令的4个方法："><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">1. 重复前一个命令的4个方法：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-在命令历史中搜索命令："><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">2. 在命令历史中搜索命令：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-要重新调用前一个命令中最后一个参数："><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">3. 要重新调用前一个命令中最后一个参数：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-其他命令历史快捷方式"><span class="post-toc-number">3.0.4.</span> <span class="post-toc-text">4. 其他命令历史快捷方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-调用历史参数："><span class="post-toc-number">3.0.5.</span> <span class="post-toc-text">5. 调用历史参数：</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#四、命令历史相关环节变量："><span class="post-toc-number">4.</span> <span class="post-toc-text">四、命令历史相关环节变量：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#控制命令历史的记录方式："><span class="post-toc-number">4.0.1.</span> <span class="post-toc-text">控制命令历史的记录方式：</span></a></li></ol></li></ol></li></ol>
+    <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-1、说明："><span class="post-toc-number">1.1.</span> <span class="post-toc-text"> 1、说明：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-2、配置文件"><span class="post-toc-number">1.2.</span> <span class="post-toc-text"> 2、配置文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、相关参数"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、相关参数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、history的常用快捷方式"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、history的常用快捷方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-1-重复前一个命令的4个方法："><span class="post-toc-number">3.1.</span> <span class="post-toc-text"> 1. 重复前一个命令的4个方法：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-按↑键并回车执行"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">   按↑键并回车执行;</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-按-并执行回车；"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">   按 !!并执行回车；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-输入-1并执行回车"><span class="post-toc-number">3.1.3.</span> <span class="post-toc-text">   输入!-1并执行回车;</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-按Ctrl-P并执行回车；"><span class="post-toc-number">3.1.4.</span> <span class="post-toc-text">   按Ctrl+P并执行回车；</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-2-在命令历史中搜索命令："><span class="post-toc-number">3.2.</span> <span class="post-toc-text"> 2. 在命令历史中搜索命令：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">   Ctrl + r : 在命令历史中搜索命令；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">   Ctrl + g : 从命令历史搜索模式中退出；</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-3-要重新调用前一个命令中最后一个参数："><span class="post-toc-number">3.3.</span> <span class="post-toc-text"> 3. 要重新调用前一个命令中最后一个参数：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-4-其他命令历史快捷方式"><span class="post-toc-number">3.4.</span> <span class="post-toc-text"> 4. 其他命令历史快捷方式</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-5-调用历史参数："><span class="post-toc-number">3.5.</span> <span class="post-toc-text"> 5. 调用历史参数：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#四、命令历史相关环节变量："><span class="post-toc-number">3.6.</span> <span class="post-toc-text">四、命令历史相关环节变量：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#五、控制命令历史的记录方式："><span class="post-toc-number">3.7.</span> <span class="post-toc-text">五、控制命令历史的记录方式：</span></a></li></ol></li></ol>
 </div>
 <!--<div class="post-back"><i class="material-icons">arrow_back</i></div>-->
 <script type="text/javascript">

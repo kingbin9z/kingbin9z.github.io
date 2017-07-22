@@ -5,9 +5,9 @@
     <entry>
       <title><![CDATA[使用Squid+Stunnel代理上网]]></title>
       <url>/2017/07/22/%E4%BD%BF%E7%94%A8Squid-Stunnel%E4%BB%A3%E7%90%86%E4%B8%8A%E7%BD%91/</url>
-      <content type="html"><![CDATA[<h3 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h3><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
-<h3 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h3><p>&emsp;&emsp;服务端：阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;软件：squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;客户端：stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;原理：当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
-<h3 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h3><h4 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y squid                   //yum安装Squid</span>
+      <content type="html"><![CDATA[<h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
+<h5 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h5><p>&emsp;&emsp;<strong>服务端：</strong>阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;<strong>软件：</strong>squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;<strong>客户端：</strong>stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;<strong>原理：</strong>当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
+<h5 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h5><h6 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y squid                   //yum安装Squid</span>
 <span class="token comment" spellcheck="true">#vim /etc/squid/squid.conf              //修改配置文件</span>
     <span class="token comment" spellcheck="true"># And finally deny all other access to this proxy</span>
     <span class="token comment" spellcheck="true">#http_access deny all               //注释掉该行</span>
@@ -15,9 +15,9 @@
     <span class="token comment" spellcheck="true"># Squid normally listens to port 3128</span>
     http_port 127.0.0.1:3128            //在端口前加入本地回环地址，只允许本地访问；
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y stunnel     //yum安装Stunnel</span>
+<h6 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y stunnel     //yum安装Stunnel</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#cd /etc/stunnel</span>
+<h6 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#cd /etc/stunnel</span>
 <span class="token comment" spellcheck="true">#openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem     //生成证书</span>
 Generating a 2048 bit RSA private key
 <span class="token punctuation">..</span><span class="token punctuation">..</span>.+++
@@ -40,7 +40,7 @@ Common Name <span class="token punctuation">(</span>eg, your name or your server
 Email Address <span class="token punctuation">[</span><span class="token punctuation">]</span>:                                               //邮件地址
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>&emsp;结束后会在/etc/stunnel/目录下生成一个stunnel.pem的文件；</p>
-<h4 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span>
+<h6 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span>
 client <span class="token operator">=</span> no
 cert <span class="token operator">=</span> /etc/stunnel/stunnel.pem     //配置加密代理证书
 CAfile <span class="token operator">=</span> /etc/stunnel/stunnel.pem
@@ -48,21 +48,21 @@ CAfile <span class="token operator">=</span> /etc/stunnel/stunnel.pem
 accept <span class="token operator">=</span> 34567                      //服务端口
 connect <span class="token operator">=</span> 127.0.0.1:3128            //指向本地的Squid服务端口
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#systemctl start squid.service      //启动Squid；</span>
+<h6 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#systemctl start squid.service      //启动Squid；</span>
 <span class="token comment" spellcheck="true">#stunnel        //启动Stunnel；</span>
 <span class="token comment" spellcheck="true">#ss -tunlp      //检测端口判断服务是否启动；</span>
 Netid State      Recv-Q Send-Q       Local Address:Port        Peer Address:Port
 tcp   LISTEN     0      128              127.0.0.1:3128                   *:*           //squid服务            
 tcp   LISTEN     0      128                      *:34567                  *:*           //Stunnel服务
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h4><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:</p>
+<h6 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h6><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#firewall-cmd --zone=public --add-port=34567/tcp --permanent</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>&emsp;在阿里云控制台里面添加端口映射后，在客户端上面测试是否能够正常访问Stunnel端口：</p>
-<pre class="line-numbers language-dos"><code class="language-dos">C:\Users\wbz>telnet Service_IP 34567
+<pre class="line-numbers language-dos"><code class="language-dos">C:\Users\wang>telnet Service_IP 34567
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>&emsp;如果命令执行后没有报错，cmd.exe窗口显示的是一个黑屏，说明服务能够正常使用；</p>
-<h3 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h3><h4 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h4><h4 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h4><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:</p>
+<h5 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h5><h6 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h6><h6 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h6><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:</p>
 <pre class="line-numbers language-dos"><code class="language-dos">client=yes
 [https]
 accept=127.0.0.1:8088       //在浏览器里面添加的代理地址和端口号；
@@ -93,37 +93,65 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
     <entry>
       <title><![CDATA[Linux查看历史命令]]></title>
       <url>/2017/07/20/Linux%E5%AE%89%E8%A3%85/</url>
-      <content type="html"><![CDATA[<h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><h2 id="1、说明："><a href="#1、说明：" class="headerlink" title="1、说明："></a>1、说明：</h2><p> <em><code>history</code>是Shell的内置命令，用来查看以前执行过的命令。</em>  </p>
-<h2 id="2、配置文件"><a href="#2、配置文件" class="headerlink" title="2、配置文件"></a>2、配置文件</h2><p>当登陆Shell时，会读取命令历史文件<code>~/.bash_history</code>中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件<code>~/.bash_history</code>中。 </p>
-<h1 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h1><blockquote>
-<p><strong><code>-c</code></strong>: 清空历史命令；<br><strong><code>-d</code></strong>: 删除历史中的第N个命令；<br><strong><code>N</code></strong>: 显示最近的N条历史；<br><strong><code>-a</code></strong>: 追加本次会话新执行的命令至命令历史文件中;<br><strong><code>-n</code></strong> : 读命令历史文件中未读过的行到历史列表；<br><strong><code>-r</code></strong> : 读命令历史文件附加到历史列表；<br><strong><code>-w</code></strong>: 保存历史列表到指定的命令历史文件中；<br><strong><code>-p</code></strong>: 展开历史参数成多行，但不存在历史列表中；<br><strong><code>-s</code></strong>: 展开历史参数成一行，附加在历史列表后；  </p>
-</blockquote>
-<h1 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h1><h3 id="1-重复前一个命令的4个方法："><a href="#1-重复前一个命令的4个方法：" class="headerlink" title="1. 重复前一个命令的4个方法："></a>1. 重复前一个命令的4个方法：</h3><blockquote>
-<ol>
-<li>按<code>↑</code>键并回车执行;</li>
-<li>按 <code>!!</code>并执行回车；</li>
-<li>输入<code>!-1</code>并执行回车;</li>
-<li>按<code>Ctrl+P</code>并执行回车；</li>
-</ol>
-</blockquote>
-<h3 id="2-在命令历史中搜索命令："><a href="#2-在命令历史中搜索命令：" class="headerlink" title="2. 在命令历史中搜索命令："></a>2. 在命令历史中搜索命令：</h3><blockquote>
-<p><strong><code>Ctrl + r</code></strong> : 在命令历史中搜索命令；<br><strong><code>Ctrl + g</code></strong> : 从命令历史搜索模式中退出；</p>
-</blockquote>
-<h3 id="3-要重新调用前一个命令中最后一个参数："><a href="#3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="3. 要重新调用前一个命令中最后一个参数："></a>3. 要重新调用前一个命令中最后一个参数：</h3><blockquote>
-<p><strong><code>!$</code></strong>: 表示<br> <strong><code>Esc, .</code></strong>: 点击Esc键后松开，然后点击 . 键<br> <strong><code>Alt+ .</code></strong>:按住Alt键的同时点击 . 键）</p>
-</blockquote>
-<h3 id="4-其他命令历史快捷方式"><a href="#4-其他命令历史快捷方式" class="headerlink" title="4. 其他命令历史快捷方式"></a>4. 其他命令历史快捷方式</h3><blockquote>
-<p><strong><code>!:0</code></strong>  执行前一条命令(去除参数);<br> <strong><code>Ctrl + n</code></strong>： 显示当前历史中的下一条命令，但不执行；<br> <strong><code>Ctrl + j</code></strong>：执行当前命令；<br> <strong><code>!n</code></strong>: 执行history命令输出对应序列号n的命令；<br> <strong><code>!-n</code></strong>: 执行history历史中倒数第n个命令；<br> <strong><code>!string</code></strong>: 重复前一个以“string”开头的命令；<br> <strong><code>!?string</code></strong>: 重复前一个包含string的命令；<br> <strong><code>!string:p</code></strong>: 仅打印历史命令而不执行；<br> <strong><code>^string</code></strong>: 删除上一条命令中第一个string；<br> <strong><code>^string1^string2</code></strong>: 将上一条命令中的第一个string1替换为string2；<br> <strong><code>!:gs/string1/string2</code></strong>: 将上一条命令中所有的string1都替换为string2;</p>
-</blockquote>
-<h3 id="5-调用历史参数："><a href="#5-调用历史参数：" class="headerlink" title="5. 调用历史参数："></a>5. 调用历史参数：</h3><blockquote>
-<p><strong><code>command !^</code></strong> : 利用上一个命令的第一个参数做cmd的参数;<br> <strong><code>command !$</code></strong>: 利用上一个命令的最后一个参数做cmd的参数;<br> <strong><code>command !*</code></strong> : 利用上一个命令的全部参数做cmd的参数;<br><strong><code>command !:n</code></strong> : 利用上一个命令的第n个参数做cmd的参数;<br><strong><code>command !n:^</code></strong> : 调用第n条命令的第一个参数;<br><strong><code>command !n:$</code></strong> : 调用第n条命令的最后一个参数;<br><strong><code>command !n:m</code></strong> : 调用第n条命令的第m个参数;<br><strong><code>command !n:*</code></strong> : 调用第n条命令的所有参数;<br><strong><code>command !string:^</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数;<br><strong><code>command !string:$</code></strong> : 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;<br><strong><code>command !string:n</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;<br><strong><code>command !string:*</code></strong> : 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;  </p>
-</blockquote>
-<h1 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h1><blockquote>
-<p><strong><code>HISTSIZE</code></strong>：命令历史记录的条数;<br><strong><code>HISTFILE</code></strong>：指定历史文件，默认为~/.bash_history;<br><strong><code>HISTFILESIZE</code></strong>：命令历史文件记录历史的条数;<br><strong><code>HISTTIMEFORMAT=&quot;%F %T&quot;</code></strong> 显示时间;<br><strong><code>HISTIGNORE=&quot;str1:str2*:…&quot;</code></strong> 忽略str1命令， str2开头的历史;  </p>
-</blockquote>
-<h3 id="控制命令历史的记录方式："><a href="#控制命令历史的记录方式：" class="headerlink" title="控制命令历史的记录方式："></a>控制命令历史的记录方式：</h3><blockquote>
-<p><strong>环境变量： HISTCONTROL相关参数</strong><br><strong><code>ignoredups</code></strong> 默认，忽略重复的命令，连续且相同为“重复”<br><strong><code>ignorespace</code></strong> 忽略所有以空白开头的命令<br><strong><code>ignoreboth</code></strong> 相当于<strong><code>ignoredups</code></strong>, <strong><code>ignorespace</code></strong>的组合<br><strong><code>erasedups</code></strong> 删除重复命令<br><strong>修改方式：</strong><br><strong><code>export HISCONTROL=&quot;参数&quot;</code></strong><br><strong>存放在 <code>/etc/profile</code> 或 <code>~/.bash_profile</code></strong></p>
-</blockquote>
+      <content type="html"><![CDATA[<h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><h5 id="emsp-1、说明："><a href="#emsp-1、说明：" class="headerlink" title="&emsp;1、说明："></a>&emsp;1、说明：</h5><p>&emsp;&emsp;&emsp;<strong>history是Shell的内置命令，用来查看以前执行过的命令。</strong>  </p>
+<h5 id="emsp-2、配置文件"><a href="#emsp-2、配置文件" class="headerlink" title="&emsp;2、配置文件"></a>&emsp;2、配置文件</h5><p>&emsp;&emsp;&emsp;<strong>当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_history中。</strong></p>
+<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><pre class="line-numbers language-bash"><code class="language-bash">history:
+        -c: 清空历史命令；  
+        -d: 删除历史中的第N个命令；  
+         N: 显示最近的N条历史；  
+        -a: 追加本次会话新执行的命令至命令历史文件中<span class="token punctuation">;</span>  
+        -n: 读命令历史文件中未读过的行到历史列表；  
+        -r: 读命令历史文件附加到历史列表；  
+        -w: 保存历史列表到指定的命令历史文件中；  
+        -p: 展开历史参数成多行，但不存在历史列表中；  
+        -s: 展开历史参数成一行，附加在历史列表后；
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">Alt + .:    按住Alt键的同时点击 . 键
+Esc, . :    点击Esc键后松开，然后点击 . 键
+     !$:    表示
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><pre class="line-numbers language-dos"><code class="language-dos">                  !n:    执行history命令输出对应序列号n的命令；  
+                 !-n:    执行history历史中倒数第n个命令；  
+                 !:0:    执行前一条命令(去除参数);  
+            Ctrl + n:    显示当前历史中的下一条命令，但不执行；  
+            Ctrl + j:    执行当前命令；  
+             !string:    重复前一个以“string”开头的命令；  
+            !?string:    重复前一个包含string的命令；  
+           !string:p:    仅打印历史命令而不执行；  
+             ^string:    删除上一条命令中第一个string；  
+    ^string1^string2:    将上一条命令中的第一个string1替换为string2；  
+!:gs/string1/string2:    将上一条命令中所有的string1都替换为string2;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">command !^: 利用上一个命令的第一个参数做cmd的参数;  
+command !$: 利用上一个命令的最后一个参数做cmd的参数;  
+command !*: 利用上一个命令的全部参数做cmd的参数;  
+command !:n: 利用上一个命令的第n个参数做cmd的参数;  
+command !n:^: 调用第n条命令的第一个参数;  
+command !n:$: 调用第n条命令的最后一个参数;  
+command !n:m: 调用第n条命令的第m个参数;  
+command !n:*: 调用第n条命令的所有参数;  
+command !string:^: 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数;  
+command !string:$: 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;  
+command !string:n: 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;  
+command !string:*: 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h5><pre class="line-numbers language-dos"><code class="language-dos">HISTSIZE：命令历史记录的条数;  
+HISTFILE：指定历史文件，默认为~/.bash_history;  
+HISTFILESIZE：命令历史文件记录历史的条数;  
+HISTTIMEFORMAT="%F %T"：显示时间;  
+HISTIGNORE="str1:str2*:…"：忽略str1命令， str2开头的历史;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="五、控制命令历史的记录方式："><a href="#五、控制命令历史的记录方式：" class="headerlink" title="五、控制命令历史的记录方式："></a>五、控制命令历史的记录方式：</h5><p>&emsp;<strong>通过修改环境变量：HISTCONTROL的相关参数来控制历史命令的记录方式：</strong></p>
+<p>&emsp;&emsp;&emsp;<strong>HISTCONTROL相关参数：</strong></p>
+<pre class="line-numbers language-bash"><code class="language-bash">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  
+ignorespace:忽略所有以空白开头的命令  
+ignoreboth:相当于ignoredups, ignorespace的组合  
+erasedups:删除重复命令
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&emsp;&emsp;&emsp;<strong>修改方式：</strong></p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#export HISCONTROL="参数"  </span>
+文件存放在 /etc/profile 或 ~/.bash_profile
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 ]]></content>
       
         <categories>
@@ -170,6 +198,17 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
   
     
     <entry>
+      <title><![CDATA[关于]]></title>
+      <url>/about/index.html</url>
+      <content type="html"><![CDATA[<h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><h4 id="90后-金牛男"><a href="#90后-金牛男" class="headerlink" title="90后  金牛男"></a>90后  金牛男</h4><h3 id="现师从马哥，在学Linux"><a href="#现师从马哥，在学Linux" class="headerlink" title="现师从马哥，在学Linux"></a><a href="http://www.magedu.com/" target="_blank" rel="external">现师从马哥，在学Linux</a></h3><h3 id="如何联系我"><a href="#如何联系我" class="headerlink" title="如何联系我"></a><a href="http://www.wangbinzhou.com/" target="_blank" rel="external">如何联系我</a></h3><h5 id="QQ：2501228271"><a href="#QQ：2501228271" class="headerlink" title="QQ：2501228271"></a>QQ：2501228271</h5><h5 id="邮箱：2501228271-qq-com"><a href="#邮箱：2501228271-qq-com" class="headerlink" title="邮箱：2501228271@qq.com"></a>邮箱：2501228271@qq.com</h5><p>  <br></p>
+<h1 id="如何获取友链"><a href="#如何获取友链" class="headerlink" title="如何获取友链"></a>如何获取友链</h1><h5 id="私信我，或发邮件"><a href="#私信我，或发邮件" class="headerlink" title="私信我，或发邮件"></a>私信我，或发邮件</h5><h5 id="格式如下："><a href="#格式如下：" class="headerlink" title="格式如下："></a>格式如下：</h5><blockquote>
+<p><strong>你的昵称：</strong><br><strong>  网  址：</strong><br><strong> 一段简介：</strong> </p>
+</blockquote>
+<p>  <br>  </p>
+<h1 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h1><h5 id="这是某猫开发的Hexo的主题–Vateral"><a href="#这是某猫开发的Hexo的主题–Vateral" class="headerlink" title="这是某猫开发的Hexo的主题–Vateral"></a>这是某猫开发的Hexo的主题–Vateral</h5><h5 id="powered-by-hexo-amp-Materialize"><a href="#powered-by-hexo-amp-Materialize" class="headerlink" title="powered by hexo &amp; Materialize"></a>powered by hexo &amp; Materialize</h5><h5 id="基于material-design"><a href="#基于material-design" class="headerlink" title="基于material design"></a>基于material design</h5><h5 id="兼容目前大部分设备，从电脑，到平板，再到手机"><a href="#兼容目前大部分设备，从电脑，到平板，再到手机" class="headerlink" title="兼容目前大部分设备，从电脑，到平板，再到手机"></a>兼容目前大部分设备，从电脑，到平板，再到手机</h5><h5 id="某猫的Blog-amp-Github"><a href="#某猫的Blog-amp-Github" class="headerlink" title="某猫的Blog&amp;Github"></a>某猫的<a href="https://www.moumaobuchiyu.com/" target="_blank" rel="external">Blog</a>&amp;<a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank" rel="external">Github</a></h5>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[photo]]></title>
       <url>/photo/index.html</url>
       <content type="html"></content>
@@ -179,17 +218,6 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
       <title><![CDATA[friends]]></title>
       <url>/friends/index.html</url>
       <content type="html"></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[关于]]></title>
-      <url>/about/index.html</url>
-      <content type="html"><![CDATA[<h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><h4 id="90后-金牛男"><a href="#90后-金牛男" class="headerlink" title="90后  金牛男"></a>90后  金牛男</h4><h3 id="现师从马哥，在学Linux"><a href="#现师从马哥，在学Linux" class="headerlink" title="现师从马哥，在学Linux"></a><a href="http://www.magedu.com/" target="_blank" rel="external">现师从马哥，在学Linux</a></h3><h3 id="如何联系我"><a href="#如何联系我" class="headerlink" title="如何联系我"></a><a href="http://www.wangbinzhou.com/" target="_blank" rel="external">如何联系我</a></h3><h5 id="QQ：2501228271"><a href="#QQ：2501228271" class="headerlink" title="QQ：2501228271"></a>QQ：2501228271</h5><h5 id="邮箱：2501228271-qq-com"><a href="#邮箱：2501228271-qq-com" class="headerlink" title="邮箱：2501228271@qq.com"></a>邮箱：2501228271@qq.com</h5><p>  <br></p>
-<h1 id="如何获取友链"><a href="#如何获取友链" class="headerlink" title="如何获取友链"></a>如何获取友链</h1><h5 id="私信我，或发邮件"><a href="#私信我，或发邮件" class="headerlink" title="私信我，或发邮件"></a>私信我，或发邮件</h5><h5 id="格式如下："><a href="#格式如下：" class="headerlink" title="格式如下："></a>格式如下：</h5><blockquote>
-<p><strong>你的昵称：</strong><br><strong>  网  址：</strong><br><strong> 一段简介：</strong> </p>
-</blockquote>
-<p>  <br>  </p>
-<h1 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h1><h5 id="这是某猫开发的Hexo的主题–Vateral"><a href="#这是某猫开发的Hexo的主题–Vateral" class="headerlink" title="这是某猫开发的Hexo的主题–Vateral"></a>这是某猫开发的Hexo的主题–Vateral</h5><h5 id="powered-by-hexo-amp-Materialize"><a href="#powered-by-hexo-amp-Materialize" class="headerlink" title="powered by hexo &amp; Materialize"></a>powered by hexo &amp; Materialize</h5><h5 id="基于material-design"><a href="#基于material-design" class="headerlink" title="基于material design"></a>基于material design</h5><h5 id="兼容目前大部分设备，从电脑，到平板，再到手机"><a href="#兼容目前大部分设备，从电脑，到平板，再到手机" class="headerlink" title="兼容目前大部分设备，从电脑，到平板，再到手机"></a>兼容目前大部分设备，从电脑，到平板，再到手机</h5><h5 id="某猫的Blog-amp-Github"><a href="#某猫的Blog-amp-Github" class="headerlink" title="某猫的Blog&amp;Github"></a>某猫的<a href="https://www.moumaobuchiyu.com/" target="_blank" rel="external">Blog</a>&amp;<a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank" rel="external">Github</a></h5>]]></content>
     </entry>
     
   
