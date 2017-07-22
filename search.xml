@@ -3,6 +3,83 @@
   
     
     <entry>
+      <title><![CDATA[Linux查看命令历史]]></title>
+      <url>/2017/07/22/Linux%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E5%8E%86%E5%8F%B2/</url>
+      <content type="html"><![CDATA[<h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><h5 id="emsp-1、说明："><a href="#emsp-1、说明：" class="headerlink" title="&emsp;1、说明："></a>&emsp;1、说明：</h5><p>&emsp;&emsp;&emsp;<strong>history是Shell的内置命令，用来查看以前执行过的命令。</strong>  </p>
+<h5 id="emsp-2、配置文件"><a href="#emsp-2、配置文件" class="headerlink" title="&emsp;2、配置文件"></a>&emsp;2、配置文件</h5><p>&emsp;&emsp;&emsp;<strong>当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_history中。</strong></p>
+<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><pre class="line-numbers language-bash"><code class="language-bash">history:
+        -c: 清空历史命令；  
+        -d: 删除历史中的第N个命令；  
+         N: 显示最近的N条历史；  
+        -a: 追加本次会话新执行的命令至命令历史文件中<span class="token punctuation">;</span>  
+        -n: 读命令历史文件中未读过的行到历史列表；  
+        -r: 读命令历史文件附加到历史列表；  
+        -w: 保存历史列表到指定的命令历史文件中；  
+        -p: 展开历史参数成多行，但不存在历史列表中；  
+        -s: 展开历史参数成一行，附加在历史列表后；
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">Alt + .:    按住Alt键的同时点击 . 键
+Esc, . :    点击Esc键后松开，然后点击 . 键
+     !$:    表示
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><pre class="line-numbers language-dos"><code class="language-dos">                  !n:    执行history命令输出对应序列号n的命令；  
+                 !-n:    执行history历史中倒数第n个命令；  
+                 !:0:    执行前一条命令(去除参数);  
+            Ctrl + n:    显示当前历史中的下一条命令，但不执行；  
+            Ctrl + j:    执行当前命令；  
+             !string:    重复前一个以“string”开头的命令；  
+            !?string:    重复前一个包含string的命令；  
+           !string:p:    仅打印历史命令而不执行；  
+             ^string:    删除上一条命令中第一个string；  
+    ^string1^string2:    将上一条命令中的第一个string1替换为string2；  
+!:gs/string1/string2:    将上一条命令中所有的string1都替换为string2;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">command !^: 利用上一个命令的第一个参数做cmd的参数;  
+command !$: 利用上一个命令的最后一个参数做cmd的参数;  
+command !*: 利用上一个命令的全部参数做cmd的参数;  
+command !:n: 利用上一个命令的第n个参数做cmd的参数;  
+command !n:^: 调用第n条命令的第一个参数;  
+command !n:$: 调用第n条命令的最后一个参数;  
+command !n:m: 调用第n条命令的第m个参数;  
+command !n:*: 调用第n条命令的所有参数;  
+command !string:^: 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数;  
+command !string:$: 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;  
+command !string:n: 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;  
+command !string:*: 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h5><pre class="line-numbers language-dos"><code class="language-dos">HISTSIZE：命令历史记录的条数;  
+HISTFILE：指定历史文件，默认为~/.bash_history;  
+HISTFILESIZE：命令历史文件记录历史的条数;  
+HISTTIMEFORMAT="%F %T"：显示时间;  
+HISTIGNORE="str1:str2*:…"：忽略str1命令， str2开头的历史;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="五、控制命令历史的记录方式："><a href="#五、控制命令历史的记录方式：" class="headerlink" title="五、控制命令历史的记录方式："></a>五、控制命令历史的记录方式：</h5><p>&emsp;<strong>通过修改环境变量：HISTCONTROL的相关参数来控制历史命令的记录方式：</strong></p>
+<p>&emsp;&emsp;&emsp;<strong>HISTCONTROL相关参数：</strong></p>
+<pre class="line-numbers language-bash"><code class="language-bash">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  
+ignorespace:忽略所有以空白开头的命令  
+ignoreboth:相当于ignoredups, ignorespace的组合  
+erasedups:删除重复命令
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>&emsp;&emsp;&emsp;<strong>修改方式：</strong></p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#export HISCONTROL="参数"  </span>
+文件存放在 /etc/profile 或 ~/.bash_profile
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> 查看历史命令 </tag>
+            
+            <tag> history </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用Squid+Stunnel代理上网]]></title>
       <url>/2017/07/22/%E4%BD%BF%E7%94%A8Squid-Stunnel%E4%BB%A3%E7%90%86%E4%B8%8A%E7%BD%91/</url>
       <content type="html"><![CDATA[<h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
@@ -90,110 +167,6 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
         
     </entry>
     
-    <entry>
-      <title><![CDATA[Linux查看历史命令]]></title>
-      <url>/2017/07/20/Linux%E5%AE%89%E8%A3%85/</url>
-      <content type="html"><![CDATA[<h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><h5 id="emsp-1、说明："><a href="#emsp-1、说明：" class="headerlink" title="&emsp;1、说明："></a>&emsp;1、说明：</h5><p>&emsp;&emsp;&emsp;<strong>history是Shell的内置命令，用来查看以前执行过的命令。</strong>  </p>
-<h5 id="emsp-2、配置文件"><a href="#emsp-2、配置文件" class="headerlink" title="&emsp;2、配置文件"></a>&emsp;2、配置文件</h5><p>&emsp;&emsp;&emsp;<strong>当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_history中。</strong></p>
-<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><pre class="line-numbers language-bash"><code class="language-bash">history:
-        -c: 清空历史命令；  
-        -d: 删除历史中的第N个命令；  
-         N: 显示最近的N条历史；  
-        -a: 追加本次会话新执行的命令至命令历史文件中<span class="token punctuation">;</span>  
-        -n: 读命令历史文件中未读过的行到历史列表；  
-        -r: 读命令历史文件附加到历史列表；  
-        -w: 保存历史列表到指定的命令历史文件中；  
-        -p: 展开历史参数成多行，但不存在历史列表中；  
-        -s: 展开历史参数成一行，附加在历史列表后；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">Alt + .:    按住Alt键的同时点击 . 键
-Esc, . :    点击Esc键后松开，然后点击 . 键
-     !$:    表示
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><pre class="line-numbers language-dos"><code class="language-dos">                  !n:    执行history命令输出对应序列号n的命令；  
-                 !-n:    执行history历史中倒数第n个命令；  
-                 !:0:    执行前一条命令(去除参数);  
-            Ctrl + n:    显示当前历史中的下一条命令，但不执行；  
-            Ctrl + j:    执行当前命令；  
-             !string:    重复前一个以“string”开头的命令；  
-            !?string:    重复前一个包含string的命令；  
-           !string:p:    仅打印历史命令而不执行；  
-             ^string:    删除上一条命令中第一个string；  
-    ^string1^string2:    将上一条命令中的第一个string1替换为string2；  
-!:gs/string1/string2:    将上一条命令中所有的string1都替换为string2;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">command !^: 利用上一个命令的第一个参数做cmd的参数;  
-command !$: 利用上一个命令的最后一个参数做cmd的参数;  
-command !*: 利用上一个命令的全部参数做cmd的参数;  
-command !:n: 利用上一个命令的第n个参数做cmd的参数;  
-command !n:^: 调用第n条命令的第一个参数;  
-command !n:$: 调用第n条命令的最后一个参数;  
-command !n:m: 调用第n条命令的第m个参数;  
-command !n:*: 调用第n条命令的所有参数;  
-command !string:^: 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数;  
-command !string:$: 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;  
-command !string:n: 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;  
-command !string:*: 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h5><pre class="line-numbers language-dos"><code class="language-dos">HISTSIZE：命令历史记录的条数;  
-HISTFILE：指定历史文件，默认为~/.bash_history;  
-HISTFILESIZE：命令历史文件记录历史的条数;  
-HISTTIMEFORMAT="%F %T"：显示时间;  
-HISTIGNORE="str1:str2*:…"：忽略str1命令， str2开头的历史;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="五、控制命令历史的记录方式："><a href="#五、控制命令历史的记录方式：" class="headerlink" title="五、控制命令历史的记录方式："></a>五、控制命令历史的记录方式：</h5><p>&emsp;<strong>通过修改环境变量：HISTCONTROL的相关参数来控制历史命令的记录方式：</strong></p>
-<p>&emsp;&emsp;&emsp;<strong>HISTCONTROL相关参数：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  
-ignorespace:忽略所有以空白开头的命令  
-ignoreboth:相当于ignoredups, ignorespace的组合  
-erasedups:删除重复命令
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>&emsp;&emsp;&emsp;<strong>修改方式：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#export HISCONTROL="参数"  </span>
-文件存放在 /etc/profile 或 ~/.bash_profile
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-]]></content>
-      
-        <categories>
-            
-            <category> Linux </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Linux </tag>
-            
-            <tag> 查看历史命令 </tag>
-            
-            <tag> history </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hello World]]></title>
-      <url>/2017/07/19/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo server
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo generate
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo deploy
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-      
-        
-    </entry>
-    
   
   
     
@@ -207,19 +180,19 @@ erasedups:删除重复命令
 <p><strong>你的昵称：</strong><br><strong>  网&emsp;&emsp;址：</strong><br><strong> 一段简介：</strong> </p>
 </blockquote>
 <p>  <br>  </p>
-<h4 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h4><p>&emsp;这是某猫开发的Hexo的主题–Vateral<br>&emsp;powered by hexo &amp; Materialize<br>&emsp;基于material design<br>&emsp;兼容目前大部分设备，从电脑，到平板，再到手机<br>&emsp;某猫的<a href="https://www.moumaobuchiyu.com/" target="_blank" rel="external">Blog</a>&amp;<a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank" rel="external">Github</a></p>
+<h4 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h4><p>&emsp;这是某猫开发的Hexo的主题–Vateral<br>&emsp;powered by hexo &amp; Materialize<br>&emsp;基于material design<br>&emsp;兼容目前大部分设备，从电脑到平板，再到手机<br>&emsp;某猫的<a href="https://www.moumaobuchiyu.com/" target="_blank" rel="external">Blog</a>&amp;<a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank" rel="external">Github</a></p>
 ]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[friends]]></title>
-      <url>/friends/index.html</url>
-      <content type="html"></content>
     </entry>
     
     <entry>
       <title><![CDATA[photo]]></title>
       <url>/photo/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[friends]]></title>
+      <url>/friends/index.html</url>
       <content type="html"></content>
     </entry>
     
