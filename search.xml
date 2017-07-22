@@ -200,12 +200,15 @@ erasedups:删除重复命令
     <entry>
       <title><![CDATA[关于]]></title>
       <url>/about/index.html</url>
-      <content type="html"><![CDATA[<h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><h4 id="90后-金牛男"><a href="#90后-金牛男" class="headerlink" title="90后  金牛男"></a>90后  金牛男</h4><h3 id="现师从马哥，在学Linux"><a href="#现师从马哥，在学Linux" class="headerlink" title="现师从马哥，在学Linux"></a><a href="http://www.magedu.com/" target="_blank" rel="external">现师从马哥，在学Linux</a></h3><h3 id="如何联系我"><a href="#如何联系我" class="headerlink" title="如何联系我"></a><a href="http://www.wangbinzhou.com/" target="_blank" rel="external">如何联系我</a></h3><h5 id="QQ：2501228271"><a href="#QQ：2501228271" class="headerlink" title="QQ：2501228271"></a>QQ：2501228271</h5><h5 id="邮箱：2501228271-qq-com"><a href="#邮箱：2501228271-qq-com" class="headerlink" title="邮箱：2501228271@qq.com"></a>邮箱：2501228271@qq.com</h5><p>  <br></p>
-<h1 id="如何获取友链"><a href="#如何获取友链" class="headerlink" title="如何获取友链"></a>如何获取友链</h1><h5 id="私信我，或发邮件"><a href="#私信我，或发邮件" class="headerlink" title="私信我，或发邮件"></a>私信我，或发邮件</h5><h5 id="格式如下："><a href="#格式如下：" class="headerlink" title="格式如下："></a>格式如下：</h5><blockquote>
-<p><strong>你的昵称：</strong><br><strong>  网  址：</strong><br><strong> 一段简介：</strong> </p>
+      <content type="html"><![CDATA[<h4 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h4><h6 id="emsp-90后-金牛男"><a href="#emsp-90后-金牛男" class="headerlink" title="&emsp;90后  金牛男"></a>&emsp;90后  金牛男</h6><h6 id="emsp-现师从马哥，在学Linux"><a href="#emsp-现师从马哥，在学Linux" class="headerlink" title="&emsp;现师从马哥，在学Linux"></a>&emsp;<a href="http://www.magedu.com/" target="_blank" rel="external">现师从马哥，在学Linux</a></h6><h6 id="emsp-如何联系我"><a href="#emsp-如何联系我" class="headerlink" title="&emsp;如何联系我:"></a>&emsp;<a href="http://www.wangbinzhou.com/" target="_blank" rel="external">如何联系我:</a></h6><p>&emsp;QQ：2501228271<br>&emsp;邮箱：2501228271@qq.com</p>
+<p>  <br></p>
+<h4 id="如何获取友链"><a href="#如何获取友链" class="headerlink" title="如何获取友链"></a>如何获取友链</h4><p>&emsp;私信我，或发邮件<br>&emsp;格式如下：  </p>
+<blockquote>
+<p><strong>你的昵称：</strong><br><strong>  网&emsp;&emsp;址：</strong><br><strong> 一段简介：</strong> </p>
 </blockquote>
 <p>  <br>  </p>
-<h1 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h1><h5 id="这是某猫开发的Hexo的主题–Vateral"><a href="#这是某猫开发的Hexo的主题–Vateral" class="headerlink" title="这是某猫开发的Hexo的主题–Vateral"></a>这是某猫开发的Hexo的主题–Vateral</h5><h5 id="powered-by-hexo-amp-Materialize"><a href="#powered-by-hexo-amp-Materialize" class="headerlink" title="powered by hexo &amp; Materialize"></a>powered by hexo &amp; Materialize</h5><h5 id="基于material-design"><a href="#基于material-design" class="headerlink" title="基于material design"></a>基于material design</h5><h5 id="兼容目前大部分设备，从电脑，到平板，再到手机"><a href="#兼容目前大部分设备，从电脑，到平板，再到手机" class="headerlink" title="兼容目前大部分设备，从电脑，到平板，再到手机"></a>兼容目前大部分设备，从电脑，到平板，再到手机</h5><h5 id="某猫的Blog-amp-Github"><a href="#某猫的Blog-amp-Github" class="headerlink" title="某猫的Blog&amp;Github"></a>某猫的<a href="https://www.moumaobuchiyu.com/" target="_blank" rel="external">Blog</a>&amp;<a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank" rel="external">Github</a></h5>]]></content>
+<h4 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h4><p>&emsp;这是某猫开发的Hexo的主题–Vateral<br>&emsp;powered by hexo &amp; Materialize<br>&emsp;基于material design<br>&emsp;兼容目前大部分设备，从电脑，到平板，再到手机<br>&emsp;某猫的<a href="https://www.moumaobuchiyu.com/" target="_blank" rel="external">Blog</a>&amp;<a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank" rel="external">Github</a></p>
+]]></content>
     </entry>
     
     <entry>
