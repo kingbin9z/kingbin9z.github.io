@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="WangBinZhou" />
+
+
+
+<meta name="description" content="一、简介：&amp;emsp;&amp;emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。&amp;emsp;&amp;emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！ 二、安装环境及原理：&amp;">
+<meta name="keywords" content="Squid Stunnel 代理上网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Squid+Stunnel代理上网">
+<meta property="og:url" content="http://blog.wangbinzhou.com/2017/07/27/使用Squid-Stunnel代理上网/index.html">
+<meta property="og:site_name" content="WangBinZhou">
+<meta property="og:description" content="一、简介：&amp;emsp;&amp;emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。&amp;emsp;&amp;emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！ 二、安装环境及原理：&amp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-27T12:53:45.361Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Squid+Stunnel代理上网">
+<meta name="twitter:description" content="一、简介：&amp;emsp;&amp;emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。&amp;emsp;&amp;emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！ 二、安装环境及原理：&amp;">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="WangBinZhou" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>使用Squid+Stunnel代理上网 | WangBinZhou</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">WangBinZhou</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/随笔">随笔</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/2501228271@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2501228271" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux命令/">-Linux -Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid Stunnel 代理上网</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于Linux</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">WangBinZhou</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">WangBinZhou</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/随笔">随笔</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/2501228271@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2501228271" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-使用Squid-Stunnel代理上网" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/27/使用Squid-Stunnel代理上网/" class="article-date">
+      <time datetime="2017-07-27T12:51:43.000Z" itemprop="datePublished">2017-07-27</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用Squid+Stunnel代理上网
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid Stunnel 代理上网</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
+<h5 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h5><p>&emsp;&emsp;<strong>服务端：</strong>阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;<strong>软件：</strong>squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;<strong>客户端：</strong>stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;<strong>原理：</strong>当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
+<h5 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h5><h6 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y squid                   //yum安装Squid</span>
+<span class="token comment" spellcheck="true">#vim /etc/squid/squid.conf              //修改配置文件</span>
+    <span class="token comment" spellcheck="true"># And finally deny all other access to this proxy</span>
+    <span class="token comment" spellcheck="true">#http_access deny all               //注释掉该行</span>
+    http_access allow all               //复制上一行，将“deny”改为“allow”
+    <span class="token comment" spellcheck="true"># Squid normally listens to port 3128</span>
+    http_port 127.0.0.1:3128            //在端口前加入本地回环地址，只允许本地访问；
+</code></pre>
+<h6 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y stunnel     //yum安装Stunnel</span>
+</code></pre>
+<h6 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#cd /etc/stunnel</span>
+<span class="token comment" spellcheck="true">#openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem     //生成证书</span>
+Generating a 2048 bit RSA private key
+<span class="token punctuation">..</span><span class="token punctuation">..</span>.+++
+<span class="token punctuation">..</span><span class="token punctuation">..</span>+++
+writing new private key to <span class="token string">'stunnel.pem'</span>
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter <span class="token string">'.'</span>, the field will be left blank.
+-----
+Country Name <span class="token punctuation">(</span>2 letter code<span class="token punctuation">)</span> <span class="token punctuation">[</span>XX<span class="token punctuation">]</span>:CN                            //国家字母代码
+State or Province Name <span class="token punctuation">(</span>full name<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:BeiJing                   //省份
+Locality Name <span class="token punctuation">(</span>eg, city<span class="token punctuation">)</span> <span class="token punctuation">[</span>Default City<span class="token punctuation">]</span>:BeiJing                 //城市
+Organization Name <span class="token punctuation">(</span>eg, company<span class="token punctuation">)</span> <span class="token punctuation">[</span>Default Company Ltd<span class="token punctuation">]</span>:          //组织名称
+Organizational Unit Name <span class="token punctuation">(</span>eg, section<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:                      //组织单位名称
+Common Name <span class="token punctuation">(</span>eg, your name or your server's hostname<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:       //当前系统的主机名
+Email Address <span class="token punctuation">[</span><span class="token punctuation">]</span>:                                               //邮件地址
+</code></pre>
+<p>&emsp;结束后会在/etc/stunnel/目录下生成一个stunnel.pem的文件；</p>
+<h6 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span>
+client <span class="token operator">=</span> no
+cert <span class="token operator">=</span> /etc/stunnel/stunnel.pem     //配置加密代理证书
+CAfile <span class="token operator">=</span> /etc/stunnel/stunnel.pem
+<span class="token punctuation">[</span>https<span class="token punctuation">]</span>
+accept <span class="token operator">=</span> 34567                      //服务端口
+connect <span class="token operator">=</span> 127.0.0.1:3128            //指向本地的Squid服务端口
+</code></pre>
+<h6 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#systemctl start squid.service      //启动Squid；</span>
+<span class="token comment" spellcheck="true">#stunnel        //启动Stunnel；</span>
+<span class="token comment" spellcheck="true">#ss -tunlp      //检测端口判断服务是否启动；</span>
+Netid State      Recv-Q Send-Q       Local Address:Port        Peer Address:Port
+tcp   LISTEN     0      128              127.0.0.1:3128                   *:*           //squid服务            
+tcp   LISTEN     0      128                      *:34567                  *:*           //Stunnel服务
+</code></pre>
+<h6 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h6><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#firewall-cmd --zone=public --add-port=34567/tcp --permanent</span>
+</code></pre>
+<p>&emsp;在阿里云控制台里面添加端口映射后，在客户端上面测试是否能够正常访问Stunnel端口：</p>
+<pre class=" language-dos"><code class="language-dos">C:\Users\wang>telnet Service_IP 34567
+</code></pre>
+<p>&emsp;如果命令执行后没有报错，cmd.exe窗口显示的是一个黑屏，说明服务能够正常使用；</p>
+<h5 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h5><h6 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h6><h6 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h6><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:</p>
+<pre class=" language-dos"><code class="language-dos">client=yes
+[https]
+accept=127.0.0.1:8088       //在浏览器里面添加的代理地址和端口号；
+connect=Service_IP:34567      //对应服务器的IP和端口；
+</code></pre>
+<p>&emsp;&emsp;我使用的是Chrome浏览器，在里面添加了Proxy SwitchyOmega扩展程序，能够灵活的设置代理上网，也可以添加相应的匹配规则，让需要代理网址的走Stunnel访问，国内的网站正常（不走Stunnel）的访问；</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
+        <p><span>发布时间:</span>2017-07-27, 20:51:43</p>
+        <p><span>最后更新:</span>2017-07-27, 20:53:45</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/27/使用Squid-Stunnel代理上网/" title="使用Squid+Stunnel代理上网">http://blog.wangbinzhou.com/2017/07/27/使用Squid-Stunnel代理上网/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/07/27/使用Squid-Stunnel代理上网/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/07/27/Linux常用命令总结-9、正则表达式/">
+                    Linux常用命令总结-9、正则表达式
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#一、简介："><span class="toc-number">1.</span> <span class="toc-text">一、简介：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#二、安装环境及原理："><span class="toc-number">2.</span> <span class="toc-text">二、安装环境及原理：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#三、服务端配置："><span class="toc-number">3.</span> <span class="toc-text">三、服务端配置：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-1、服务端安装配置Squid："><span class="toc-number">3.1.</span> <span class="toc-text"> 1、服务端安装配置Squid：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-2、服务端安装Stunnel："><span class="toc-number">3.2.</span> <span class="toc-text"> 2、服务端安装Stunnel：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-3、生成加密代理证书："><span class="toc-number">3.3.</span> <span class="toc-text"> 3、生成加密代理证书：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-4、配置Stunnel："><span class="toc-number">3.4.</span> <span class="toc-text"> 4、配置Stunnel：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-5、启动服务并检查："><span class="toc-number">3.5.</span> <span class="toc-text"> 5、启动服务并检查：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-6、对公网开放34567端口；"><span class="toc-number">3.6.</span> <span class="toc-text"> 6、对公网开放34567端口；</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#四、客户端配置："><span class="toc-number">4.</span> <span class="toc-text">四、客户端配置：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-1、安装stunnel-exe客户端后直接运行；"><span class="toc-number">4.1.</span> <span class="toc-text"> 1、安装stunnel.exe客户端后直接运行；</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-2、配置Stunnel客户端："><span class="toc-number">4.2.</span> <span class="toc-text"> 2、配置Stunnel客户端：</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"使用Squid+Stunnel代理上网　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/07/27/Linux常用命令总结-9、正则表达式/" title="下一篇: Linux常用命令总结-9、正则表达式">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017 WangBinZhou
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

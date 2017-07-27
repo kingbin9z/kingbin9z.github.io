@@ -1,155 +1,327 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  
-  <meta name="keywords" content="网站关键字">
-  <meta name="description" content="网站简介">
-  
-  <title>WangBinZhou</title>
-  
-    <!-- stylesheets list from config.yml -->
-    
-      <link rel="stylesheet" href="/css/materialize.min.css">
-    
-      <link rel="stylesheet" href="/css/main.min.css">
-    
-  
-  <style type="text/css">
-      html{
-          font-family: sans-serif;
-          font-weight: 300;
-      }
-      @font-face {
-          font-family: 'Material Icons';
-          font-style: normal;
-          font-weight: 400;
-          src: url(/fonts/MaterialIcons-Regular.eot);
-          src: url(/fonts/MaterialIcons-Regular.woff2) format('woff2'),
-          url(/fonts/MaterialIcons-Regular.woff) format('woff'),
-          url(/fonts/MaterialIcons-Regular.ttf) format('truetype')
-      }
-  </style>
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="WangBinZhou" />
+
+
+
+<meta name="description" content="一、简介&amp;emsp;1、说明：&amp;emsp;&amp;emsp;&amp;emsp;history是Shell的内置命令，用来查看以前执行过的命令。   &amp;emsp;2、配置文件&amp;emsp;&amp;emsp;&amp;emsp;当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_histor">
+<meta name="keywords" content="Linux,Linux命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用命令总结-3、查看命令历史">
+<meta property="og:url" content="http://blog.wangbinzhou.com/2017/07/22/Linux常用命令总结-3、查看命令历史/index.html">
+<meta property="og:site_name" content="WangBinZhou">
+<meta property="og:description" content="一、简介&amp;emsp;1、说明：&amp;emsp;&amp;emsp;&amp;emsp;history是Shell的内置命令，用来查看以前执行过的命令。   &amp;emsp;2、配置文件&amp;emsp;&amp;emsp;&amp;emsp;当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_histor">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-25T05:46:31.091Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux常用命令总结-3、查看命令历史">
+<meta name="twitter:description" content="一、简介&amp;emsp;1、说明：&amp;emsp;&amp;emsp;&amp;emsp;history是Shell的内置命令，用来查看以前执行过的命令。   &amp;emsp;2、配置文件&amp;emsp;&amp;emsp;&amp;emsp;当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_histor">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="WangBinZhou" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Linux常用命令总结-3、查看命令历史 | WangBinZhou</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 <body>
-<div id="menu-box"><a href="javascript:void(0)" id="menu" data-activates="slide-out" class="button-collapse menu" ><span class="nav-btn"></span></a></div>
-<div id="menu-outer">
-  <div id="menu-inner">
-      <ul id="slide-out" class="side-nav" >
-    <div class="nav-header"  style="background-image: url(/images/header-bg.png);background-color:#26A69A">
-    <div class="header-box"><img src="/images/header.jpg" ondragstart="return false;"></div>
-    <p>WangBinZhou</p>
-    <div class="nav-link">
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">WangBinZhou</a></h1>
+        </hgroup>
+
         
-        <a href="http://example.com" target="_blank"> <div class="link-box twitter"></div></a>
+
         
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
         
-        <a  href="https://github.com/kingbin9z" target="_blank"><div class="link-box github"></div></a>
+
+
         
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
         
-        <a href="mailto:http://2501228271@qq.com"><div class="link-box email"></div></a>
-        
-        
-        <a href="http://example.com" target="_blank"><div class="link-box weibo"></div></a>
-        
-        
-        <a href="http://example.com" target="_blank"> <div class="link-box zhihu"></div></a>
-        
-    </div>
-    <div class="nav-search">
-        <form id="search-form"> <!-- 搜索框相关 -->
-            <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索..." class="search form-control" autocomplete="off" autocorrect="off"/>
-            <div class="nav-search-img"><i class="material-icons">search</i></div>
-        </form>
-        <div id="local-search-result"></div> <!-- 搜索结果区 -->
-        <p class='no-result'>无搜索结果</p>
-    </div>
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/随笔">随笔</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/2501228271@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2501228271" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux命令/">-Linux -Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid Stunnel 代理上网</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于Linux</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
 </div>
-    <!--Homepage-->
-
-<li class="nav-list">
-    <a href="/" target="_self">
-        <div class="nav-ico"><i class="material-icons">home</i> </div><p>主页</p>
-    </a>
-</li>
-
-<!--archives-->
-
-<li class="nav-list dropdown-btn">
-    <a  class=""  target="_self">
-        <div class="nav-ico"><i class="material-icons">assignment</i></div><p>归档</p><div class="dropdown-ico"><i class="material-icons">arrow_drop_down</i></div>
-    </a>
-</li>
-
-<ul class="dropdown-menu dropdown" >
-    <li class="nav-dropdown-list">
-        <a class="archive-link" href="/archives/2017/07/">七月 2017<span class="archive-count">11</span></a>
-    </li>
-</ul>
-<!--categories-->
-
-<li class="nav-list dropdown-btn">
-    <a   class=""  target="_self">
-        <div class="nav-ico"><i class="material-icons">dashboard</i></div><p>分类</p><div class="dropdown-ico"><i class="material-icons">arrow_drop_down</i></div>
-    </a>
-</li>
-
-<ul class="dropdown-menu dropdown" >
-    <li class="nav-dropdown-list">
-        <a class="category-link" href="/categories/Linux/">Linux<span class="category-count">1</span></a></li><li class="nav-dropdown-list"><a class="category-link" href="/categories/Linux常用命令/">Linux常用命令<span class="category-count">2</span></a></li><li class="nav-dropdown-list"><a class="category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结<span class="category-count">3</span></a>
-    </li>
-</ul>
-<!--tags-->
-
-<li class="nav-list">
-    <a href="/archives" target="_self">
-        <div class="nav-ico"><i class="material-icons">bookmark</i> </div><p>标签</p>
-    </a>
-</li>
-
-<!--photo-->
-
-<!--friends-->
-
-<li class="nav-list">
-    <a href="/friends" target="_self">
-        <div class="nav-ico"><i class="material-icons">face</i> </div><p>友链</p>
-    </a>
-</li>
-
-<!--about-->
-
-<li class="nav-list">
-    <a href="/about" target="_self">
-        <div class="nav-ico"><i class="material-icons">copyright</i> </div><p>关于</p>
-    </a>
-</li>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">WangBinZhou</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">WangBinZhou</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/随笔">随笔</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/2501228271@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2501228271" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Linux常用命令总结-3、查看命令历史" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/22/Linux常用命令总结-3、查看命令历史/" class="article-date">
+      <time datetime="2017-07-22T11:21:49.000Z" itemprop="datePublished">2017-07-22</time>
+</a>
 
 
-</ul>
-
-  </div>
-</div>
-
-<div id="content-outer">
-  <div id="content-inner">
+    </div>
+  
+  <div class="article-inner">
     
-<article id="post">
-  <div class="post-page-title"  style="background-color:#26A69A;background-image:url(/images/random/vateral-13.png)" >
-  <h2>Linux常用命令总结-3、查看命令历史</h2>
+      <input type="hidden" class="isFancy" />
     
-  <p>作者:WangBinZhou &nbsp&nbsp 发布于:<time datetime="2017-07-22T11:21:49.000Z">
-          2017-07-22
-    </time>
-  </p>
     
-  </div>
-  <div class="post-page-content">
-  <h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><h5 id="emsp-1、说明："><a href="#emsp-1、说明：" class="headerlink" title="&emsp;1、说明："></a>&emsp;1、说明：</h5><p>&emsp;&emsp;&emsp;<strong>history是Shell的内置命令，用来查看以前执行过的命令。</strong>  </p>
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux常用命令总结-3、查看命令历史
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><h5 id="emsp-1、说明："><a href="#emsp-1、说明：" class="headerlink" title="&emsp;1、说明："></a>&emsp;1、说明：</h5><p>&emsp;&emsp;&emsp;<strong>history是Shell的内置命令，用来查看以前执行过的命令。</strong>  </p>
 <h5 id="emsp-2、配置文件"><a href="#emsp-2、配置文件" class="headerlink" title="&emsp;2、配置文件"></a>&emsp;2、配置文件</h5><p>&emsp;&emsp;&emsp;<strong>当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_history中。</strong></p>
-<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><pre class="line-numbers language-bash"><code class="language-bash">history:
+<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><pre class=" language-bash"><code class="language-bash">history:
         -c: 清空历史命令；  
         -d: 删除历史中的第N个命令；  
          N: 显示最近的N条历史；  
@@ -159,12 +331,12 @@
         -w: 保存历史列表到指定的命令历史文件中；  
         -p: 展开历史参数成多行，但不存在历史列表中；  
         -s: 展开历史参数成一行，附加在历史列表后；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">Alt + .:    按住Alt键的同时点击 . 键
+</code></pre>
+<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><pre class=" language-dos"><code class="language-dos">Alt + .:    按住Alt键的同时点击 . 键
 Esc, . :    点击Esc键后松开，然后点击 . 键
      !$:    表示
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><pre class="line-numbers language-dos"><code class="language-dos">                  !n:    执行history命令输出对应序列号n的命令；  
+</code></pre>
+<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><pre class=" language-dos"><code class="language-dos">                  !n:    执行history命令输出对应序列号n的命令；  
                  !-n:    执行history历史中倒数第n个命令；  
                  !:0:    执行前一条命令(去除参数);  
             Ctrl + n:    显示当前历史中的下一条命令，但不执行；  
@@ -175,8 +347,8 @@ Esc, . :    点击Esc键后松开，然后点击 . 键
              ^string:    删除上一条命令中第一个string；  
     ^string1^string2:    将上一条命令中的第一个string1替换为string2；  
 !:gs/string1/string2:    将上一条命令中所有的string1都替换为string2;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">command !^: 利用上一个命令的第一个参数做cmd的参数;  
+</code></pre>
+<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><pre class=" language-dos"><code class="language-dos">command !^: 利用上一个命令的第一个参数做cmd的参数;  
 command !$: 利用上一个命令的最后一个参数做cmd的参数;  
 command !*: 利用上一个命令的全部参数做cmd的参数;  
 command !:n: 利用上一个命令的第n个参数做cmd的参数;  
@@ -188,123 +360,244 @@ command !string:^: 从命令历史中搜索以 string 开头的命令，并获�
 command !string:$: 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;  
 command !string:n: 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;  
 command !string:*: 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h5><pre class="line-numbers language-dos"><code class="language-dos">HISTSIZE：命令历史记录的条数;  
+</code></pre>
+<h5 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h5><pre class=" language-dos"><code class="language-dos">HISTSIZE：命令历史记录的条数;  
 HISTFILE：指定历史文件，默认为~/.bash_history;  
 HISTFILESIZE：命令历史文件记录历史的条数;  
 HISTTIMEFORMAT="%F %T"：显示时间;  
 HISTIGNORE="str1:str2*:…"：忽略str1命令， str2开头的历史;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h5 id="五、控制命令历史的记录方式："><a href="#五、控制命令历史的记录方式：" class="headerlink" title="五、控制命令历史的记录方式："></a>五、控制命令历史的记录方式：</h5><p>&emsp;<strong>通过修改环境变量：HISTCONTROL的相关参数来控制历史命令的记录方式：</strong></p>
 <p>&emsp;&emsp;&emsp;<strong>HISTCONTROL相关参数：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  
+<pre class=" language-bash"><code class="language-bash">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  
 ignorespace:忽略所有以空白开头的命令  
 ignoreboth:相当于ignoredups, ignorespace的组合  
 erasedups:删除重复命令
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>&emsp;&emsp;&emsp;<strong>修改方式：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#export HISCONTROL="参数"  </span>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#export HISCONTROL="参数"  </span>
 文件存放在 /etc/profile 或 ~/.bash_profile
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</code></pre>
 
-  </div>
-  <!--评论块-->
+      
+    </div>
     
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
+        <p><span>发布时间:</span>2017-07-22, 19:21:49</p>
+        <p><span>最后更新:</span>2017-07-25, 13:46:31</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/" title="Linux常用命令总结-3、查看命令历史">http://blog.wangbinzhou.com/2017/07/22/Linux常用命令总结-3、查看命令历史/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/07/22/Linux常用命令总结-3、查看命令历史/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/07/25/Linux常用命令总结-目录/">
+                    Linux常用命令总结-目录
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
 </article>
-<nav class="post-nav">
-  <!-- Prev Nav -->
-    
-  <a href="/2017/07/25/Linux常用命令总结-目录/" id="post_nav-newer" class="post-nav-content prev-content">
-      新篇
-  </a>
-    
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、简介"><span class="toc-number">1.</span> <span class="toc-text">一、简介</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#emsp-1、说明："><span class="toc-number">1.1.</span> <span class="toc-text"> 1、说明：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#emsp-2、配置文件"><span class="toc-number">1.2.</span> <span class="toc-text"> 2、配置文件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、相关参数"><span class="toc-number">2.</span> <span class="toc-text">二、相关参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、history的常用快捷方式"><span class="toc-number">3.</span> <span class="toc-text">三、history的常用快捷方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#emsp-1-重复前一个命令的4个方法："><span class="toc-number">3.1.</span> <span class="toc-text"> 1. 重复前一个命令的4个方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-emsp-emsp-按↑键并回车执行"><span class="toc-number">3.1.1.</span> <span class="toc-text">   按↑键并回车执行;</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-emsp-emsp-按-并执行回车；"><span class="toc-number">3.1.2.</span> <span class="toc-text">   按 !!并执行回车；</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-emsp-emsp-输入-1并执行回车"><span class="toc-number">3.1.3.</span> <span class="toc-text">   输入!-1并执行回车;</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-emsp-emsp-按Ctrl-P并执行回车；"><span class="toc-number">3.1.4.</span> <span class="toc-text">   按Ctrl+P并执行回车；</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#emsp-2-在命令历史中搜索命令："><span class="toc-number">3.2.</span> <span class="toc-text"> 2. 在命令历史中搜索命令：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><span class="toc-number">3.2.1.</span> <span class="toc-text">   Ctrl + r : 在命令历史中搜索命令；</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><span class="toc-number">3.2.2.</span> <span class="toc-text">   Ctrl + g : 从命令历史搜索模式中退出；</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#emsp-3-要重新调用前一个命令中最后一个参数："><span class="toc-number">3.3.</span> <span class="toc-text"> 3. 要重新调用前一个命令中最后一个参数：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#emsp-4-其他命令历史快捷方式"><span class="toc-number">3.4.</span> <span class="toc-text"> 4. 其他命令历史快捷方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#emsp-5-调用历史参数："><span class="toc-number">3.5.</span> <span class="toc-text"> 5. 调用历史参数：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#四、命令历史相关环节变量："><span class="toc-number">3.6.</span> <span class="toc-text">四、命令历史相关环节变量：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#五、控制命令历史的记录方式："><span class="toc-number">3.7.</span> <span class="toc-text">五、控制命令历史的记录方式：</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
-  <!-- Next Nav -->
+
     
-  <a href="/2017/07/22/使用Squid-Stunnel代理上网/" id="post_nav-older" class="post-nav-content next-content">
-      旧篇
-  </a>
+<div class="share">
     
-</nav>
-<div class="post-toc-btn"><i class="material-icons">format_list_numbered</i></div>
-<div class="post-toc-none"><p>(无)</p></div>
-<div class="post-toc-box">
-    <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-1、说明："><span class="post-toc-number">1.1.</span> <span class="post-toc-text"> 1、说明：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-2、配置文件"><span class="post-toc-number">1.2.</span> <span class="post-toc-text"> 2、配置文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、相关参数"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、相关参数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、history的常用快捷方式"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、history的常用快捷方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-1-重复前一个命令的4个方法："><span class="post-toc-number">3.1.</span> <span class="post-toc-text"> 1. 重复前一个命令的4个方法：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-按↑键并回车执行"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">   按↑键并回车执行;</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-按-并执行回车；"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">   按 !!并执行回车；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-输入-1并执行回车"><span class="post-toc-number">3.1.3.</span> <span class="post-toc-text">   输入!-1并执行回车;</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-按Ctrl-P并执行回车；"><span class="post-toc-number">3.1.4.</span> <span class="post-toc-text">   按Ctrl+P并执行回车；</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-2-在命令历史中搜索命令："><span class="post-toc-number">3.2.</span> <span class="post-toc-text"> 2. 在命令历史中搜索命令：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">   Ctrl + r : 在命令历史中搜索命令；</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">   Ctrl + g : 从命令历史搜索模式中退出；</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-3-要重新调用前一个命令中最后一个参数："><span class="post-toc-number">3.3.</span> <span class="post-toc-text"> 3. 要重新调用前一个命令中最后一个参数：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-4-其他命令历史快捷方式"><span class="post-toc-number">3.4.</span> <span class="post-toc-text"> 4. 其他命令历史快捷方式</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#emsp-5-调用历史参数："><span class="post-toc-number">3.5.</span> <span class="post-toc-text"> 5. 调用历史参数：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#四、命令历史相关环节变量："><span class="post-toc-number">3.6.</span> <span class="post-toc-text">四、命令历史相关环节变量：</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#五、控制命令历史的记录方式："><span class="post-toc-number">3.7.</span> <span class="post-toc-text">五、控制命令历史的记录方式：</span></a></li></ol></li></ol>
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Linux常用命令总结-3、查看命令历史　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
 </div>
-<!--<div class="post-back"><i class="material-icons">arrow_back</i></div>-->
-<script type="text/javascript">
-    menu();
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/07/25/Linux常用命令总结-目录/" title="上一篇: Linux常用命令总结-目录">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017 WangBinZhou
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
   </div>
-</div>
-<div id="bottom-outer">
-  <div id="bottom-inner">
-    <a  id="top-button" onfocus="this.blur();"><div class="up upinbody" style="background-color:#26A69A"><i class="material-icons material-up">vertical_align_top</i></div></a>
-
-
-<p >Copyright ©  2017  WangBinZhou</p>
-<p >Powered by <a href="https://hexo.io/" target="_blank"> Hexo </a> & Theme - <a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank">Vateral</a></p>
-<p style="font-size: 10px" id="footer-times" data-time="7/19/2017 00:00:00"></p>
-<script>
-    var beginTime=document.getElementById("footer-times").dataset.time
-    function show_date_time(){
-        var span=document.getElementById("footer-times")
-        window.setTimeout("show_date_time()", 1000);
-        BirthDay=new Date(beginTime);//初始日期
-        today=new Date();
-        timeold=(today.getTime()-BirthDay.getTime());
-        sectimeold=timeold/1000
-        secondsold=Math.floor(sectimeold);
-        msPerDay=24*60*60*1000
-        e_daysold=timeold/msPerDay
-        daysold=Math.floor(e_daysold);
-        e_hrsold=(e_daysold-daysold)*24;
-        hrsold=Math.floor(e_hrsold);
-        e_minsold=(e_hrsold-hrsold)*60;
-        minsold=Math.floor((e_hrsold-hrsold)*60);
-        seconds=Math.floor((e_minsold-minsold)*60);
-        span.innerHTML="本站已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
-    }
-    show_date_time();
-</script>
-
-  </div>
-</div>
-
-<!--影集界面需要的资源-->
-
-
-
-<!-- scripts list from theme config.yml -->
-
-<script src="/js/jquery-3.1.1.min.js"></script>
-
-<script src="/js/materialize.min.js"></script>
-
-<script src="/js/main.min.js"></script>
-
-
-<script>
-    NProgress.start();
-    NProgress.done();
-    lazy();
-    links();
-    window.onpopstate = menu();
-    //pjax操作
-    $(document).pjax('a:not(.nopjax)', '#content-inner', {fragment:'#content-inner', timeout:8000});
-    $(document).on('pjax:start', NProgress.start).on('pjax:end', NProgress.done)
-        .on('pjax:end', () => {
-            dowmdiv();
-            lazy();
-            toc();
-            links();
-            menu();
-        });
-</script>
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
 </body>
 </html>

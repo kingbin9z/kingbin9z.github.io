@@ -3,13 +3,91 @@
   
     
     <entry>
+      <title><![CDATA[使用Squid+Stunnel代理上网]]></title>
+      <url>/2017/07/27/%E4%BD%BF%E7%94%A8Squid-Stunnel%E4%BB%A3%E7%90%86%E4%B8%8A%E7%BD%91/</url>
+      <content type="html"><![CDATA[<h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
+<h5 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h5><p>&emsp;&emsp;<strong>服务端：</strong>阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;<strong>软件：</strong>squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;<strong>客户端：</strong>stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;<strong>原理：</strong>当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
+<h5 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h5><h6 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y squid                   //yum安装Squid</span>
+<span class="token comment" spellcheck="true">#vim /etc/squid/squid.conf              //修改配置文件</span>
+    <span class="token comment" spellcheck="true"># And finally deny all other access to this proxy</span>
+    <span class="token comment" spellcheck="true">#http_access deny all               //注释掉该行</span>
+    http_access allow all               //复制上一行，将“deny”改为“allow”
+    <span class="token comment" spellcheck="true"># Squid normally listens to port 3128</span>
+    http_port 127.0.0.1:3128            //在端口前加入本地回环地址，只允许本地访问；
+</code></pre>
+<h6 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y stunnel     //yum安装Stunnel</span>
+</code></pre>
+<h6 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#cd /etc/stunnel</span>
+<span class="token comment" spellcheck="true">#openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem     //生成证书</span>
+Generating a 2048 bit RSA private key
+<span class="token punctuation">..</span><span class="token punctuation">..</span>.+++
+<span class="token punctuation">..</span><span class="token punctuation">..</span>+++
+writing new private key to <span class="token string">'stunnel.pem'</span>
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter <span class="token string">'.'</span>, the field will be left blank.
+-----
+Country Name <span class="token punctuation">(</span>2 letter code<span class="token punctuation">)</span> <span class="token punctuation">[</span>XX<span class="token punctuation">]</span>:CN                            //国家字母代码
+State or Province Name <span class="token punctuation">(</span>full name<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:BeiJing                   //省份
+Locality Name <span class="token punctuation">(</span>eg, city<span class="token punctuation">)</span> <span class="token punctuation">[</span>Default City<span class="token punctuation">]</span>:BeiJing                 //城市
+Organization Name <span class="token punctuation">(</span>eg, company<span class="token punctuation">)</span> <span class="token punctuation">[</span>Default Company Ltd<span class="token punctuation">]</span>:          //组织名称
+Organizational Unit Name <span class="token punctuation">(</span>eg, section<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:                      //组织单位名称
+Common Name <span class="token punctuation">(</span>eg, your name or your server's hostname<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:       //当前系统的主机名
+Email Address <span class="token punctuation">[</span><span class="token punctuation">]</span>:                                               //邮件地址
+</code></pre>
+<p>&emsp;结束后会在/etc/stunnel/目录下生成一个stunnel.pem的文件；</p>
+<h6 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span>
+client <span class="token operator">=</span> no
+cert <span class="token operator">=</span> /etc/stunnel/stunnel.pem     //配置加密代理证书
+CAfile <span class="token operator">=</span> /etc/stunnel/stunnel.pem
+<span class="token punctuation">[</span>https<span class="token punctuation">]</span>
+accept <span class="token operator">=</span> 34567                      //服务端口
+connect <span class="token operator">=</span> 127.0.0.1:3128            //指向本地的Squid服务端口
+</code></pre>
+<h6 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h6><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#systemctl start squid.service      //启动Squid；</span>
+<span class="token comment" spellcheck="true">#stunnel        //启动Stunnel；</span>
+<span class="token comment" spellcheck="true">#ss -tunlp      //检测端口判断服务是否启动；</span>
+Netid State      Recv-Q Send-Q       Local Address:Port        Peer Address:Port
+tcp   LISTEN     0      128              127.0.0.1:3128                   *:*           //squid服务            
+tcp   LISTEN     0      128                      *:34567                  *:*           //Stunnel服务
+</code></pre>
+<h6 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h6><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#firewall-cmd --zone=public --add-port=34567/tcp --permanent</span>
+</code></pre>
+<p>&emsp;在阿里云控制台里面添加端口映射后，在客户端上面测试是否能够正常访问Stunnel端口：</p>
+<pre class=" language-dos"><code class="language-dos">C:\Users\wang>telnet Service_IP 34567
+</code></pre>
+<p>&emsp;如果命令执行后没有报错，cmd.exe窗口显示的是一个黑屏，说明服务能够正常使用；</p>
+<h5 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h5><h6 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h6><h6 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h6><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:</p>
+<pre class=" language-dos"><code class="language-dos">client=yes
+[https]
+accept=127.0.0.1:8088       //在浏览器里面添加的代理地址和端口号；
+connect=Service_IP:34567      //对应服务器的IP和端口；
+</code></pre>
+<p>&emsp;&emsp;我使用的是Chrome浏览器，在里面添加了Proxy SwitchyOmega扩展程序，能够灵活的设置代理上网，也可以添加相应的匹配规则，让需要代理网址的走Stunnel访问，国内的网站正常（不走Stunnel）的访问；</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Squid Stunnel 代理上网 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Linux常用命令总结-9、正则表达式]]></title>
       <url>/2017/07/27/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-9%E3%80%81%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;<strong>正则表达式（REGEXP）</strong>是一类字符所书写的模式，其中很多字符不表示其字面意义，而是表达控制或通配等功能。通常被用来检索、替换那些符合某个规则的文本。  </p>
 <h4 id="程序支持"><a href="#程序支持" class="headerlink" title="程序支持"></a>程序支持</h4><p>&emsp;&emsp;<em>Grep,Sed,Awk,Vim, Less,Nginx,Varnish等;</em>  </p>
 <h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><p>&emsp;&emsp;基本正则表达式：BRE<br>&emsp;&emsp;扩展正则表达式：ERE  </p>
 <h4 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h4><p>&emsp;&emsp;不表示其字面意义，而用于额外功能性描述；<br>&emsp;&emsp;<strong>元字符分类:</strong>字符匹配、匹配次数、位置锚定，分组；  </p>
-<h5 id="基本正则表达式的元字符："><a href="#基本正则表达式的元字符：" class="headerlink" title="基本正则表达式的元字符："></a>基本正则表达式的元字符：</h5><h6 id="字符匹配："><a href="#字符匹配：" class="headerlink" title="字符匹配："></a>字符匹配：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">.</span> 匹配任意单个字符
+<h5 id="基本正则表达式的元字符："><a href="#基本正则表达式的元字符：" class="headerlink" title="基本正则表达式的元字符："></a>基本正则表达式的元字符：</h5><h6 id="字符匹配："><a href="#字符匹配：" class="headerlink" title="字符匹配："></a>字符匹配：</h6><pre class=" language-bash"><code class="language-bash"><span class="token keyword">.</span> 匹配任意单个字符
 <span class="token punctuation">[</span><span class="token punctuation">]</span> 匹配指定范围内的任意单个字符
 <span class="token punctuation">[</span>^<span class="token punctuation">]</span> 匹配指定范围外的任意单个字符
 <span class="token punctuation">[</span>0-9<span class="token punctuation">]</span>,<span class="token punctuation">[</span>:digit:<span class="token punctuation">]</span> 十进制数字 
@@ -24,9 +102,9 @@
 <span class="token punctuation">[</span>:graph:<span class="token punctuation">]</span> 可打印的非空白字符
 <span class="token punctuation">[</span>:print:<span class="token punctuation">]</span> 可打印字符
 <span class="token punctuation">[</span>:punct:<span class="token punctuation">]</span> 标点符号
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h6 id="匹配次数："><a href="#匹配次数：" class="headerlink" title="匹配次数："></a>匹配次数：</h6><p>&emsp;&emsp;<strong>作用:</strong> 用于实现指定其前面的字符所能够出现的次数.  </p>
-<pre class="line-numbers language-bash"><code class="language-bash">* 匹配前面的字符任意次，包括0次<span class="token punctuation">(</span>贪婪模式：尽可能长的匹配<span class="token punctuation">)</span>
+<pre class=" language-bash"><code class="language-bash">* 匹配前面的字符任意次，包括0次<span class="token punctuation">(</span>贪婪模式：尽可能长的匹配<span class="token punctuation">)</span>
 .* 任意长度的任意字符
 \? 匹配其前面的字符0或1次
 \+ 匹配其前面的字符至少1次
@@ -34,9 +112,9 @@
 \<span class="token punctuation">{</span>m,n\<span class="token punctuation">}</span> 匹配前面的字符至少m次，至多n次
 \<span class="token punctuation">{</span>,n\<span class="token punctuation">}</span> 匹配前面的字符至多n次
 \<span class="token punctuation">{</span>n,\<span class="token punctuation">}</span> 匹配前面的字符至少n次
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h6 id="位置锚定："><a href="#位置锚定：" class="headerlink" title="位置锚定："></a>位置锚定：</h6><p>&emsp;&emsp;<strong>作用:</strong> 定位出现的位置；</p>
-<pre class="line-numbers language-bash"><code class="language-bash">^ 行首锚定，写在模式的最左侧
+<pre class=" language-bash"><code class="language-bash">^ 行首锚定，写在模式的最左侧
 $ 行尾锚定，写在模式的最右侧
 ^PATTERN$ 用于模式匹配整行
 ^$ 空行
@@ -44,42 +122,42 @@ $ 行尾锚定，写在模式的最右侧
 \<span class="token operator">&lt;</span> 或 \b 词首锚定，用于单词模式的左侧   
 \<span class="token operator">></span> 或 \b 词尾锚定；用于单词模式的右侧
 \<span class="token operator">&lt;</span>PATTERN\<span class="token operator">></span> 匹配整个单词
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <blockquote>
 <p>Note:不包含特殊字符的连续字符组成的串叫单词：</p>
 </blockquote>
 <h6 id="分组："><a href="#分组：" class="headerlink" title="分组："></a>分组：</h6><p>&emsp;&emsp;<code>\(\)</code>将一个或多个字符捆绑在一起，当作一个整体进行处理.<br>&emsp;&emsp;<strong>如：</strong><code>\(root\)\+</code></p>
 <p>&emsp;&emsp;分组括号中的模式匹配到的内容会被正则表达式引擎记录于内部的变量中,这些变量的命名方式为: <code>\1, \2, \3, ...</code><br>&emsp;&emsp;<code>\1</code> 表示从左侧起第一个左括号以及与之匹配右括号之间的模式所匹配到的字符<br><strong>示例：</strong>   </p>
-<pre class="line-numbers language-bash"><code class="language-bash">\<span class="token punctuation">(</span>string1\+\<span class="token punctuation">(</span>string2\<span class="token punctuation">)</span>*\<span class="token punctuation">)</span>
+<pre class=" language-bash"><code class="language-bash">\<span class="token punctuation">(</span>string1\+\<span class="token punctuation">(</span>string2\<span class="token punctuation">)</span>*\<span class="token punctuation">)</span>
 \1 ： string1\+\<span class="token punctuation">(</span>string2\<span class="token punctuation">)</span>*
 \2 ： string2
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>&emsp;&emsp;<strong>后向引用：</strong>引用前面的分组括号中的模式所匹配字符，而非模式本身.  </p>
 <h6 id="或者："><a href="#或者：" class="headerlink" title="或者：\\|"></a>或者：<code>\\|</code></h6><p>&emsp;&emsp;示例： </p>
-<pre class="line-numbers language-bash"><code class="language-bash">a\<span class="token operator">|</span>b: a或b C\<span class="token operator">|</span>cat: C或cat \<span class="token punctuation">(</span>C\<span class="token operator">|</span>c\<span class="token punctuation">)</span>at:Cat或cat
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h5 id="扩展正则表达式的元字符："><a href="#扩展正则表达式的元字符：" class="headerlink" title="扩展正则表达式的元字符："></a>扩展正则表达式的元字符：</h5><h6 id="字符匹配：-1"><a href="#字符匹配：-1" class="headerlink" title="字符匹配："></a>字符匹配：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">.</span> 任意单个字符
+<pre class=" language-bash"><code class="language-bash">a\<span class="token operator">|</span>b: a或b C\<span class="token operator">|</span>cat: C或cat \<span class="token punctuation">(</span>C\<span class="token operator">|</span>c\<span class="token punctuation">)</span>at:Cat或cat
+</code></pre>
+<h5 id="扩展正则表达式的元字符："><a href="#扩展正则表达式的元字符：" class="headerlink" title="扩展正则表达式的元字符："></a>扩展正则表达式的元字符：</h5><h6 id="字符匹配：-1"><a href="#字符匹配：-1" class="headerlink" title="字符匹配："></a>字符匹配：</h6><pre class=" language-bash"><code class="language-bash"><span class="token keyword">.</span> 任意单个字符
 <span class="token punctuation">[</span><span class="token punctuation">]</span> 指定范围的字符
 <span class="token punctuation">[</span>^<span class="token punctuation">]</span> 不在指定范围的字符
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h6 id="次数匹配："><a href="#次数匹配：" class="headerlink" title="次数匹配："></a>次数匹配：</h6><pre class="line-numbers language-bash"><code class="language-bash">*：匹配前面字符任意次
+</code></pre>
+<h6 id="次数匹配："><a href="#次数匹配：" class="headerlink" title="次数匹配："></a>次数匹配：</h6><pre class=" language-bash"><code class="language-bash">*：匹配前面字符任意次
 ?: 0或1次
 +： 1次或多次
 <span class="token punctuation">{</span>m<span class="token punctuation">}</span>：匹配m次
 <span class="token punctuation">{</span>m,n<span class="token punctuation">}</span>：至少m，至多n次
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h6 id="位置锚定：-1"><a href="#位置锚定：-1" class="headerlink" title="位置锚定："></a>位置锚定：</h6><pre class="line-numbers language-bash"><code class="language-bash">^ :行首
+</code></pre>
+<h6 id="位置锚定：-1"><a href="#位置锚定：-1" class="headerlink" title="位置锚定："></a>位置锚定：</h6><pre class=" language-bash"><code class="language-bash">^ :行首
 $ :行尾
 \<span class="token operator">&lt;</span>, \b :语首
 \<span class="token operator">></span>, \b :语尾
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h6 id="分组：-1"><a href="#分组：-1" class="headerlink" title="分组："></a>分组：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<h6 id="分组：-1"><a href="#分组：-1" class="headerlink" title="分组："></a>分组：</h6><pre class=" language-bash"><code class="language-bash"><span class="token punctuation">(</span><span class="token punctuation">)</span>
 后向引用： \1, \2, <span class="token punctuation">..</span>.
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h6 id="或者：-1"><a href="#或者：-1" class="headerlink" title="或者："></a>或者：</h6><pre class="line-numbers language-bash"><code class="language-bash">a<span class="token operator">|</span>b: a或b
+</code></pre>
+<h6 id="或者：-1"><a href="#或者：-1" class="headerlink" title="或者："></a>或者：</h6><pre class=" language-bash"><code class="language-bash">a<span class="token operator">|</span>b: a或b
 C<span class="token operator">|</span>cat: C或cat
 <span class="token punctuation">(</span>C<span class="token operator">|</span>c<span class="token punctuation">)</span>at:Cat或cat
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 ]]></content>
       
         <categories>
@@ -156,37 +234,37 @@ C<span class="token operator">|</span>cat: C或cat
       <url>/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-1%E3%80%81%E7%BA%BF%E4%B8%8A%E6%9F%A5%E8%AF%A2%E5%8F%8A%E5%B8%AE%E5%8A%A9%E5%91%BD%E4%BB%A4/</url>
       <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;Linux命令分为<strong>内部命令</strong>和<strong>外部命令</strong>；<br>&emsp;&emsp;<strong>内部命令：</strong> 由shell自带的命令。在系统启动时就调入内存，是常驻内存的，所以执行效率高。<br>&emsp;&emsp;<strong>外部命令：</strong> 由系统的软件提供的命令；，用户需要时才从硬盘中读入内存；  </p>
 <h4 id="判断一个命令是否为内部命令：type"><a href="#判断一个命令是否为内部命令：type" class="headerlink" title="判断一个命令是否为内部命令：type"></a>判断一个命令是否为内部命令：type</h4><p>&emsp;&emsp;<strong>常见用法：</strong>  </p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">type</span> COMMAND
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">type</span> COMMAND
+</code></pre>
 <h4 id="显示内部命令列表：help"><a href="#显示内部命令列表：help" class="headerlink" title="显示内部命令列表：help"></a>显示内部命令列表：help</h4><p>&emsp;&emsp;<strong>常见用法：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#help</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#help</span>
+</code></pre>
 <h4 id="列出内部命令列表：enable"><a href="#列出内部命令列表：enable" class="headerlink" title="列出内部命令列表：enable"></a>列出内部命令列表：enable</h4><p>&emsp;&emsp;<strong>常见用法：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">enable</span> COMMAND: 启用内部命令；
+<pre class=" language-bash"><code class="language-bash"><span class="token function">enable</span> COMMAND: 启用内部命令；
         -n COMMAND: 禁用某个命令；
         -n：查看被禁用的所有内部命令；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h4 id="hash缓存表："><a href="#hash缓存表：" class="headerlink" title="hash缓存表："></a>hash缓存表：</h4><p>&emsp;&emsp;系统初始hash表为空，当外部命令执行时，默认会从PATH路径下寻找该命令，找到后会将这条命令的路径记录到hash表中，当再次使用该命令时， shell解释器首先会查看hash表，存在将执行之，如果不存在，将会去PATH路径下寻找。利用hash缓存表可大大提高命令的调用速率。<br>&emsp;&emsp;<strong>常见用法：</strong>  </p>
-<pre class="line-numbers language-bash"><code class="language-bash">hash: 显示hash缓存
+<pre class=" language-bash"><code class="language-bash">hash: 显示hash缓存
 <span class="token function">hash</span> –l: 显示hash缓存，可作为输入使用
 <span class="token function">hash</span> –p path name: 将命令全路径path起别名为name
 <span class="token function">hash</span> –t name: 打印缓存中name的路径
 <span class="token function">hash</span> –d name: 清除name缓存
 <span class="token function">hash</span> –r: 清除缓存
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h4 id="使用命令帮助：man"><a href="#使用命令帮助：man" class="headerlink" title="使用命令帮助：man"></a>使用命令帮助：man</h4><p>&emsp;&emsp;手册存放在<code>/usr/share/man</code>里，几乎每个命令都有man的“页面”;<br>&emsp;&emsp;<strong>配置文件：</strong>  </p>
-<pre class="line-numbers language-bash"><code class="language-bash">/etc/man.config <span class="token operator">|</span> man_db.conf
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class=" language-bash"><code class="language-bash">/etc/man.config <span class="token operator">|</span> man_db.conf
+</code></pre>
 <p>&emsp;&emsp;<strong>常用选项：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">man</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span> COMMAND
+<pre class=" language-bash"><code class="language-bash"><span class="token function">man</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span> COMMAND
     -M：到指定位置下搜索COMMAND命令的手册页并显示；
     -a：列出所有帮助；
     -k：列出所有匹配的页面，使用whatis数据库；
     -f：相当于whatis；
     -w：打印man帮助的文件路径；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>&emsp;&emsp;<strong>man命令的操作方法：使用less命令实现</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash">space,^v,^f，^F: 向文件尾部翻屏；
+<pre class=" language-bash"><code class="language-bash">space,^v,^f，^F: 向文件尾部翻屏；
 b,^b: 向文首部翻屏；
 d,^d: 向文件尾部翻半屏；
 u，^u: 向文件首部翻半屏；
@@ -196,13 +274,13 @@ q: 退出
 <span class="token comment" spellcheck="true">#：跳转至第#行</span>
 1G: 回到文件首部
 G：翻至文件尾部
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>&emsp;&emsp;<strong>使用man搜索：</strong><br>&emsp;&emsp;&emsp;<strong>/KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp; &emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件尾部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：上一个</strong><br>&emsp;&emsp;&emsp;<strong>?KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp;&emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件首部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 跟搜索命令同方向，下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：跟搜索命令反方向，上一个</strong>  </p>
 <h4 id="info-适合通用文档参考"><a href="#info-适合通用文档参考" class="headerlink" title="info: 适合通用文档参考:"></a>info: 适合通用文档参考:</h4><p>&emsp;&emsp;<strong>使用方法：</strong>  </p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#info COMMAND</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#info COMMAND</span>
+</code></pre>
 <p>&emsp;&emsp;没有参数，列出所有的页面；页面结构就想一个网站，每一页分为“节点”，链接节点之前*  </p>
-<pre class="line-numbers language-bash"><code class="language-bash">方向键: PgUp， PgDn 导航  
+<pre class=" language-bash"><code class="language-bash">方向键: PgUp， PgDn 导航  
 Tab键: 移动到下一个链接  
 d: 显示主题目录  
 Home: 显示主题首部  
@@ -210,33 +288,33 @@ Enter: 进入选定链接
 n/p/u/l: 进入下/前/上一层/最后一个链接  
 s: 文字 文本搜索  
 q: 退出 info
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h4 id="查看命令或文件的的路径-whereis"><a href="#查看命令或文件的的路径-whereis" class="headerlink" title="查看命令或文件的的路径: whereis"></a>查看命令或文件的的路径: whereis</h4><p>&emsp;&emsp;显示命令的简短描述；(需要使用数据库，刚安装后不可立即使用)<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;makewhatis | mandb 制作数据库<br>&emsp;&emsp;&emsp;&emsp;<strong>使用示例：</strong> </p>
-<pre class="line-numbers language-bash"><code class="language-bash">whatis <span class="token function">cal</span> 
+<pre class=" language-bash"><code class="language-bash">whatis <span class="token function">cal</span> 
     或 
 <span class="token function">man</span> -f <span class="token function">cal</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h4 id="查看外部命令的路径which："><a href="#查看外部命令的路径which：" class="headerlink" title="查看外部命令的路径which："></a>查看外部命令的路径which：</h4><p>&emsp;&emsp;查看可执行程序文件的路径<br>&emsp;&emsp;<strong>常用选项：</strong> </p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">which</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span><span class="token punctuation">..</span>.COMMAND
+<pre class=" language-bash"><code class="language-bash"><span class="token function">which</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span><span class="token punctuation">..</span>.COMMAND
         -a: 查看全部
         --skip-alias：忽略别名
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h4 id="命令别名：alias"><a href="#命令别名：alias" class="headerlink" title="命令别名：alias"></a>命令别名：alias</h4><p>&emsp;&emsp;<strong>使用示例：</strong>  </p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">alias</span> NAME<span class="token operator">=</span><span class="token string">'VALUE'</span>   //定义别名NAME,其相当于执行命令VALUE:  
+<pre class=" language-bash"><code class="language-bash"><span class="token function">alias</span> NAME<span class="token operator">=</span><span class="token string">'VALUE'</span>   //定义别名NAME,其相当于执行命令VALUE:  
 alias：显示当前shell进程所有可用的命令别名；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</code></pre>
 <blockquote>
 <p><strong>Note:</strong> 在命令行中定义的别名，仅对当前shell进程有效，如果想永久有效，要定义在配置文件中：<br>&emsp;&emsp;&emsp;&emsp;<strong>仅对当前用户：</strong>~/.bashrc<br>&emsp;&emsp;&emsp;&emsp;<strong>对所有用户有效：</strong>/etc/bashrc<br>&emsp;&emsp;&emsp;编辑配置给出的新配置不会立即生效，需要使用source重新读取配置文件；</p>
 </blockquote>
 <h4 id="撤销命令别名：-unalias"><a href="#撤销命令别名：-unalias" class="headerlink" title="撤销命令别名：    unalias"></a>撤销命令别名：    unalias</h4><p>&emsp;&emsp;<strong>使用示例：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">unalias</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span> NAME
+<pre class=" language-bash"><code class="language-bash"><span class="token function">unalias</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span> NAME
         -a：取消所有别名；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</code></pre>
 <p>&emsp;&emsp;<strong>如果别名同原命令同名，如果要执行原命令，可以使用：</strong>  </p>
-<pre class="line-numbers language-bash"><code class="language-bash">\COMMAND
+<pre class=" language-bash"><code class="language-bash">\COMMAND
 <span class="token string">'COMMAND'</span>
 /PATH/COMMAND:外部命令
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 ]]></content>
       
         <categories>
@@ -279,7 +357,7 @@ alias：显示当前shell进程所有可用的命令别名；
       <url>/2017/07/22/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-3%E3%80%81%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E5%8E%86%E5%8F%B2/</url>
       <content type="html"><![CDATA[<h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><h5 id="emsp-1、说明："><a href="#emsp-1、说明：" class="headerlink" title="&emsp;1、说明："></a>&emsp;1、说明：</h5><p>&emsp;&emsp;&emsp;<strong>history是Shell的内置命令，用来查看以前执行过的命令。</strong>  </p>
 <h5 id="emsp-2、配置文件"><a href="#emsp-2、配置文件" class="headerlink" title="&emsp;2、配置文件"></a>&emsp;2、配置文件</h5><p>&emsp;&emsp;&emsp;<strong>当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_history中。</strong></p>
-<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><pre class="line-numbers language-bash"><code class="language-bash">history:
+<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><pre class=" language-bash"><code class="language-bash">history:
         -c: 清空历史命令；  
         -d: 删除历史中的第N个命令；  
          N: 显示最近的N条历史；  
@@ -289,12 +367,12 @@ alias：显示当前shell进程所有可用的命令别名；
         -w: 保存历史列表到指定的命令历史文件中；  
         -p: 展开历史参数成多行，但不存在历史列表中；  
         -s: 展开历史参数成一行，附加在历史列表后；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">Alt + .:    按住Alt键的同时点击 . 键
+</code></pre>
+<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><pre class=" language-dos"><code class="language-dos">Alt + .:    按住Alt键的同时点击 . 键
 Esc, . :    点击Esc键后松开，然后点击 . 键
      !$:    表示
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><pre class="line-numbers language-dos"><code class="language-dos">                  !n:    执行history命令输出对应序列号n的命令；  
+</code></pre>
+<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><pre class=" language-dos"><code class="language-dos">                  !n:    执行history命令输出对应序列号n的命令；  
                  !-n:    执行history历史中倒数第n个命令；  
                  !:0:    执行前一条命令(去除参数);  
             Ctrl + n:    显示当前历史中的下一条命令，但不执行；  
@@ -305,8 +383,8 @@ Esc, . :    点击Esc键后松开，然后点击 . 键
              ^string:    删除上一条命令中第一个string；  
     ^string1^string2:    将上一条命令中的第一个string1替换为string2；  
 !:gs/string1/string2:    将上一条命令中所有的string1都替换为string2;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><pre class="line-numbers language-dos"><code class="language-dos">command !^: 利用上一个命令的第一个参数做cmd的参数;  
+</code></pre>
+<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><pre class=" language-dos"><code class="language-dos">command !^: 利用上一个命令的第一个参数做cmd的参数;  
 command !$: 利用上一个命令的最后一个参数做cmd的参数;  
 command !*: 利用上一个命令的全部参数做cmd的参数;  
 command !:n: 利用上一个命令的第n个参数做cmd的参数;  
@@ -318,24 +396,24 @@ command !string:^: 从命令历史中搜索以 string 开头的命令，并获�
 command !string:$: 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;  
 command !string:n: 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;  
 command !string:*: 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h5><pre class="line-numbers language-dos"><code class="language-dos">HISTSIZE：命令历史记录的条数;  
+</code></pre>
+<h5 id="四、命令历史相关环节变量："><a href="#四、命令历史相关环节变量：" class="headerlink" title="四、命令历史相关环节变量："></a>四、命令历史相关环节变量：</h5><pre class=" language-dos"><code class="language-dos">HISTSIZE：命令历史记录的条数;  
 HISTFILE：指定历史文件，默认为~/.bash_history;  
 HISTFILESIZE：命令历史文件记录历史的条数;  
 HISTTIMEFORMAT="%F %T"：显示时间;  
 HISTIGNORE="str1:str2*:…"：忽略str1命令， str2开头的历史;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h5 id="五、控制命令历史的记录方式："><a href="#五、控制命令历史的记录方式：" class="headerlink" title="五、控制命令历史的记录方式："></a>五、控制命令历史的记录方式：</h5><p>&emsp;<strong>通过修改环境变量：HISTCONTROL的相关参数来控制历史命令的记录方式：</strong></p>
 <p>&emsp;&emsp;&emsp;<strong>HISTCONTROL相关参数：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  
+<pre class=" language-bash"><code class="language-bash">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  
 ignorespace:忽略所有以空白开头的命令  
 ignoreboth:相当于ignoredups, ignorespace的组合  
 erasedups:删除重复命令
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>&emsp;&emsp;&emsp;<strong>修改方式：</strong></p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#export HISCONTROL="参数"  </span>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#export HISCONTROL="参数"  </span>
 文件存放在 /etc/profile 或 ~/.bash_profile
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</code></pre>
 ]]></content>
       
         <categories>
@@ -355,122 +433,6 @@ erasedups:删除重复命令
         
     </entry>
     
-    <entry>
-      <title><![CDATA[使用Squid+Stunnel代理上网]]></title>
-      <url>/2017/07/22/%E4%BD%BF%E7%94%A8Squid-Stunnel%E4%BB%A3%E7%90%86%E4%B8%8A%E7%BD%91/</url>
-      <content type="html"><![CDATA[<h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
-<h5 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h5><p>&emsp;&emsp;<strong>服务端：</strong>阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;<strong>软件：</strong>squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;<strong>客户端：</strong>stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;<strong>原理：</strong>当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
-<h5 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h5><h6 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y squid                   //yum安装Squid</span>
-<span class="token comment" spellcheck="true">#vim /etc/squid/squid.conf              //修改配置文件</span>
-    <span class="token comment" spellcheck="true"># And finally deny all other access to this proxy</span>
-    <span class="token comment" spellcheck="true">#http_access deny all               //注释掉该行</span>
-    http_access allow all               //复制上一行，将“deny”改为“allow”
-    <span class="token comment" spellcheck="true"># Squid normally listens to port 3128</span>
-    http_port 127.0.0.1:3128            //在端口前加入本地回环地址，只允许本地访问；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h6 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#yum install -y stunnel     //yum安装Stunnel</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h6 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#cd /etc/stunnel</span>
-<span class="token comment" spellcheck="true">#openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem     //生成证书</span>
-Generating a 2048 bit RSA private key
-<span class="token punctuation">..</span><span class="token punctuation">..</span>.+++
-<span class="token punctuation">..</span><span class="token punctuation">..</span>+++
-writing new private key to <span class="token string">'stunnel.pem'</span>
------
-You are about to be asked to enter information that will be incorporated
-into your certificate request.
-What you are about to enter is what is called a Distinguished Name or a DN.
-There are quite a few fields but you can leave some blank
-For some fields there will be a default value,
-If you enter <span class="token string">'.'</span>, the field will be left blank.
------
-Country Name <span class="token punctuation">(</span>2 letter code<span class="token punctuation">)</span> <span class="token punctuation">[</span>XX<span class="token punctuation">]</span>:CN                            //国家字母代码
-State or Province Name <span class="token punctuation">(</span>full name<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:BeiJing                   //省份
-Locality Name <span class="token punctuation">(</span>eg, city<span class="token punctuation">)</span> <span class="token punctuation">[</span>Default City<span class="token punctuation">]</span>:BeiJing                 //城市
-Organization Name <span class="token punctuation">(</span>eg, company<span class="token punctuation">)</span> <span class="token punctuation">[</span>Default Company Ltd<span class="token punctuation">]</span>:          //组织名称
-Organizational Unit Name <span class="token punctuation">(</span>eg, section<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:                      //组织单位名称
-Common Name <span class="token punctuation">(</span>eg, your name or your server's hostname<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>:       //当前系统的主机名
-Email Address <span class="token punctuation">[</span><span class="token punctuation">]</span>:                                               //邮件地址
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>&emsp;结束后会在/etc/stunnel/目录下生成一个stunnel.pem的文件；</p>
-<h6 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span>
-client <span class="token operator">=</span> no
-cert <span class="token operator">=</span> /etc/stunnel/stunnel.pem     //配置加密代理证书
-CAfile <span class="token operator">=</span> /etc/stunnel/stunnel.pem
-<span class="token punctuation">[</span>https<span class="token punctuation">]</span>
-accept <span class="token operator">=</span> 34567                      //服务端口
-connect <span class="token operator">=</span> 127.0.0.1:3128            //指向本地的Squid服务端口
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h6 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#systemctl start squid.service      //启动Squid；</span>
-<span class="token comment" spellcheck="true">#stunnel        //启动Stunnel；</span>
-<span class="token comment" spellcheck="true">#ss -tunlp      //检测端口判断服务是否启动；</span>
-Netid State      Recv-Q Send-Q       Local Address:Port        Peer Address:Port
-tcp   LISTEN     0      128              127.0.0.1:3128                   *:*           //squid服务            
-tcp   LISTEN     0      128                      *:34567                  *:*           //Stunnel服务
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h6 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h6><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#firewall-cmd --zone=public --add-port=34567/tcp --permanent</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>&emsp;在阿里云控制台里面添加端口映射后，在客户端上面测试是否能够正常访问Stunnel端口：</p>
-<pre class="line-numbers language-dos"><code class="language-dos">C:\Users\wang>telnet Service_IP 34567
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>&emsp;如果命令执行后没有报错，cmd.exe窗口显示的是一个黑屏，说明服务能够正常使用；</p>
-<h5 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h5><h6 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h6><h6 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h6><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:</p>
-<pre class="line-numbers language-dos"><code class="language-dos">client=yes
-[https]
-accept=127.0.0.1:8088       //在浏览器里面添加的代理地址和端口号；
-connect=Service_IP:34567      //对应服务器的IP和端口；
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>&emsp;&emsp;我使用的是Chrome浏览器，在里面添加了Proxy SwitchyOmega扩展程序，能够灵活的设置代理上网，也可以添加相应的匹配规则，让需要代理网址的走Stunnel访问，国内的网站正常（不走Stunnel）的访问；</p>
-]]></content>
-      
-        <categories>
-            
-            <category> Linux </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Linux </tag>
-            
-            <tag> Squid </tag>
-            
-            <tag> Stunnel </tag>
-            
-        </tags>
-        
-    </entry>
-    
   
-  
-    
-    <entry>
-      <title><![CDATA[friends]]></title>
-      <url>/friends/index.html</url>
-      <content type="html"></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[关于]]></title>
-      <url>/about/index.html</url>
-      <content type="html"><![CDATA[<h4 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h4><h6 id="emsp-90后-金牛男"><a href="#emsp-90后-金牛男" class="headerlink" title="&emsp;90后  金牛男"></a>&emsp;90后  金牛男</h6><h6 id="emsp-现师从马哥，在学Linux"><a href="#emsp-现师从马哥，在学Linux" class="headerlink" title="&emsp;现师从马哥，在学Linux"></a>&emsp;<a href="http://www.magedu.com/" target="_blank" rel="external">现师从马哥，在学Linux</a></h6><h6 id="emsp-如何联系我"><a href="#emsp-如何联系我" class="headerlink" title="&emsp;如何联系我:"></a>&emsp;<a href="http://www.wangbinzhou.com/" target="_blank" rel="external">如何联系我:</a></h6><p>&emsp;QQ：2501228271<br>&emsp;邮箱：2501228271@qq.com</p>
-<p>  <br></p>
-<h4 id="如何获取友链"><a href="#如何获取友链" class="headerlink" title="如何获取友链"></a>如何获取友链</h4><p>&emsp;私信我，或发邮件<br>&emsp;格式如下：  </p>
-<blockquote>
-<p><strong>你的昵称：</strong><br><strong>  网&emsp;&emsp;址：</strong><br><strong> 一段简介：</strong> </p>
-</blockquote>
-<p>  <br>  </p>
-<h4 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h4><p>&emsp;这是某猫开发的Hexo的主题–Vateral<br>&emsp;powered by hexo &amp; Materialize<br>&emsp;基于material design<br>&emsp;兼容目前大部分设备，从电脑到平板，再到手机<br>&emsp;某猫的<a href="https://www.moumaobuchiyu.com/" target="_blank" rel="external">Blog</a>&amp;<a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank" rel="external">Github</a></p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[photo]]></title>
-      <url>/photo/index.html</url>
-      <content type="html"></content>
-    </entry>
-    
   
 </search>
