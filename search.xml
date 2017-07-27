@@ -3,6 +3,103 @@
   
     
     <entry>
+      <title><![CDATA[Linux常用命令总结-9、正则表达式]]></title>
+      <url>/2017/07/27/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-9%E3%80%81%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;<strong>正则表达式（REGEXP）</strong>是一类字符所书写的模式，其中很多字符不表示其字面意义，而是表达控制或通配等功能。通常被用来检索、替换那些符合某个规则的文本。  </p>
+<h4 id="程序支持"><a href="#程序支持" class="headerlink" title="程序支持"></a>程序支持</h4><p>&emsp;&emsp;<em>Grep,Sed,Awk,Vim, Less,Nginx,Varnish等;</em>  </p>
+<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><p>&emsp;&emsp;基本正则表达式：BRE<br>&emsp;&emsp;扩展正则表达式：ERE  </p>
+<h4 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h4><p>&emsp;&emsp;不表示其字面意义，而用于额外功能性描述；<br>&emsp;&emsp;<strong>元字符分类:</strong>字符匹配、匹配次数、位置锚定，分组；  </p>
+<h5 id="基本正则表达式的元字符："><a href="#基本正则表达式的元字符：" class="headerlink" title="基本正则表达式的元字符："></a>基本正则表达式的元字符：</h5><h6 id="字符匹配："><a href="#字符匹配：" class="headerlink" title="字符匹配："></a>字符匹配：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">.</span> 匹配任意单个字符
+<span class="token punctuation">[</span><span class="token punctuation">]</span> 匹配指定范围内的任意单个字符
+<span class="token punctuation">[</span>^<span class="token punctuation">]</span> 匹配指定范围外的任意单个字符
+<span class="token punctuation">[</span>0-9<span class="token punctuation">]</span>,<span class="token punctuation">[</span>:digit:<span class="token punctuation">]</span> 十进制数字 
+<span class="token punctuation">[</span>a-z<span class="token punctuation">]</span>,<span class="token punctuation">[</span>:lower:<span class="token punctuation">]</span> 小写字母
+<span class="token punctuation">[</span>A-Z<span class="token punctuation">]</span>,<span class="token punctuation">[</span>:upper:<span class="token punctuation">]</span> 大写字母
+<span class="token punctuation">[</span>:alpha:<span class="token punctuation">]</span> 代表任何英文大小写字符，亦即 A-Z, a-z
+<span class="token punctuation">[</span>:alnum:<span class="token punctuation">]</span> 字母和数字
+<span class="token punctuation">[</span>:space:<span class="token punctuation">]</span> 水平和垂直的空白字符（比<span class="token punctuation">[</span>:blank:<span class="token punctuation">]</span>包含的范围广）
+<span class="token punctuation">[</span>:blank:<span class="token punctuation">]</span> 空白字符（空格和制表符）
+<span class="token punctuation">[</span>:cntrl:<span class="token punctuation">]</span> 不可打印的控制字符（退格、删除、警铃<span class="token punctuation">..</span>.）
+<span class="token punctuation">[</span>:xdigit:<span class="token punctuation">]</span>十六进制数字
+<span class="token punctuation">[</span>:graph:<span class="token punctuation">]</span> 可打印的非空白字符
+<span class="token punctuation">[</span>:print:<span class="token punctuation">]</span> 可打印字符
+<span class="token punctuation">[</span>:punct:<span class="token punctuation">]</span> 标点符号
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h6 id="匹配次数："><a href="#匹配次数：" class="headerlink" title="匹配次数："></a>匹配次数：</h6><p>&emsp;&emsp;<strong>作用:</strong> 用于实现指定其前面的字符所能够出现的次数.  </p>
+<pre class="line-numbers language-bash"><code class="language-bash">* 匹配前面的字符任意次，包括0次<span class="token punctuation">(</span>贪婪模式：尽可能长的匹配<span class="token punctuation">)</span>
+.* 任意长度的任意字符
+\? 匹配其前面的字符0或1次
+\+ 匹配其前面的字符至少1次
+\<span class="token punctuation">{</span>n\<span class="token punctuation">}</span> 匹配前面的字符n次
+\<span class="token punctuation">{</span>m,n\<span class="token punctuation">}</span> 匹配前面的字符至少m次，至多n次
+\<span class="token punctuation">{</span>,n\<span class="token punctuation">}</span> 匹配前面的字符至多n次
+\<span class="token punctuation">{</span>n,\<span class="token punctuation">}</span> 匹配前面的字符至少n次
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h6 id="位置锚定："><a href="#位置锚定：" class="headerlink" title="位置锚定："></a>位置锚定：</h6><p>&emsp;&emsp;<strong>作用:</strong> 定位出现的位置；</p>
+<pre class="line-numbers language-bash"><code class="language-bash">^ 行首锚定，写在模式的最左侧
+$ 行尾锚定，写在模式的最右侧
+^PATTERN$ 用于模式匹配整行
+^$ 空行
+^<span class="token punctuation">[</span><span class="token punctuation">[</span>:space:<span class="token punctuation">]</span><span class="token punctuation">]</span>*$ 空白行
+\<span class="token operator">&lt;</span> 或 \b 词首锚定，用于单词模式的左侧   
+\<span class="token operator">></span> 或 \b 词尾锚定；用于单词模式的右侧
+\<span class="token operator">&lt;</span>PATTERN\<span class="token operator">></span> 匹配整个单词
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>Note:不包含特殊字符的连续字符组成的串叫单词：</p>
+</blockquote>
+<h6 id="分组："><a href="#分组：" class="headerlink" title="分组："></a>分组：</h6><p>&emsp;&emsp;<code>\(\)</code>将一个或多个字符捆绑在一起，当作一个整体进行处理.<br>&emsp;&emsp;<strong>如：</strong><code>\(root\)\+</code></p>
+<p>&emsp;&emsp;分组括号中的模式匹配到的内容会被正则表达式引擎记录于内部的变量中,这些变量的命名方式为: <code>\1, \2, \3, ...</code><br>&emsp;&emsp;<code>\1</code> 表示从左侧起第一个左括号以及与之匹配右括号之间的模式所匹配到的字符<br><strong>示例：</strong>   </p>
+<pre class="line-numbers language-bash"><code class="language-bash">\<span class="token punctuation">(</span>string1\+\<span class="token punctuation">(</span>string2\<span class="token punctuation">)</span>*\<span class="token punctuation">)</span>
+\1 ： string1\+\<span class="token punctuation">(</span>string2\<span class="token punctuation">)</span>*
+\2 ： string2
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>&emsp;&emsp;<strong>后向引用：</strong>引用前面的分组括号中的模式所匹配字符，而非模式本身.  </p>
+<p>&emsp;&emsp;<strong>或者：</strong><code>\\|</code><br>&emsp;&emsp;&emsp;&emsp;示例： </p>
+<pre class="line-numbers language-bash"><code class="language-bash">a\<span class="token operator">|</span>b: a或b C\<span class="token operator">|</span>cat: C或cat \<span class="token punctuation">(</span>C\<span class="token operator">|</span>c\<span class="token punctuation">)</span>at:Cat或cat
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="扩展正则表达式的元字符："><a href="#扩展正则表达式的元字符：" class="headerlink" title="扩展正则表达式的元字符："></a>扩展正则表达式的元字符：</h5><p>######字符匹配：  </p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">.</span> 任意单个字符
+<span class="token punctuation">[</span><span class="token punctuation">]</span> 指定范围的字符
+<span class="token punctuation">[</span>^<span class="token punctuation">]</span> 不在指定范围的字符
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h6 id="次数匹配："><a href="#次数匹配：" class="headerlink" title="次数匹配："></a>次数匹配：</h6><pre class="line-numbers language-bash"><code class="language-bash">*：匹配前面字符任意次
+?: 0或1次
++： 1次或多次
+<span class="token punctuation">{</span>m<span class="token punctuation">}</span>：匹配m次
+<span class="token punctuation">{</span>m,n<span class="token punctuation">}</span>：至少m，至多n次
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h6 id="位置锚定：-1"><a href="#位置锚定：-1" class="headerlink" title="位置锚定："></a>位置锚定：</h6><pre class="line-numbers language-bash"><code class="language-bash">^ :行首
+$ :行尾
+\<span class="token operator">&lt;</span>, \b :语首
+\<span class="token operator">></span>, \b :语尾
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>######分组：  </p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">(</span><span class="token punctuation">)</span>
+后向引用： \1, \2, <span class="token punctuation">..</span>.
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h6 id="或者："><a href="#或者：" class="headerlink" title="或者："></a>或者：</h6><pre class="line-numbers language-bash"><code class="language-bash">a<span class="token operator">|</span>b: a或b
+C<span class="token operator">|</span>cat: C或cat
+<span class="token punctuation">(</span>C<span class="token operator">|</span>c<span class="token punctuation">)</span>at:Cat或cat
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> Linux常用命令 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> -Linux -Linux命令 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Linux常用命令总结-8、vim文本编辑器]]></title>
       <url>/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-8%E3%80%81vim%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/</url>
       <content type="html"></content>
@@ -102,9 +199,7 @@ q: 退出
 1G: 回到文件首部
 G：翻至文件尾部
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>&emsp;&emsp;<strong>使用man搜索：</strong><br>&emsp;&emsp;&emsp;<strong>/KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp; &emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件尾部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：上一个</strong><br>&emsp;&emsp;&emsp;<strong>?KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp;&emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件首部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 跟搜索命令同方向，下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：跟搜索命令反方向，上一个</strong> </p>
-</blockquote>
+<p>&emsp;&emsp;<strong>使用man搜索：</strong><br>&emsp;&emsp;&emsp;<strong>/KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp; &emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件尾部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：上一个</strong><br>&emsp;&emsp;&emsp;<strong>?KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp;&emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件首部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 跟搜索命令同方向，下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：跟搜索命令反方向，上一个</strong>  </p>
 <h4 id="info-适合通用文档参考"><a href="#info-适合通用文档参考" class="headerlink" title="info: 适合通用文档参考:"></a>info: 适合通用文档参考:</h4><p>&emsp;&emsp;<strong>使用方法：</strong>  </p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#info COMMAND</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -118,7 +213,7 @@ n/p/u/l: 进入下/前/上一层/最后一个链接
 s: 文字 文本搜索  
 q: 退出 info
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="查看命令或文件的的路径-whereis"><a href="#查看命令或文件的的路径-whereis" class="headerlink" title="查看命令或文件的的路径: whereis"></a>查看命令或文件的的路径: whereis</h4><p>&emsp;&emsp;显示命令的简短描述；(需要使用数据库，刚安装后不可立即使用)<br>&emsp;&emsp;&emsp;&emsp;&emsp;makewhatis | mandb 制作数据库<br>&emsp;&emsp;<strong>使用示例：</strong> </p>
+<h4 id="查看命令或文件的的路径-whereis"><a href="#查看命令或文件的的路径-whereis" class="headerlink" title="查看命令或文件的的路径: whereis"></a>查看命令或文件的的路径: whereis</h4><p>&emsp;&emsp;显示命令的简短描述；(需要使用数据库，刚安装后不可立即使用)<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;makewhatis | mandb 制作数据库<br>&emsp;&emsp;&emsp;&emsp;<strong>使用示例：</strong> </p>
 <pre class="line-numbers language-bash"><code class="language-bash">whatis <span class="token function">cal</span> 
     或 
 <span class="token function">man</span> -f <span class="token function">cal</span>
@@ -148,7 +243,7 @@ alias：显示当前shell进程所有可用的命令别名；
       
         <categories>
             
-            <category> Linux常用命令总结 </category>
+            <category> Linux常用命令 </category>
             
         </categories>
         
@@ -354,12 +449,6 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
   
     
     <entry>
-      <title><![CDATA[friends]]></title>
-      <url>/friends/index.html</url>
-      <content type="html"></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[关于]]></title>
       <url>/about/index.html</url>
       <content type="html"><![CDATA[<h4 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h4><h6 id="emsp-90后-金牛男"><a href="#emsp-90后-金牛男" class="headerlink" title="&emsp;90后  金牛男"></a>&emsp;90后  金牛男</h6><h6 id="emsp-现师从马哥，在学Linux"><a href="#emsp-现师从马哥，在学Linux" class="headerlink" title="&emsp;现师从马哥，在学Linux"></a>&emsp;<a href="http://www.magedu.com/" target="_blank" rel="external">现师从马哥，在学Linux</a></h6><h6 id="emsp-如何联系我"><a href="#emsp-如何联系我" class="headerlink" title="&emsp;如何联系我:"></a>&emsp;<a href="http://www.wangbinzhou.com/" target="_blank" rel="external">如何联系我:</a></h6><p>&emsp;QQ：2501228271<br>&emsp;邮箱：2501228271@qq.com</p>
@@ -371,6 +460,12 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
 <p>  <br>  </p>
 <h4 id="关于主题"><a href="#关于主题" class="headerlink" title="关于主题"></a>关于主题</h4><p>&emsp;这是某猫开发的Hexo的主题–Vateral<br>&emsp;powered by hexo &amp; Materialize<br>&emsp;基于material design<br>&emsp;兼容目前大部分设备，从电脑到平板，再到手机<br>&emsp;某猫的<a href="https://www.moumaobuchiyu.com/" target="_blank" rel="external">Blog</a>&amp;<a href="https://github.com/moumao/hexo-theme-Vateral" target="_blank" rel="external">Github</a></p>
 ]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[friends]]></title>
+      <url>/friends/index.html</url>
+      <content type="html"></content>
     </entry>
     
     <entry>
