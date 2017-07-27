@@ -55,7 +55,7 @@ $ 行尾锚定，写在模式的最右侧
 \2 ： string2
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>&emsp;&emsp;<strong>后向引用：</strong>引用前面的分组括号中的模式所匹配字符，而非模式本身.  </p>
-<p>&emsp;&emsp;<strong>或者：</strong><code>\\|</code><br>&emsp;&emsp;&emsp;&emsp;示例： </p>
+<h6 id="或者："><a href="#或者：" class="headerlink" title="或者：\\|"></a>或者：<code>\\|</code></h6><p>&emsp;&emsp;示例： </p>
 <pre class="line-numbers language-bash"><code class="language-bash">a\<span class="token operator">|</span>b: a或b C\<span class="token operator">|</span>cat: C或cat \<span class="token punctuation">(</span>C\<span class="token operator">|</span>c\<span class="token punctuation">)</span>at:Cat或cat
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h5 id="扩展正则表达式的元字符："><a href="#扩展正则表达式的元字符：" class="headerlink" title="扩展正则表达式的元字符："></a>扩展正则表达式的元字符：</h5><h6 id="字符匹配：-1"><a href="#字符匹配：-1" class="headerlink" title="字符匹配："></a>字符匹配：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">.</span> 任意单个字符
@@ -76,7 +76,7 @@ $ :行尾
 <h6 id="分组：-1"><a href="#分组：-1" class="headerlink" title="分组："></a>分组：</h6><pre class="line-numbers language-bash"><code class="language-bash"><span class="token punctuation">(</span><span class="token punctuation">)</span>
 后向引用： \1, \2, <span class="token punctuation">..</span>.
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h6 id="或者："><a href="#或者：" class="headerlink" title="或者："></a>或者：</h6><pre class="line-numbers language-bash"><code class="language-bash">a<span class="token operator">|</span>b: a或b
+<h6 id="或者：-1"><a href="#或者：-1" class="headerlink" title="或者："></a>或者：</h6><pre class="line-numbers language-bash"><code class="language-bash">a<span class="token operator">|</span>b: a或b
 C<span class="token operator">|</span>cat: C或cat
 <span class="token punctuation">(</span>C<span class="token operator">|</span>c<span class="token punctuation">)</span>at:Cat或cat
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -447,6 +447,12 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
   
     
     <entry>
+      <title><![CDATA[friends]]></title>
+      <url>/friends/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[关于]]></title>
       <url>/about/index.html</url>
       <content type="html"><![CDATA[<h4 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h4><h6 id="emsp-90后-金牛男"><a href="#emsp-90后-金牛男" class="headerlink" title="&emsp;90后  金牛男"></a>&emsp;90后  金牛男</h6><h6 id="emsp-现师从马哥，在学Linux"><a href="#emsp-现师从马哥，在学Linux" class="headerlink" title="&emsp;现师从马哥，在学Linux"></a>&emsp;<a href="http://www.magedu.com/" target="_blank" rel="external">现师从马哥，在学Linux</a></h6><h6 id="emsp-如何联系我"><a href="#emsp-如何联系我" class="headerlink" title="&emsp;如何联系我:"></a>&emsp;<a href="http://www.wangbinzhou.com/" target="_blank" rel="external">如何联系我:</a></h6><p>&emsp;QQ：2501228271<br>&emsp;邮箱：2501228271@qq.com</p>
@@ -463,12 +469,6 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
     <entry>
       <title><![CDATA[photo]]></title>
       <url>/photo/index.html</url>
-      <content type="html"></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[friends]]></title>
-      <url>/friends/index.html</url>
       <content type="html"></content>
     </entry>
     
