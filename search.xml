@@ -74,7 +74,7 @@ connect=Service_IP:34567      //对应服务器的IP和端口；
         
         <tags>
             
-            <tag> Squid Stunnel 代理上网 </tag>
+            <tag> Squid/Stunnel/代理上网 </tag>
             
         </tags>
         
@@ -169,7 +169,7 @@ C<span class="token operator">|</span>cat: C或cat
         
         <tags>
             
-            <tag> -Linux -Linux命令 </tag>
+            <tag> Linux/Linux命令 </tag>
             
         </tags>
         
@@ -326,7 +326,7 @@ alias：显示当前shell进程所有可用的命令别名；
         
         <tags>
             
-            <tag> -Linux -Linux命令 </tag>
+            <tag> Linux命令/Linux </tag>
             
         </tags>
         
@@ -346,7 +346,7 @@ alias：显示当前shell进程所有可用的命令别名；
         
         <tags>
             
-            <tag> -Linux -Linux命令 </tag>
+            <tag> Linux命令/Linux </tag>
             
         </tags>
         
@@ -425,9 +425,7 @@ erasedups:删除重复命令
         
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Linux命令 </tag>
+            <tag> Linux命令/Linux </tag>
             
         </tags>
         
