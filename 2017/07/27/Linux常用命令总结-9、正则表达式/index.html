@@ -323,78 +323,20 @@
 <h4 id="程序支持"><a href="#程序支持" class="headerlink" title="程序支持"></a>程序支持</h4><p>&emsp;&emsp;<em>Grep,Sed,Awk,Vim, Less,Nginx,Varnish等;</em>  </p>
 <h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><p>&emsp;&emsp;基本正则表达式：BRE<br>&emsp;&emsp;扩展正则表达式：ERE  </p>
 <h4 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h4><p>&emsp;&emsp;不表示其字面意义，而用于额外功能性描述；<br>&emsp;&emsp;<strong>元字符分类:</strong>字符匹配、匹配次数、位置锚定，分组；  </p>
-<h5 id="基本正则表达式的元字符："><a href="#基本正则表达式的元字符：" class="headerlink" title="基本正则表达式的元字符："></a>基本正则表达式的元字符：</h5><h6 id="字符匹配："><a href="#字符匹配：" class="headerlink" title="字符匹配："></a>字符匹配：</h6><pre class=" language-bash"><code class="language-bash"><span class="token keyword">.</span> 匹配任意单个字符
-<span class="token punctuation">[</span><span class="token punctuation">]</span> 匹配指定范围内的任意单个字符
-<span class="token punctuation">[</span>^<span class="token punctuation">]</span> 匹配指定范围外的任意单个字符
-<span class="token punctuation">[</span>0-9<span class="token punctuation">]</span>,<span class="token punctuation">[</span>:digit:<span class="token punctuation">]</span> 十进制数字 
-<span class="token punctuation">[</span>a-z<span class="token punctuation">]</span>,<span class="token punctuation">[</span>:lower:<span class="token punctuation">]</span> 小写字母
-<span class="token punctuation">[</span>A-Z<span class="token punctuation">]</span>,<span class="token punctuation">[</span>:upper:<span class="token punctuation">]</span> 大写字母
-<span class="token punctuation">[</span>:alpha:<span class="token punctuation">]</span> 代表任何英文大小写字符，亦即 A-Z, a-z
-<span class="token punctuation">[</span>:alnum:<span class="token punctuation">]</span> 字母和数字
-<span class="token punctuation">[</span>:space:<span class="token punctuation">]</span> 水平和垂直的空白字符（比<span class="token punctuation">[</span>:blank:<span class="token punctuation">]</span>包含的范围广）
-<span class="token punctuation">[</span>:blank:<span class="token punctuation">]</span> 空白字符（空格和制表符）
-<span class="token punctuation">[</span>:cntrl:<span class="token punctuation">]</span> 不可打印的控制字符（退格、删除、警铃<span class="token punctuation">..</span>.）
-<span class="token punctuation">[</span>:xdigit:<span class="token punctuation">]</span>十六进制数字
-<span class="token punctuation">[</span>:graph:<span class="token punctuation">]</span> 可打印的非空白字符
-<span class="token punctuation">[</span>:print:<span class="token punctuation">]</span> 可打印字符
-<span class="token punctuation">[</span>:punct:<span class="token punctuation">]</span> 标点符号
-</code></pre>
-<h6 id="匹配次数："><a href="#匹配次数：" class="headerlink" title="匹配次数："></a>匹配次数：</h6><p>&emsp;&emsp;<strong>作用:</strong> 用于实现指定其前面的字符所能够出现的次数.  </p>
-<pre class=" language-bash"><code class="language-bash">* 匹配前面的字符任意次，包括0次<span class="token punctuation">(</span>贪婪模式：尽可能长的匹配<span class="token punctuation">)</span>
-.* 任意长度的任意字符
-\? 匹配其前面的字符0或1次
-\+ 匹配其前面的字符至少1次
-\<span class="token punctuation">{</span>n\<span class="token punctuation">}</span> 匹配前面的字符n次
-\<span class="token punctuation">{</span>m,n\<span class="token punctuation">}</span> 匹配前面的字符至少m次，至多n次
-\<span class="token punctuation">{</span>,n\<span class="token punctuation">}</span> 匹配前面的字符至多n次
-\<span class="token punctuation">{</span>n,\<span class="token punctuation">}</span> 匹配前面的字符至少n次
-</code></pre>
-<h6 id="位置锚定："><a href="#位置锚定：" class="headerlink" title="位置锚定："></a>位置锚定：</h6><p>&emsp;&emsp;<strong>作用:</strong> 定位出现的位置；</p>
-<pre class=" language-bash"><code class="language-bash">^ 行首锚定，写在模式的最左侧
-$ 行尾锚定，写在模式的最右侧
-^PATTERN$ 用于模式匹配整行
-^$ 空行
-^<span class="token punctuation">[</span><span class="token punctuation">[</span>:space:<span class="token punctuation">]</span><span class="token punctuation">]</span>*$ 空白行
-\<span class="token operator">&lt;</span> 或 \b 词首锚定，用于单词模式的左侧   
-\<span class="token operator">></span> 或 \b 词尾锚定；用于单词模式的右侧
-\<span class="token operator">&lt;</span>PATTERN\<span class="token operator">></span> 匹配整个单词
-</code></pre>
+<h5 id="基本正则表达式的元字符："><a href="#基本正则表达式的元字符：" class="headerlink" title="基本正则表达式的元字符："></a>基本正则表达式的元字符：</h5><h6 id="字符匹配："><a href="#字符匹配：" class="headerlink" title="字符匹配："></a>字符匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">. 匹配任意单个字符</div><div class="line">[] 匹配指定范围内的任意单个字符</div><div class="line">[^] 匹配指定范围外的任意单个字符</div><div class="line">[0-9],[:digit:] 十进制数字 </div><div class="line">[a-z],[:lower:] 小写字母</div><div class="line">[A-Z],[:upper:] 大写字母</div><div class="line">[:alpha:] 代表任何英文大小写字符，亦即 A-Z, a-z</div><div class="line">[:alnum:] 字母和数字</div><div class="line">[:space:] 水平和垂直的空白字符（比[:blank:]包含的范围广）</div><div class="line">[:blank:] 空白字符（空格和制表符）</div><div class="line">[:cntrl:] 不可打印的控制字符（退格、删除、警铃...）</div><div class="line">[:xdigit:]十六进制数字</div><div class="line">[:graph:] 可打印的非空白字符</div><div class="line">[:<span class="built_in">print</span>:] 可打印字符</div><div class="line">[:punct:] 标点符号</div></pre></td></tr></table></figure>
+<h6 id="匹配次数："><a href="#匹配次数：" class="headerlink" title="匹配次数："></a>匹配次数：</h6><p>&emsp;&emsp;<strong>作用:</strong> 用于实现指定其前面的字符所能够出现的次数.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">* 匹配前面的字符任意次，包括0次(贪婪模式：尽可能长的匹配)</div><div class="line">.* 任意长度的任意字符</div><div class="line">\? 匹配其前面的字符0或1次</div><div class="line">\+ 匹配其前面的字符至少1次</div><div class="line">\&#123;n\&#125; 匹配前面的字符n次</div><div class="line">\&#123;m,n\&#125; 匹配前面的字符至少m次，至多n次</div><div class="line">\&#123;,n\&#125; 匹配前面的字符至多n次</div><div class="line">\&#123;n,\&#125; 匹配前面的字符至少n次</div></pre></td></tr></table></figure></p>
+<h6 id="位置锚定："><a href="#位置锚定：" class="headerlink" title="位置锚定："></a>位置锚定：</h6><p>&emsp;&emsp;<strong>作用:</strong> 定位出现的位置；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">^ 行首锚定，写在模式的最左侧</div><div class="line">$ 行尾锚定，写在模式的最右侧</div><div class="line">^PATTERN$ 用于模式匹配整行</div><div class="line">^$ 空行</div><div class="line">^[[:space:]]*$ 空白行</div><div class="line">\&lt; 或 \b 词首锚定，用于单词模式的左侧   </div><div class="line">\&gt; 或 \b 词尾锚定；用于单词模式的右侧</div><div class="line">\&lt;PATTERN\&gt; 匹配整个单词</div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>Note:不包含特殊字符的连续字符组成的串叫单词：</p>
 </blockquote>
-<h6 id="分组："><a href="#分组：" class="headerlink" title="分组："></a>分组：</h6><p>&emsp;&emsp;<code>\(\)</code>将一个或多个字符捆绑在一起，当作一个整体进行处理.<br>&emsp;&emsp;<strong>如：</strong><code>\(root\)\+</code></p>
-<p>&emsp;&emsp;分组括号中的模式匹配到的内容会被正则表达式引擎记录于内部的变量中,这些变量的命名方式为: <code>\1, \2, \3, ...</code><br>&emsp;&emsp;<code>\1</code> 表示从左侧起第一个左括号以及与之匹配右括号之间的模式所匹配到的字符<br><strong>示例：</strong>   </p>
-<pre class=" language-bash"><code class="language-bash">\<span class="token punctuation">(</span>string1\+\<span class="token punctuation">(</span>string2\<span class="token punctuation">)</span>*\<span class="token punctuation">)</span>
-\1 ： string1\+\<span class="token punctuation">(</span>string2\<span class="token punctuation">)</span>*
-\2 ： string2
-</code></pre>
+<h6 id="分组："><a href="#分组：" class="headerlink" title="分组："></a>分组：</h6><p>&emsp;&emsp;<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&amp;emsp;&amp;emsp;__如：__```\(root\)\+</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;分组括号中的模式匹配到的内容会被正则表达式引擎记录于内部的变量中,这些变量的命名方式为: <figure class="highlight plain"><figcaption><span>\2, \3, ...```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&amp;emsp;&amp;emsp;```\1``` 表示从左侧起第一个左括号以及与之匹配右括号之间的模式所匹配到的字符</div><div class="line">__示例：__   </div><div class="line">```bash</div><div class="line">\(string1\+\(string2\)*\)</div><div class="line">\1 ： string1\+\(string2\)*</div><div class="line">\2 ： string2</div></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;<strong>后向引用：</strong>引用前面的分组括号中的模式所匹配字符，而非模式本身.  </p>
-<h6 id="或者："><a href="#或者：" class="headerlink" title="或者：\\|"></a>或者：<code>\\|</code></h6><p>&emsp;&emsp;示例： </p>
-<pre class=" language-bash"><code class="language-bash">a\<span class="token operator">|</span>b: a或b C\<span class="token operator">|</span>cat: C或cat \<span class="token punctuation">(</span>C\<span class="token operator">|</span>c\<span class="token punctuation">)</span>at:Cat或cat
-</code></pre>
-<h5 id="扩展正则表达式的元字符："><a href="#扩展正则表达式的元字符：" class="headerlink" title="扩展正则表达式的元字符："></a>扩展正则表达式的元字符：</h5><h6 id="字符匹配：-1"><a href="#字符匹配：-1" class="headerlink" title="字符匹配："></a>字符匹配：</h6><pre class=" language-bash"><code class="language-bash"><span class="token keyword">.</span> 任意单个字符
-<span class="token punctuation">[</span><span class="token punctuation">]</span> 指定范围的字符
-<span class="token punctuation">[</span>^<span class="token punctuation">]</span> 不在指定范围的字符
-</code></pre>
-<h6 id="次数匹配："><a href="#次数匹配：" class="headerlink" title="次数匹配："></a>次数匹配：</h6><pre class=" language-bash"><code class="language-bash">*：匹配前面字符任意次
-?: 0或1次
-+： 1次或多次
-<span class="token punctuation">{</span>m<span class="token punctuation">}</span>：匹配m次
-<span class="token punctuation">{</span>m,n<span class="token punctuation">}</span>：至少m，至多n次
-</code></pre>
-<h6 id="位置锚定：-1"><a href="#位置锚定：-1" class="headerlink" title="位置锚定："></a>位置锚定：</h6><pre class=" language-bash"><code class="language-bash">^ :行首
-$ :行尾
-\<span class="token operator">&lt;</span>, \b :语首
-\<span class="token operator">></span>, \b :语尾
-</code></pre>
-<h6 id="分组：-1"><a href="#分组：-1" class="headerlink" title="分组："></a>分组：</h6><pre class=" language-bash"><code class="language-bash"><span class="token punctuation">(</span><span class="token punctuation">)</span>
-后向引用： \1, \2, <span class="token punctuation">..</span>.
-</code></pre>
-<h6 id="或者：-1"><a href="#或者：-1" class="headerlink" title="或者："></a>或者：</h6><pre class=" language-bash"><code class="language-bash">a<span class="token operator">|</span>b: a或b
-C<span class="token operator">|</span>cat: C或cat
-<span class="token punctuation">(</span>C<span class="token operator">|</span>c<span class="token punctuation">)</span>at:Cat或cat
-</code></pre>
-
+<h6 id="或者："><a href="#或者：" class="headerlink" title="或者："></a>或者：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&amp;emsp;&amp;emsp;示例： </div><div class="line">```bash</div><div class="line">a\|b: a或b C\|cat: C或cat \(C\|c\)at:Cat或cat</div></pre></td></tr></table></figure></h6><h5 id="扩展正则表达式的元字符："><a href="#扩展正则表达式的元字符：" class="headerlink" title="扩展正则表达式的元字符："></a>扩展正则表达式的元字符：</h5><h6 id="字符匹配：-1"><a href="#字符匹配：-1" class="headerlink" title="字符匹配："></a>字符匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">. 任意单个字符</div><div class="line">[] 指定范围的字符</div><div class="line">[^] 不在指定范围的字符</div></pre></td></tr></table></figure>
+<h6 id="次数匹配："><a href="#次数匹配：" class="headerlink" title="次数匹配："></a>次数匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">*：匹配前面字符任意次</div><div class="line">?: 0或1次</div><div class="line">+： 1次或多次</div><div class="line">&#123;m&#125;：匹配m次</div><div class="line">&#123;m,n&#125;：至少m，至多n次</div></pre></td></tr></table></figure>
+<h6 id="位置锚定：-1"><a href="#位置锚定：-1" class="headerlink" title="位置锚定："></a>位置锚定：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">^ :行首</div><div class="line">$ :行尾</div><div class="line">\&lt;, \b :语首</div><div class="line">\&gt;, \b :语尾</div></pre></td></tr></table></figure>
+<h6 id="分组：-1"><a href="#分组：-1" class="headerlink" title="分组："></a>分组：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">()</div><div class="line">后向引用： \1, \2, ...</div></pre></td></tr></table></figure>
+<h6 id="或者：-1"><a href="#或者：-1" class="headerlink" title="或者："></a>或者：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a|b: a或b</div><div class="line">C|cat: C或cat</div><div class="line">(C|c)at:Cat或cat</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -441,7 +383,7 @@ C<span class="token operator">|</span>cat: C或cat
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#程序支持"><span class="toc-number">2.</span> <span class="toc-text">程序支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分类"><span class="toc-number">3.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#元字符"><span class="toc-number">4.</span> <span class="toc-text">元字符</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#基本正则表达式的元字符："><span class="toc-number">4.1.</span> <span class="toc-text">基本正则表达式的元字符：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#字符匹配："><span class="toc-number">4.1.1.</span> <span class="toc-text">字符匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#匹配次数："><span class="toc-number">4.1.2.</span> <span class="toc-text">匹配次数：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#位置锚定："><span class="toc-number">4.1.3.</span> <span class="toc-text">位置锚定：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分组："><span class="toc-number">4.1.4.</span> <span class="toc-text">分组：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#或者："><span class="toc-number">4.1.5.</span> <span class="toc-text">或者：\\|</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#扩展正则表达式的元字符："><span class="toc-number">4.2.</span> <span class="toc-text">扩展正则表达式的元字符：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#字符匹配：-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">字符匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#次数匹配："><span class="toc-number">4.2.2.</span> <span class="toc-text">次数匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#位置锚定：-1"><span class="toc-number">4.2.3.</span> <span class="toc-text">位置锚定：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分组：-1"><span class="toc-number">4.2.4.</span> <span class="toc-text">分组：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#或者：-1"><span class="toc-number">4.2.5.</span> <span class="toc-text">或者：</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#程序支持"><span class="toc-number">2.</span> <span class="toc-text">程序支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分类"><span class="toc-number">3.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#元字符"><span class="toc-number">4.</span> <span class="toc-text">元字符</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#基本正则表达式的元字符："><span class="toc-number">4.1.</span> <span class="toc-text">基本正则表达式的元字符：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#字符匹配："><span class="toc-number">4.1.1.</span> <span class="toc-text">字符匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#匹配次数："><span class="toc-number">4.1.2.</span> <span class="toc-text">匹配次数：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#位置锚定："><span class="toc-number">4.1.3.</span> <span class="toc-text">位置锚定：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分组："><span class="toc-number">4.1.4.</span> <span class="toc-text">分组：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#或者："><span class="toc-number">4.1.5.</span> <span class="toc-text">或者：123&emsp;&emsp;示例： ```basha\|b: a或b C\|cat: C或cat \(C\|c\)at:Cat或cat</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#扩展正则表达式的元字符："><span class="toc-number">4.2.</span> <span class="toc-text">扩展正则表达式的元字符：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#字符匹配：-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">字符匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#次数匹配："><span class="toc-number">4.2.2.</span> <span class="toc-text">次数匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#位置锚定：-1"><span class="toc-number">4.2.3.</span> <span class="toc-text">位置锚定：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分组：-1"><span class="toc-number">4.2.4.</span> <span class="toc-text">分组：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#或者：-1"><span class="toc-number">4.2.5.</span> <span class="toc-text">或者：</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
