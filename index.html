@@ -199,7 +199,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux命令/">Linux/Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令-Linux/">Linux命令/Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux命令/">Linux/Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令-Linux/">Linux命令/Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li></ul>
                     </div>
                 </section>
                 
@@ -517,15 +517,61 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;作为运维人员，我们经常需要查看、分析和统计日志等信息，在这里，我对初级的文本处理工具的学习做一个小总结。<br><strong>本文提到的命令：</strong><br>&emsp;&emsp;<em>查看文件内容：</em> <code>cat</code>、<code>more</code>、<code>less</code><br>&emsp;&emsp;<em>文件截取：</em> <code>head</code> 和 <code>tail</code><br>&emsp;&emsp;<em>按列抽取:</em>  <code>cut</code><br>&emsp;&emsp;<em>文本数据统计：</em> <code>wc</code><br>&emsp;&emsp;<em>文本排序：</em> <code>sort</code><br>&emsp;&emsp;<em>去重复的行：</em> <code>uniq</code><br>&emsp;&emsp;<em>按关键字抽取：</em><code>grep</code>  </p>
+<h4 id="文件查看命令"><a href="#文件查看命令" class="headerlink" title="文件查看命令"></a>文件查看命令</h4><h5 id="标准输入文件：cat"><a href="#标准输入文件：cat" class="headerlink" title="标准输入文件：cat"></a>标准输入文件：cat</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数:</strong><br><code>-E</code>: 显示行结束符&amp;；<br><code>-n</code>: 对显示出的每一行进行编号；<br><code>-A</code>: 显示所有控制符；<br><code>-b</code>: 非空行编号；<br><code>-s</code>: 压缩连续的空行成一行；  </p>
+<h5 id="分页查看文件：more"><a href="#分页查看文件：more" class="headerlink" title="分页查看文件：more"></a>分页查看文件：more</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">more [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-d</code>: 显示翻页及退出提示；</p>
+<h5 id="按页查看文件：less"><a href="#按页查看文件：less" class="headerlink" title="按页查看文件：less"></a>按页查看文件：less</h5><p><strong>用法:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">less [FILE]...</div></pre></td></tr></table></figure></p>
+<p><em>查看时常用的命令：</em><br><code>/文本</code>: 搜索“文本”；<br><code>n/N</code>: 跳到<code>下一个</code>或<code>上一个</code>匹配；</p>
+<blockquote>
+<p>Note: man命令使用的就是less分页器；</p>
+</blockquote>
+<h5 id="显示文本前-行的内容：head"><a href="#显示文本前-行的内容：head" class="headerlink" title="显示文本前#行的内容：head"></a>显示文本前#行的内容：head</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">head [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-c #</code>: 指定获取前#字节；<br><code>-n #</code>: 指定获取前#字节；<br><code>-#</code>: 指定行数；  </p>
+<h5 id="显示文本后-行的内容：tail"><a href="#显示文本后-行的内容：tail" class="headerlink" title="显示文本后#行的内容：tail"></a>显示文本后#行的内容：tail</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-c #</code>: 指定获取后#字节；<br><code>-n #</code>: 指定获取后#字节；<br><code>- #</code>: 指定行数；<br><code>-f</code>: 跟踪显示文件新追加的内容，常用日志监控；  </p>
+<h4 id="文本处理类命令："><a href="#文本处理类命令：" class="headerlink" title="文本处理类命令："></a>文本处理类命令：</h4><h5 id="按列抽取文本：cut"><a href="#按列抽取文本：cut" class="headerlink" title="按列抽取文本：cut"></a>按列抽取文本：cut</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cut [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-d DELIMITER</code>: 指明分隔符，默认tab；<br><code>-f FILEDS</code>:<br>&emsp;&emsp;<code>#</code>: 第#字段；<br>&emsp;&emsp;<code>#,#[,#]</code>: 离散的多个字段，例如1,3,6；<br>&emsp;&emsp;<code>#-#</code>: 1-3,7;<br>&emsp;&emsp;<code>-c</code>: 按字符切割；<br>&emsp;&emsp;<code>--output-delimiter=STRING</code>指明输出分隔符；<br><strong>示例：</strong><br>显示文件或STDIN数据的指定列：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$cut</span> -d: -f1 /etc/passwd</div><div class="line"><span class="variable">$cat</span> /etc/passwd | cut -d: -f7</div><div class="line"><span class="variable">$cut</span> -c2-5 /usr/share/dict/words</div></pre></td></tr></table></figure></p>
+<h5 id="合并两个文件同行号的列到一行：paste"><a href="#合并两个文件同行号的列到一行：paste" class="headerlink" title="合并两个文件同行号的列到一行：paste"></a>合并两个文件同行号的列到一行：paste</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">paste [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-d 分隔符</code>: 指定分隔符，默认用TAB;<br><code>-s</code>: 所有行合成一行显示；<br><strong>示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$paste</span> f1 f2</div><div class="line"><span class="variable">$paste</span> -s f1 f2</div></pre></td></tr></table></figure></p>
+<h5 id="文本数据统计：wc"><a href="#文本数据统计：wc" class="headerlink" title="文本数据统计：wc"></a>文本数据统计：wc</h5><p>&emsp;&emsp;对文件或STDIN（标准输出）的数据，做单词总数、行总数、字节总数字符总数的统计。<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wc [OPTION]...[FILE]...</div><div class="line"></div><div class="line"><span class="variable">$wc</span> story.txt</div><div class="line">39      237     1901        story.txt</div><div class="line">行数    字数    字符数</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-l</code>: 只统计行数；<br><code>-w</code>: 只统计单词总数；<br><code>-c</code>: 只统计字节总数；<br><code>-m</code>: 只统计字符总数；  </p>
+<h5 id="文本排序：-sort"><a href="#文本排序：-sort" class="headerlink" title="文本排序： sort"></a>文本排序： sort</h5><p>&emsp;&emsp;把整理过的文本显示在标准输出，不会改变原始文件。<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sort [OPTIONS]...[FILES]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-r</code>: 执行反方向（由上至下）整理；<br><code>-n</code>: 执行按数字大小整理；<br><code>-f</code>: 选项忽略（fold）字符串中的字符大小写；<br><code>-u</code>: 选项（独特，unique）删除输出中的重复行；<br><code>-t c</code>: 选项使用<code>c</code>作为字符界定符；<br><code>-k X</code>: 选项安装使用<code>c</code>字符分隔的<code>X</code>列来整理能够使用多次；  </p>
+<h5 id="去除重复的行：uniq"><a href="#去除重复的行：uniq" class="headerlink" title="去除重复的行：uniq"></a>去除重复的行：uniq</h5><p>&emsp;&emsp;从输入中删除前后相接的重复的行；<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uniq [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-c</code>: 显示每行重复出现的次数；<br><code>-d</code>: 仅显示重复出现的行；<br><code>-u</code>: 仅显示不曾重复的行；</p>
+<blockquote>
+<p>Note: 连续且完全想用方为重复；<br>常和sort命令一起配合使用：<code>sort userlist.txt | uniq -c</code></p>
+</blockquote>
+<h5 id="文件对比：diff-和-patch"><a href="#文件对比：diff-和-patch" class="headerlink" title="文件对比：diff 和 patch"></a>文件对比：diff 和 patch</h5><h6 id="比较文件：diff"><a href="#比较文件：diff" class="headerlink" title="比较文件：diff"></a>比较文件：diff</h6><p>&emsp;&emsp;比较两个文件之间的区别；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$diff foo.conf-broken foo.conf-works5c5</div><div class="line">&lt;   use_widgets = no</div><div class="line">---</div><div class="line">&gt;   use_widgets = yes</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注明第5行有区别（改变）。  </p>
+</blockquote>
+<h6 id="复制对文件改变：patch"><a href="#复制对文件改变：patch" class="headerlink" title="复制对文件改变：patch"></a>复制对文件改变：patch</h6><p><code>diff</code>: 命令的输入被保存在一种叫做“补丁”的文件中。 </p>
+<blockquote>
+<p>使用<code>-u</code>选项来输出“统一的（unified）”diff格式文件，最适用于补丁文件。<br><code>patch</code>: 复制在其它文件中进行的改变（要谨慎使用）<br>使用<code>-b</code>选项来自动备份改变了的文件；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$diff -u foo.conf-broken foo.conf-works &gt; foo.patch</div><div class="line">$patch -b foo.conf-broken foo.patch</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="文本过滤：grep"><a href="#文本过滤：grep" class="headerlink" title="文本过滤：grep"></a>文本过滤：grep</h4><p>&emsp;&emsp;文本搜索工具，根据用户指定的正则表达式字符及文本字符所编写的过滤条件，对目标文本逐行进行匹配检查，打印匹配到的行。<br><strong>用法：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">grep [OPTIONS] PATTERN [FILE...]</div><div class="line">    grep root /etc/passwd</div><div class="line">    grep <span class="string">"$USER"</span> /etc/passwd</div><div class="line">    grep <span class="string">'$USER'</span> /etc/passwd</div><div class="line">    grep `whoami` /etc/passwd</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>--color=auto</code>: 对匹配到的文本着色显示；（Centos 7默认已使用alias设置此参数）<br><code>-v</code>: 显示不被pattern匹配到的行；<br><code>-i</code>: 忽略字符大小写；<br><code>-n</code>: 显示匹配的行号；<br><code>-c</code>: 统计匹配的行数；<br><code>-o</code>: 仅显示匹配到的字符串；<br><code>-q</code>: 静默模式，不输出任何信息;<br><code>-A #</code> : after,同时显示匹配行的后#行;<br><code>-B #</code>: before,同时显示匹配行的前#行；<br><code>-c #</code>: context,同时显示匹配行的前后各#行；<br><code>-e</code>: 实现多个选项间的逻辑or关系；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grep -e <span class="string">'cat'</span> -e <span class="string">'dog'</span> file</div></pre></td></tr></table></figure></p>
+<p><code>-w</code>: 匹配整个单词；<br><code>-E</code>: 使用ERE;<br><code>-F</code>: 相当于fgrep，不支持正则表达式；</p>
+
       
     </div>
     
     <div class="article-info article-info-index">
       
       
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
       
       <div class="clearfix"></div>
     </div>
