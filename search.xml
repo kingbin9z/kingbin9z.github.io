@@ -3,6 +3,69 @@
   
     
     <entry>
+      <title><![CDATA[Linux常用命令总结：10、文件查找之locate和find]]></title>
+      <url>/2017/08/01/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93%EF%BC%9A10%E3%80%81%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E4%B9%8Blocate%E5%92%8Cfind/</url>
+      <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;在日常生活中，有时候我们需要在Linux系统上查找符合特定条件的文件，可以通过命令<code>locate</code>和<code>find</code>来查找。<br><strong>区别：</strong><br><code>locate</code>: 非实时查找，每天会定时更新生成一个数据库，通过数据库查找；<br><code>find</code>: 实时查找；  </p>
+<h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><p>&emsp;&emsp;<code>locate</code>命令依赖于系统系统在较为空闲时自动构建（周期性任务）的一个文件索引数据库<code>/var/lib/mlocate/mlocate.db</code>进行查找文件。索引构建过程需要遍历整个根文件系统，极消耗资源。管理员可以通过命令<code>updatedb</code>手动更新数据库。<br><strong>工作特点：</strong>  </p>
+<ul>
+<li>查找速度快；  </li>
+<li>模糊查找；</li>
+<li>非实时查找；</li>
+<li>搜索的是文件的全路径，不仅仅是文件名；</li>
+<li>可能只搜索用户具备读取和执行权限的目录；<br><strong>用法：</strong>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">locate [OPTION]... PATTERN...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>常用参数：</strong><br><code>-i</code>: 不区分大小写的搜索；<br><code>-n N</code>: 只列举前N个匹配项目；<br><code>-r</code>: 使用正则表达式搜索；<br><strong>示例：</strong><br><code>locate conf</code>: 搜索名称或路径中带有“conf”的文件；<br><code>locate -r &#39;\.conf$&#39;</code>: 使用正则表达式来搜索以“.conf”结尾的文件；  </p>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>&emsp;&emsp;实时查找工具，通过遍历指定路径完成文件查找；  </p>
+<h5 id="工作特点"><a href="#工作特点" class="headerlink" title="工作特点"></a>工作特点</h5><ul>
+<li>查找速度略慢；  </li>
+<li>精确查找；  </li>
+<li>实时查找；  </li>
+<li>可能只搜素用户具备读取和执行权限的目录；  </li>
+</ul>
+<h5 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find [OPTIOON]...[查找路径] [查找条件] [处理动作]</div></pre></td></tr></table></figure>
+<p>查找路径：指定具体目标路径；默认为当前目录；<br>查找条件：指定的查找标准，可以是文件名、大小、类型、权限等标准进行；默认为找出指定路径下的所有文件；<br>处理动作：对符合条件的文件做操作，默认输出至屏幕；  </p>
+<h6 id="查找条件："><a href="#查找条件：" class="headerlink" title="查找条件："></a>查找条件：</h6><p>指定搜索层级：<br><code>-maxdepth level</code>：最大搜索目录深度，指定目录为1级；<br><code>-mindepth level</code>：最小搜索目录深度；<br>根据文件名和inode查找：<br><code>-name &quot;文件名称&quot;</code>: 支持使用glob:<code>*,?,[],[^]</code>;<br><code>-iname &quot;文件名称&quot;</code>：不区分字母大小写；<br><code>inum n</code>: 按inode好查找；<br><code>-samefile name</code>: 相同inode号的文件；<br><code>-links n</code>: 链接数为n的文件；<br><code>-regex &quot;PATTERN&quot;</code>: 以PATTERN匹配整个文件路径字符串，而不仅仅是文件名称；<br>根据属主、属组查找：<br><code>-user USERNAME</code>:查找属主为指定用户（UID）的文件；<br><code>-group GRPNAME</code>:查找属组为指定组（GID）的文件；<br><code>uid UserID</code>:查找属主为指定的UID号的文件；<br><code>gid GroupID</code>:查找属组为指定的GID号的文件；<br><code>-nouser</code>:查找没有属主的文件；<br><code>-nogroup</code>:  查找没有属组的文件；<br>根据文件类型查找：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-<span class="built_in">type</span> TYPE:  </div><div class="line">            f: 普通文件</div><div class="line">            d: 目录文件</div><div class="line">            l: 符号链接文件</div><div class="line">            s: 套接字文件</div><div class="line">            b：块设备文件</div><div class="line">            c: 字符设备文件</div><div class="line">            p: 管道文件</div></pre></td></tr></table></figure></p>
+<p>组合条件：<br>&emsp;&emsp;&emsp;&emsp;与：<code>-a</code><br>&emsp;&emsp;&emsp;&emsp;或：<code>-o</code><br>&emsp;&emsp;&emsp;&emsp;非：<code>-not,!</code><br>德·摩根定律：<br>&emsp;&emsp;&emsp;&emsp;&emsp;<code>(非 A) 或 (非 B) = 非(A 且 B)</code><br>&emsp;&emsp;&emsp;&emsp;&emsp;<code>(非 A) 且 (非 B) = 非(A 或 B)</code><br>&emsp;&emsp;示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">!A -a !B = !(A - oB)</div><div class="line">!A -O !B = !(A -a B)</div></pre></td></tr></table></figure></p>
+<p>find示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">find -name snow.png     //搜索名为snow.png的文件</div><div class="line">find -iname snow.png    //不区分大小写地搜索名为snow.png、Snow.png、SNOW.PNG等等的文件</div><div class="line">find / -name <span class="string">"*.txt"</span>    //搜索/目录下.txt后缀的文件</div><div class="line">find /var -name <span class="string">"*log*"</span>     //搜索名称包含<span class="built_in">log</span>字符的文件</div><div class="line">find -user joe -group joe   //搜索被用户joe以及群组joe所拥有的文件</div><div class="line">find -user joe -not -group joe</div><div class="line">find -user joe -o -user jane</div><div class="line">find -not \( -user joe -o -user jane \)</div><div class="line">find / -user joe -o -uid 500</div></pre></td></tr></table></figure></p>
+<p>&emsp;找出/tmp目录下，属主不是root，且文件名不以f开头的文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">find /tmp \( -not -user root -a -not -name <span class="string">'f*'</span> \) -ls</div><div class="line">find /tmp -not \( -user root -o -name <span class="string">'f*'</span> \) -ls</div></pre></td></tr></table></figure></p>
+<p>&emsp;排除目录：<br>&emsp;&emsp;<em>示例：查找/etc/下，除/etc/sane.d目录的其他所有.conf后缀的文件</em><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">find /etc -path <span class="string">'/etc/sane.d'</span> -a -prune -o -name <span class="string">"*.conf"</span></div><div class="line">find /etc \(-path <span class="string">'/etc/sane.d'</span> -o -path <span class="string">'/etc/fonts'</span> \) -a prune -o name <span class="string">"*.conf"</span></div></pre></td></tr></table></figure></p>
+<p>根据文件大小来查找：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">-size [+|-]<span class="comment">#UNIT    常用单位:k,M,G,c(byte)</span></div><div class="line"><span class="comment">#UNIT: (#-1,#]</span></div><div class="line">    如： 6k 表示（5k,6k]</div><div class="line">-<span class="comment">#UNIT: [0,#-1]</span></div><div class="line">    如： -6k 表示[0,5k]</div><div class="line">+<span class="comment">#UNIT： (#,∞)</span></div><div class="line">    如： +6k 表示(6k,∞)</div></pre></td></tr></table></figure></p>
+<p>根据时间戳：<br>&emsp;<em>以“天”为单位：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-atime [+|-]<span class="comment">#,</span></div><div class="line">	<span class="comment">#: [#,#+1)</span></div><div class="line">	+<span class="comment">#: [#+1,∞]</span></div><div class="line">    -<span class="comment">#: [0,#)</span></div><div class="line">    -mtime</div><div class="line">    -ctime</div></pre></td></tr></table></figure></p>
+<p>&emsp;<em>以“分钟”为单位:</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-amin</div><div class="line">-mmin</div><div class="line">-cmin</div></pre></td></tr></table></figure></p>
+<p>根据权限查找：<br><code>-perm [/|-]MODE</code><br>&emsp;<code>MODE</code>: 精确权限匹配<br>&emsp;<code>/MODE</code>：任何一类(u,g,o)对象的权限中只要能一位匹配即可，或关系， + 从centos7开始淘汰<br>&emsp;<code>-MODE</code>：每一类对象都必须同时拥有指定权限，与关系0 表示不关注  </p>
+<blockquote>
+<p>Note:<br>&emsp;&emsp;&emsp;find -perm 755 会匹配权限模式恰好是755的文件<br>&emsp;&emsp;&emsp;只要当任意人有写权限时， find -perm +222就会匹配<br>&emsp;&emsp;&emsp;只有当每个人都有写权限时， find -perm -222才会匹配<br>&emsp;&emsp;&emsp;只有当其它人（other）有写权限时， find -perm -002才会匹配</p>
+</blockquote>
+<h6 id="处理动作："><a href="#处理动作：" class="headerlink" title="处理动作："></a>处理动作：</h6><p><code>-print</code>：默认的处理动作，显示至屏幕<br><code>-ls</code>：类似于对查找到的文件执行“ls -l”命令<br><code>-delete</code>：删除查找到的文件<br><code>-fls file</code>：查找到的所有文件的长格式信息保存至指定文件中<br><code>-ok COMMAND {} \;</code>: 对查找到的每个文件执行由COMMAND指定的命令，对于每个文件执行命令之前，都会交互式要求用户确认<br><code>-exec COMMAND {} \;</code> 对查找到的每个文件执行由COMMAND指定的命令<br><code>{}</code>: 用于引用查找到的文件名称自身find传递查找到的文件至后面指定的命令时，查找到所有符合条件的文件一次性传递给后面的命令  </p>
+<h6 id="参数替换xargs："><a href="#参数替换xargs：" class="headerlink" title="参数替换xargs："></a>参数替换xargs：</h6><p>由于很多命令不支持管道|来传递参数，而日常工作中有这个必要，所以就有了xargs命令。xargs用于产生某个命令的参数， xargs 可以读入 stdin的数据，并且以空格符或回车符将 stdin 的数据分隔成为arguments。  </p>
+<blockquote>
+<p>注意：文件名或者是其他意义的名词内含有空格符的情况有些命令不能接受过多参数，命令执行可能会失败， xargs可以解决.  </p>
+</blockquote>
+<p>&emsp;示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ls f* |xargs rm</div><div class="line">find /sbin -perm +700 |ls -l 这个命令是错误的</div><div class="line">find /sbin -perm +7000 | xargs ls –l</div><div class="line">find和xargs格式： find | xargs COMMAND</div></pre></td></tr></table></figure></p>
+<h5 id="find示例："><a href="#find示例：" class="headerlink" title="find示例："></a>find示例：</h5><p>备份配置文件，添加.orig这个扩展名:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find -name “*.conf” -<span class="keyword">exec</span> cp &#123;&#125; &#123;&#125;.orig \;</div></pre></td></tr></table></figure></p>
+<p>提示删除存在时间超过３天以上的joe的临时文件:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /tmp -ctime +<span class="number">3</span> -user joe -ok rm &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>提示删除存在时间超过３天以上的joe的临时文件:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find ~ -perm <span class="number">-002</span> -<span class="keyword">exec</span> chmod o-w &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>搜索/data目录下权限为644、后缀为“.sh”的普通文件后，把权限修改为755；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /data –type f -perm <span class="number">644</span> -name “*.sh” –<span class="keyword">exec</span> chmod <span class="number">755</span> &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>搜索/home下的目录文件，并列表查看：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /home –type d -ls</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Linux常用命令 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux命令;Linux </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用Squid+Stunnel代理上网]]></title>
       <url>/2017/07/27/%E4%BD%BF%E7%94%A8Squid-Stunnel%E4%BB%A3%E7%90%86%E4%B8%8A%E7%BD%91/</url>
       <content type="html"><![CDATA[<h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
