@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="WangBinZhou" />
+
+
+
+<meta name="description" content="简介yum(Yellowdog Update Modifier)是rpm的前端程序，能够很好的解决软件包的相关依赖性。在日常工作中，我们可以使用安装光盘作为yum源，也可以使用阿里、网易或者搜狐提供的公共yum源。在公司的网络环境中如果有很多台Centos服务器，我们就很有必要自己搭建一个yum仓库来统一管理和安装软件。这样既保证了软件包的来源合法性，又能够节省出口带宽、提高效率。   搭建yum">
+<meta name="keywords" content="yum源和yum仓库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yum仓库搭建和yum源配置">
+<meta property="og:url" content="http://blog.wangbinzhou.com/2017/08/05/yum仓库搭建和yum源配置/index.html">
+<meta property="og:site_name" content="WangBinZhou">
+<meta property="og:description" content="简介yum(Yellowdog Update Modifier)是rpm的前端程序，能够很好的解决软件包的相关依赖性。在日常工作中，我们可以使用安装光盘作为yum源，也可以使用阿里、网易或者搜狐提供的公共yum源。在公司的网络环境中如果有很多台Centos服务器，我们就很有必要自己搭建一个yum仓库来统一管理和安装软件。这样既保证了软件包的来源合法性，又能够节省出口带宽、提高效率。   搭建yum">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-06T08:58:01.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="yum仓库搭建和yum源配置">
+<meta name="twitter:description" content="简介yum(Yellowdog Update Modifier)是rpm的前端程序，能够很好的解决软件包的相关依赖性。在日常工作中，我们可以使用安装光盘作为yum源，也可以使用阿里、网易或者搜狐提供的公共yum源。在公司的网络环境中如果有很多台Centos服务器，我们就很有必要自己搭建一个yum仓库来统一管理和安装软件。这样既保证了软件包的来源合法性，又能够节省出口带宽、提高效率。   搭建yum">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="WangBinZhou" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>yum仓库搭建和yum源配置 | WangBinZhou</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">WangBinZhou</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/随笔">随笔</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:2501228271@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2501228271" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于Linux</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">WangBinZhou</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">WangBinZhou</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/随笔">随笔</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:2501228271@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2501228271" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-yum仓库搭建和yum源配置" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/05/yum仓库搭建和yum源配置/" class="article-date">
+      <time datetime="2017-08-05T03:28:37.000Z" itemprop="datePublished">2017-08-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      yum仓库搭建和yum源配置
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>yum(Yellowdog Update Modifier)是rpm的前端程序，能够很好的解决软件包的相关依赖性。在日常工作中，我们可以使用安装光盘作为yum源，也可以使用阿里、网易或者搜狐提供的公共yum源。<br>在公司的网络环境中如果有很多台Centos服务器，我们就很有必要自己搭建一个yum仓库来统一管理和安装软件。这样既保证了软件包的来源合法性，又能够节省出口带宽、提高效率。  </p>
+<h4 id="搭建yum仓库"><a href="#搭建yum仓库" class="headerlink" title="搭建yum仓库"></a>搭建yum仓库</h4><p>yum仓库有四种搭建方式，分别是：<code>http://</code>、<code>https://</code>、<code>ftp://</code>和<code>file://</code>；<br>在这里，我们分别使用<code>ftp://</code>和<code>http://</code>这两种方式进行仓库的搭建；  </p>
+<h5 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h5><ul>
+<li>yum仓库系统环境：CentOS 7.3  </li>
+<li>http服务软件：httpd-2.4.6-45.el7.centos.4.x86_64  </li>
+<li>ftp服务软件：vsftpd-3.0.2-21.el7.x86_64  </li>
+<li>为避免干扰，临时关闭了SElinux和Firewalld；<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#setenforce 0       //临时关闭SElinux</span></div><div class="line"><span class="comment">#getenforce         //检查SElinux状态</span></div><div class="line"> Permissive			//打印警告而不是强制执行。</div><div class="line"><span class="comment">#systemctl stop firewalld   //关闭Firewalld防火墙；</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="使用ftp方式搭建yum仓库"><a href="#使用ftp方式搭建yum仓库" class="headerlink" title="使用ftp方式搭建yum仓库"></a>使用ftp方式搭建yum仓库</h5><p>yum安装vsftpd软件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y vsftpd</span></div><div class="line"><span class="comment">#systemctl start vsftpd     //启动vsftpd服务；</span></div><div class="line"><span class="comment">#systemctl enable vsftpd    //设置vsftpd开机自启；</span></div></pre></td></tr></table></figure></p>
+<p>查看vsftpd安装后的相关目录：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rpm -ql vsftpd</span></div><div class="line">/etc/logrotate.d/vsftpd</div><div class="line">/etc/pam.d/vsftpd</div><div class="line">/etc/vsftpd/ftpusers</div><div class="line">/etc/vsftpd/user_list</div><div class="line">/etc/vsftpd/vsftpd.conf     //主配置文件</div><div class="line">    ...省略若干...</div><div class="line">/etc/vsftpd/vsftpd_conf_migrate.sh</div><div class="line">/usr/sbin/vsftpd</div><div class="line">/var/ftp/pub    //ftp文件共享目录；</div></pre></td></tr></table></figure></p>
+<p>在这里，我们将CentOS安装光盘里面的软件包拷贝到yum仓库目录下，如有条件，也可以从公共的镜像站点下载相关软件包；<br><strong>yum仓库主要文件：</strong>  </p>
+<ul>
+<li>Packages&emsp;&emsp;//软件包目录</li>
+<li>repodata&emsp;&emsp;//存储众多rpm包和包相关元数据文件，yum客户端通过查找该文件来判断yum仓库内是否有自己需要的rpm包；  </li>
+<li>RPM-GPG-KEY-CentOS-7&emsp;&emsp;//软件包来源合法性校验KEY</li>
+</ul>
+<blockquote>
+<p>Note: 这三个文件是yum仓库的必备文件，安装光盘里面的其他文件可拷可不拷；  </p>
+</blockquote>
+<p>在FTP目录下创建相关版本的目录：<br>创建一个系统主目录“centos”，并在目录下创建版本目录“6”和“7”：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mkdir -pv /var/ftp/put/centos/&#123;6,7&#125;</span></div></pre></td></tr></table></figure></p>
+<p>分别挂载CentOS6、7系列的光盘，并将光盘里的内容拷贝到FTP对应的目录下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mount /dev/sr0 /media/cdrom</span></div><div class="line"><span class="comment">#cp -r /media/cdrom/* /var/ftp/pub/centos/6</span></div></pre></td></tr></table></figure></p>
+<p>测试：在浏览器里面输入ftp://yum仓库IP；<br>如果能够正常访问并看到我们从光盘里面拷贝的软件包，就说明yum仓库搭建成功；  </p>
+<h5 id="使用http方式搭建yum仓库"><a href="#使用http方式搭建yum仓库" class="headerlink" title="使用http方式搭建yum仓库"></a>使用http方式搭建yum仓库</h5><p>安装httpd软件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y httpd</span></div><div class="line"><span class="comment">#systemctl start httpd      //启动httpd软件；</span></div><div class="line"><span class="comment">#systemctl enable httpd     //设置httpd开机自启；</span></div></pre></td></tr></table></figure></p>
+<p>查看httpd软件安装生成的相关配置目录：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rpm -ql httpd</span></div><div class="line">/etc/httpd</div><div class="line">/etc/httpd/conf</div><div class="line">...省略若干...</div><div class="line">/usr/sbin/apachectl</div><div class="line">/usr/sbin/fcgistarter</div><div class="line">/usr/sbin/htcacheclean</div><div class="line">/usr/sbin/httpd</div><div class="line">/usr/sbin/rotatelogs</div><div class="line">/usr/sbin/suexec</div><div class="line">/var/cache/httpd</div><div class="line">/var/cache/httpd/proxy</div><div class="line">/var/lib/dav</div><div class="line">/var/log/httpd</div><div class="line">/var/www/cgi-bin</div><div class="line">/var/www/html       //项目存放目录</div></pre></td></tr></table></figure></p>
+<p>在/var/www/html下创建项目目录并将系统安装盘内容拷贝到相应目录下；（因为与FTP操作相同，在此省略相应操作）<br>下载<code>createrepo</code>，用来生成<code>repodata</code>文件。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">createrepo /var/www/html/centos/</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note:如果使用系统安装光盘里面的软件包，并且不再往里面添加其他rpm包的话，可以直接使用系统盘自带的<code>repodata</code>文件；如果需要往里面添加新的rpm包组，或者自己搭建第三方yum仓库的话，就需要用<code>createrepo</code>软件生成<code>repodata</code>文件，否则yum客户端就找不到新添加的rpm包；<br>至此，我们的yum仓库已经搭建好了。接下来我们配置客户端的yum源。  </p>
+</blockquote>
+<h4 id="配置yum源"><a href="#配置yum源" class="headerlink" title="配置yum源"></a>配置yum源</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>yum客户端配置文件有两个：<br>1、为所有仓库提供公共配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/yum.conf</div></pre></td></tr></table></figure></p>
+<p>2、为仓库的指向提供配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/yum.repos.d/*.repo</div></pre></td></tr></table></figure></p>
+<p>yum仓库指向的主要项有：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[repoID]</div><div class="line">name=<span class="string">"yum仓库名字"</span></div><div class="line">baseurl=<span class="string">"url指向yum仓库的系统相同版本目录下的repodata父目录即可"</span></div><div class="line">gpgcheck=&#123;<span class="number">1</span>|<span class="number">0</span>&#125;  //是否启用软件包来源合法性校验；</div><div class="line">gpgkey=<span class="string">"URL"</span>    //若启用校验，此处填写yum仓库的GPGKEY的url；</div><div class="line">enabled=&#123;<span class="number">0</span>|<span class="number">1</span>&#125;   //是否启用该yum源；<span class="number">0</span>为禁用，<span class="number">1</span>是启用；</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note：使用yum的时候会到<code>/etc/yum.repos.d/</code>目录下查找<code>*.repo</code>文件，所有我们把系统的默认文件删除或移动到其他目录下，自己新建一个<code>*.repo</code>文件。  </p>
+</blockquote>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>将yum源修改为阿里云的yum源：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mv /etc/yum.repos.d/* /tmp</span></div><div class="line"><span class="comment">#vim /etc/yum.repos.d/centos.repo</span></div><div class="line">[aliyun]</div><div class="line">name=aliyun_yum</div><div class="line">baseurl=https://mirrors.aliyun.com/centos/<span class="number">7.3</span><span class="number">.1611</span>/os/x86_64/</div><div class="line">gpgcheck=<span class="number">1</span></div><div class="line">gpgkey=https://mirrors.aliyun.com/centos/<span class="number">7.3</span><span class="number">.1611</span>/os/x86_64/RPM-GPG-KEY-CentOS<span class="number">-7</span></div><div class="line">enabled=<span class="number">1</span></div></pre></td></tr></table></figure></p>
+<p>验证修改是否已切换为阿里云的yum源：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum repolist</span></div><div class="line">Loaded plugins: fastestmirror</div><div class="line">aliyun                                                          					| <span class="number">3.6</span> kB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>     </div><div class="line">(<span class="number">1</span>/<span class="number">2</span>): aliyun/primary_db                                        					| <span class="number">5.6</span> MB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">06</span>     </div><div class="line">(<span class="number">2</span>/<span class="number">2</span>): aliyun/group_gz                                         						| <span class="number">155</span> kB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">15</span>     </div><div class="line">Loading mirror speeds <span class="keyword">from</span> cached hostfile</div><div class="line">repo id                                 	repo name                                   status</div><div class="line">aliyun                                  	aliyun_yum                                  <span class="number">9</span>,<span class="number">363</span></div><div class="line">repolist: <span class="number">9</span>,<span class="number">363</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
+        <p><span>发布时间:</span>2017-08-05, 11:28:37</p>
+        <p><span>最后更新:</span>2017-08-06, 16:58:01</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/05/yum仓库搭建和yum源配置/" title="yum仓库搭建和yum源配置">http://blog.wangbinzhou.com/2017/08/05/yum仓库搭建和yum源配置/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/08/05/yum仓库搭建和yum源配置/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">
+                    Linux常用命令总结：10、文件查找之locate和find
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搭建yum仓库"><span class="toc-number">2.</span> <span class="toc-text">搭建yum仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#环境说明"><span class="toc-number">2.1.</span> <span class="toc-text">环境说明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用ftp方式搭建yum仓库"><span class="toc-number">2.2.</span> <span class="toc-text">使用ftp方式搭建yum仓库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用http方式搭建yum仓库"><span class="toc-number">2.3.</span> <span class="toc-text">使用http方式搭建yum仓库</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置yum源"><span class="toc-number">3.</span> <span class="toc-text">配置yum源</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#介绍"><span class="toc-number">3.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#示例"><span class="toc-number">3.2.</span> <span class="toc-text">示例</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"yum仓库搭建和yum源配置　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/" title="下一篇: Linux常用命令总结：10、文件查找之locate和find">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">Linux常用命令总结：10、文件查找之locate和find</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017 WangBinZhou
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

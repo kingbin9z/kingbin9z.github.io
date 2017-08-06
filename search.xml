@@ -3,6 +3,63 @@
   
     
     <entry>
+      <title><![CDATA[yum仓库搭建和yum源配置]]></title>
+      <url>/2017/08/05/yum%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA%E5%92%8Cyum%E6%BA%90%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>yum(Yellowdog Update Modifier)是rpm的前端程序，能够很好的解决软件包的相关依赖性。在日常工作中，我们可以使用安装光盘作为yum源，也可以使用阿里、网易或者搜狐提供的公共yum源。<br>在公司的网络环境中如果有很多台Centos服务器，我们就很有必要自己搭建一个yum仓库来统一管理和安装软件。这样既保证了软件包的来源合法性，又能够节省出口带宽、提高效率。  </p>
+<h4 id="搭建yum仓库"><a href="#搭建yum仓库" class="headerlink" title="搭建yum仓库"></a>搭建yum仓库</h4><p>yum仓库有四种搭建方式，分别是：<code>http://</code>、<code>https://</code>、<code>ftp://</code>和<code>file://</code>；<br>在这里，我们分别使用<code>ftp://</code>和<code>http://</code>这两种方式进行仓库的搭建；  </p>
+<h5 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h5><ul>
+<li>yum仓库系统环境：CentOS 7.3  </li>
+<li>http服务软件：httpd-2.4.6-45.el7.centos.4.x86_64  </li>
+<li>ftp服务软件：vsftpd-3.0.2-21.el7.x86_64  </li>
+<li>为避免干扰，临时关闭了SElinux和Firewalld；<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#setenforce 0       //临时关闭SElinux</span></div><div class="line"><span class="comment">#getenforce         //检查SElinux状态</span></div><div class="line"> Permissive			//打印警告而不是强制执行。</div><div class="line"><span class="comment">#systemctl stop firewalld   //关闭Firewalld防火墙；</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="使用ftp方式搭建yum仓库"><a href="#使用ftp方式搭建yum仓库" class="headerlink" title="使用ftp方式搭建yum仓库"></a>使用ftp方式搭建yum仓库</h5><p>yum安装vsftpd软件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y vsftpd</span></div><div class="line"><span class="comment">#systemctl start vsftpd     //启动vsftpd服务；</span></div><div class="line"><span class="comment">#systemctl enable vsftpd    //设置vsftpd开机自启；</span></div></pre></td></tr></table></figure></p>
+<p>查看vsftpd安装后的相关目录：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rpm -ql vsftpd</span></div><div class="line">/etc/logrotate.d/vsftpd</div><div class="line">/etc/pam.d/vsftpd</div><div class="line">/etc/vsftpd/ftpusers</div><div class="line">/etc/vsftpd/user_list</div><div class="line">/etc/vsftpd/vsftpd.conf     //主配置文件</div><div class="line">    ...省略若干...</div><div class="line">/etc/vsftpd/vsftpd_conf_migrate.sh</div><div class="line">/usr/sbin/vsftpd</div><div class="line">/var/ftp/pub    //ftp文件共享目录；</div></pre></td></tr></table></figure></p>
+<p>在这里，我们将CentOS安装光盘里面的软件包拷贝到yum仓库目录下，如有条件，也可以从公共的镜像站点下载相关软件包；<br><strong>yum仓库主要文件：</strong>  </p>
+<ul>
+<li>Packages&emsp;&emsp;//软件包目录</li>
+<li>repodata&emsp;&emsp;//存储众多rpm包和包相关元数据文件，yum客户端通过查找该文件来判断yum仓库内是否有自己需要的rpm包；  </li>
+<li>RPM-GPG-KEY-CentOS-7&emsp;&emsp;//软件包来源合法性校验KEY</li>
+</ul>
+<blockquote>
+<p>Note: 这三个文件是yum仓库的必备文件，安装光盘里面的其他文件可拷可不拷；  </p>
+</blockquote>
+<p>在FTP目录下创建相关版本的目录：<br>创建一个系统主目录“centos”，并在目录下创建版本目录“6”和“7”：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mkdir -pv /var/ftp/put/centos/&#123;6,7&#125;</span></div></pre></td></tr></table></figure></p>
+<p>分别挂载CentOS6、7系列的光盘，并将光盘里的内容拷贝到FTP对应的目录下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mount /dev/sr0 /media/cdrom</span></div><div class="line"><span class="comment">#cp -r /media/cdrom/* /var/ftp/pub/centos/6</span></div></pre></td></tr></table></figure></p>
+<p>测试：在浏览器里面输入ftp://yum仓库IP；<br>如果能够正常访问并看到我们从光盘里面拷贝的软件包，就说明yum仓库搭建成功；  </p>
+<h5 id="使用http方式搭建yum仓库"><a href="#使用http方式搭建yum仓库" class="headerlink" title="使用http方式搭建yum仓库"></a>使用http方式搭建yum仓库</h5><p>安装httpd软件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y httpd</span></div><div class="line"><span class="comment">#systemctl start httpd      //启动httpd软件；</span></div><div class="line"><span class="comment">#systemctl enable httpd     //设置httpd开机自启；</span></div></pre></td></tr></table></figure></p>
+<p>查看httpd软件安装生成的相关配置目录：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rpm -ql httpd</span></div><div class="line">/etc/httpd</div><div class="line">/etc/httpd/conf</div><div class="line">...省略若干...</div><div class="line">/usr/sbin/apachectl</div><div class="line">/usr/sbin/fcgistarter</div><div class="line">/usr/sbin/htcacheclean</div><div class="line">/usr/sbin/httpd</div><div class="line">/usr/sbin/rotatelogs</div><div class="line">/usr/sbin/suexec</div><div class="line">/var/cache/httpd</div><div class="line">/var/cache/httpd/proxy</div><div class="line">/var/lib/dav</div><div class="line">/var/log/httpd</div><div class="line">/var/www/cgi-bin</div><div class="line">/var/www/html       //项目存放目录</div></pre></td></tr></table></figure></p>
+<p>在/var/www/html下创建项目目录并将系统安装盘内容拷贝到相应目录下；（因为与FTP操作相同，在此省略相应操作）<br>下载<code>createrepo</code>，用来生成<code>repodata</code>文件。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">createrepo /var/www/html/centos/</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note:如果使用系统安装光盘里面的软件包，并且不再往里面添加其他rpm包的话，可以直接使用系统盘自带的<code>repodata</code>文件；如果需要往里面添加新的rpm包组，或者自己搭建第三方yum仓库的话，就需要用<code>createrepo</code>软件生成<code>repodata</code>文件，否则yum客户端就找不到新添加的rpm包；<br>至此，我们的yum仓库已经搭建好了。接下来我们配置客户端的yum源。  </p>
+</blockquote>
+<h4 id="配置yum源"><a href="#配置yum源" class="headerlink" title="配置yum源"></a>配置yum源</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>yum客户端配置文件有两个：<br>1、为所有仓库提供公共配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/yum.conf</div></pre></td></tr></table></figure></p>
+<p>2、为仓库的指向提供配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/yum.repos.d/*.repo</div></pre></td></tr></table></figure></p>
+<p>yum仓库指向的主要项有：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[repoID]</div><div class="line">name=<span class="string">"yum仓库名字"</span></div><div class="line">baseurl=<span class="string">"url指向yum仓库的系统相同版本目录下的repodata父目录即可"</span></div><div class="line">gpgcheck=&#123;<span class="number">1</span>|<span class="number">0</span>&#125;  //是否启用软件包来源合法性校验；</div><div class="line">gpgkey=<span class="string">"URL"</span>    //若启用校验，此处填写yum仓库的GPGKEY的url；</div><div class="line">enabled=&#123;<span class="number">0</span>|<span class="number">1</span>&#125;   //是否启用该yum源；<span class="number">0</span>为禁用，<span class="number">1</span>是启用；</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note：使用yum的时候会到<code>/etc/yum.repos.d/</code>目录下查找<code>*.repo</code>文件，所有我们把系统的默认文件删除或移动到其他目录下，自己新建一个<code>*.repo</code>文件。  </p>
+</blockquote>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>将yum源修改为阿里云的yum源：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mv /etc/yum.repos.d/* /tmp</span></div><div class="line"><span class="comment">#vim /etc/yum.repos.d/centos.repo</span></div><div class="line">[aliyun]</div><div class="line">name=aliyun_yum</div><div class="line">baseurl=https://mirrors.aliyun.com/centos/<span class="number">7.3</span><span class="number">.1611</span>/os/x86_64/</div><div class="line">gpgcheck=<span class="number">1</span></div><div class="line">gpgkey=https://mirrors.aliyun.com/centos/<span class="number">7.3</span><span class="number">.1611</span>/os/x86_64/RPM-GPG-KEY-CentOS<span class="number">-7</span></div><div class="line">enabled=<span class="number">1</span></div></pre></td></tr></table></figure></p>
+<p>验证修改是否已切换为阿里云的yum源：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum repolist</span></div><div class="line">Loaded plugins: fastestmirror</div><div class="line">aliyun                                                          					| <span class="number">3.6</span> kB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>     </div><div class="line">(<span class="number">1</span>/<span class="number">2</span>): aliyun/primary_db                                        					| <span class="number">5.6</span> MB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">06</span>     </div><div class="line">(<span class="number">2</span>/<span class="number">2</span>): aliyun/group_gz                                         						| <span class="number">155</span> kB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">15</span>     </div><div class="line">Loading mirror speeds <span class="keyword">from</span> cached hostfile</div><div class="line">repo id                                 	repo name                                   status</div><div class="line">aliyun                                  	aliyun_yum                                  <span class="number">9</span>,<span class="number">363</span></div><div class="line">repolist: <span class="number">9</span>,<span class="number">363</span></div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> yum源和yum仓库 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Linux常用命令总结：10、文件查找之locate和find]]></title>
       <url>/2017/08/01/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93%EF%BC%9A10%E3%80%81%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E4%B9%8Blocate%E5%92%8Cfind/</url>
       <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;在日常生活中，有时候我们需要在Linux系统上查找符合特定条件的文件，可以通过命令<code>locate</code>和<code>find</code>来查找。<br><strong>区别：</strong><br><code>locate</code>: 非实时查找，每天会定时更新生成一个数据库，通过数据库查找；<br><code>find</code>: 实时查找；  </p>
