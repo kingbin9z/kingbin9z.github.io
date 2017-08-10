@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="简介&amp;emsp;&amp;emsp;正则表达式（REGEXP）是一类字符所书写的模式，其中很多字符不表示其字面意义，而是表达控制或通配等功能。通常被用来检索、替换那些符合某个规则的文本。   程序支持&amp;emsp;&amp;emsp;Grep,Sed,Awk,Vim, Less,Nginx,Varnish等;   分类&amp;emsp;&amp;emsp;基本正则表达式：BRE&amp;emsp;&amp;emsp;扩展正则表达式：ERE">
-<meta name="keywords" content="Linux命令">
+<meta name="description" content="问题描述我在自己电脑里使用VMware Warkstation里面装了几台CentOS虚拟机做实验，CentOS虚拟机装了两块网卡分别作为内网卡和外网卡。内网卡使用仅主机模式作为管理口让宿主机来连接。在保证能够正常ping通、而且延时都小于1ms的情况下，宿主机使用SecureCRT通过ssh连接虚拟机的时候，个别主机出现连接时间过长的问题，有一个虚拟机竟然需要等待10-30S！   人生苦短，时">
+<meta name="keywords" content="sshd">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux常用命令总结-9、正则表达式">
-<meta property="og:url" content="http://blog.wangbinzhou.com/2017/07/27/Linux常用命令总结-9、正则表达式/index.html">
+<meta property="og:title" content="内网ssh连接速度很慢的解决方案">
+<meta property="og:url" content="http://blog.wangbinzhou.com/2017/08/10/内网ssh连接速度很慢的解决方案/index.html">
 <meta property="og:site_name" content="WangBinZhou">
-<meta property="og:description" content="简介&amp;emsp;&amp;emsp;正则表达式（REGEXP）是一类字符所书写的模式，其中很多字符不表示其字面意义，而是表达控制或通配等功能。通常被用来检索、替换那些符合某个规则的文本。   程序支持&amp;emsp;&amp;emsp;Grep,Sed,Awk,Vim, Less,Nginx,Varnish等;   分类&amp;emsp;&amp;emsp;基本正则表达式：BRE&amp;emsp;&amp;emsp;扩展正则表达式：ERE">
+<meta property="og:description" content="问题描述我在自己电脑里使用VMware Warkstation里面装了几台CentOS虚拟机做实验，CentOS虚拟机装了两块网卡分别作为内网卡和外网卡。内网卡使用仅主机模式作为管理口让宿主机来连接。在保证能够正常ping通、而且延时都小于1ms的情况下，宿主机使用SecureCRT通过ssh连接虚拟机的时候，个别主机出现连接时间过长的问题，有一个虚拟机竟然需要等待10-30S！   人生苦短，时">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-01T01:23:03.311Z">
+<meta property="og:updated_time" content="2017-08-10T11:04:09.387Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux常用命令总结-9、正则表达式">
-<meta name="twitter:description" content="简介&amp;emsp;&amp;emsp;正则表达式（REGEXP）是一类字符所书写的模式，其中很多字符不表示其字面意义，而是表达控制或通配等功能。通常被用来检索、替换那些符合某个规则的文本。   程序支持&amp;emsp;&amp;emsp;Grep,Sed,Awk,Vim, Less,Nginx,Varnish等;   分类&amp;emsp;&amp;emsp;基本正则表达式：BRE&amp;emsp;&amp;emsp;扩展正则表达式：ERE">
+<meta name="twitter:title" content="内网ssh连接速度很慢的解决方案">
+<meta name="twitter:description" content="问题描述我在自己电脑里使用VMware Warkstation里面装了几台CentOS虚拟机做实验，CentOS虚拟机装了两块网卡分别作为内网卡和外网卡。内网卡使用仅主机模式作为管理口让宿主机来连接。在保证能够正常ping通、而且延时都小于1ms的情况下，宿主机使用SecureCRT通过ssh连接虚拟机的时候，个别主机出现连接时间过长的问题，有一个虚拟机竟然需要等待10-30S！   人生苦短，时">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Linux常用命令总结-9、正则表达式 | WangBinZhou</title>
+<title>内网ssh连接速度很慢的解决方案 | WangBinZhou</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -275,11 +275,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Linux常用命令总结-9、正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-内网ssh连接速度很慢的解决方案" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/07/27/Linux常用命令总结-9、正则表达式/" class="article-date">
-      <time datetime="2017-07-27T00:47:21.000Z" itemprop="datePublished">2017-07-27</time>
+      <a href="/2017/08/10/内网ssh连接速度很慢的解决方案/" class="article-date">
+      <time datetime="2017-08-10T00:24:48.000Z" itemprop="datePublished">2017-08-10</time>
 </a>
 
 
@@ -294,7 +294,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Linux常用命令总结-9、正则表达式
+      内网ssh连接速度很慢的解决方案
     </h1>
   
 
@@ -303,13 +303,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sshd/">sshd</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -319,25 +319,16 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;<strong>正则表达式（REGEXP）</strong>是一类字符所书写的模式，其中很多字符不表示其字面意义，而是表达控制或通配等功能。通常被用来检索、替换那些符合某个规则的文本。  </p>
-<h4 id="程序支持"><a href="#程序支持" class="headerlink" title="程序支持"></a>程序支持</h4><p>&emsp;&emsp;<em>Grep,Sed,Awk,Vim, Less,Nginx,Varnish等;</em>  </p>
-<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><p>&emsp;&emsp;基本正则表达式：BRE<br>&emsp;&emsp;扩展正则表达式：ERE  </p>
-<h4 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h4><p>&emsp;&emsp;不表示其字面意义，而用于额外功能性描述；<br>&emsp;&emsp;<strong>元字符分类:</strong>字符匹配、匹配次数、位置锚定，分组；  </p>
-<h5 id="基本正则表达式的元字符："><a href="#基本正则表达式的元字符：" class="headerlink" title="基本正则表达式的元字符："></a>基本正则表达式的元字符：</h5><h6 id="字符匹配："><a href="#字符匹配：" class="headerlink" title="字符匹配："></a>字符匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">. 匹配任意单个字符</div><div class="line">[] 匹配指定范围内的任意单个字符</div><div class="line">[^] 匹配指定范围外的任意单个字符</div><div class="line">[0-9],[:digit:] 十进制数字 </div><div class="line">[a-z],[:lower:] 小写字母</div><div class="line">[A-Z],[:upper:] 大写字母</div><div class="line">[:alpha:] 代表任何英文大小写字符，亦即 A-Z, a-z</div><div class="line">[:alnum:] 字母和数字</div><div class="line">[:space:] 水平和垂直的空白字符（比[:blank:]包含的范围广）</div><div class="line">[:blank:] 空白字符（空格和制表符）</div><div class="line">[:cntrl:] 不可打印的控制字符（退格、删除、警铃...）</div><div class="line">[:xdigit:]十六进制数字</div><div class="line">[:graph:] 可打印的非空白字符</div><div class="line">[:<span class="built_in">print</span>:] 可打印字符</div><div class="line">[:punct:] 标点符号</div></pre></td></tr></table></figure>
-<h6 id="匹配次数："><a href="#匹配次数：" class="headerlink" title="匹配次数："></a>匹配次数：</h6><p>&emsp;&emsp;<strong>作用:</strong> 用于实现指定其前面的字符所能够出现的次数.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">* 匹配前面的字符任意次，包括0次(贪婪模式：尽可能长的匹配)</div><div class="line">.* 任意长度的任意字符</div><div class="line">\? 匹配其前面的字符0或1次</div><div class="line">\+ 匹配其前面的字符至少1次</div><div class="line">\&#123;n\&#125; 匹配前面的字符n次</div><div class="line">\&#123;m,n\&#125; 匹配前面的字符至少m次，至多n次</div><div class="line">\&#123;,n\&#125; 匹配前面的字符至多n次</div><div class="line">\&#123;n,\&#125; 匹配前面的字符至少n次</div></pre></td></tr></table></figure></p>
-<h6 id="位置锚定："><a href="#位置锚定：" class="headerlink" title="位置锚定："></a>位置锚定：</h6><p>&emsp;&emsp;<strong>作用:</strong> 定位出现的位置；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">^ 行首锚定，写在模式的最左侧</div><div class="line">$ 行尾锚定，写在模式的最右侧</div><div class="line">^PATTERN$ 用于模式匹配整行</div><div class="line">^$ 空行</div><div class="line">^[[:space:]]*$ 空白行</div><div class="line">\&lt; 或 \b 词首锚定，用于单词模式的左侧   </div><div class="line">\&gt; 或 \b 词尾锚定；用于单词模式的右侧</div><div class="line">\&lt;PATTERN\&gt; 匹配整个单词</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>Note:不包含特殊字符的连续字符组成的串叫单词：</p>
-</blockquote>
-<h6 id="分组："><a href="#分组：" class="headerlink" title="分组："></a>分组：</h6><p>&emsp;&emsp;<code>\(\)</code>将一个或多个字符捆绑在一起，当作一个整体进行处理.<br>&emsp;&emsp;<strong>如：</strong> <code>\(root\)\+</code></p>
-<p>&emsp;&emsp;分组括号中的模式匹配到的内容会被正则表达式引擎记录于内部的变量中,这些变量的命名方式为:<code>\1, \2, \3, ...</code><br>&emsp;&emsp;<code>\1</code> 表示从左侧起第一个左括号以及与之匹配右括号之间的模式所匹配到的字符<br><strong>示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">\(string1\+\(string2\)*\)</div><div class="line">\1 ： string1\+\(string2\)*</div><div class="line">\2 ： string2</div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<strong>后向引用：</strong>引用前面的分组括号中的模式所匹配字符，而非模式本身.  </p>
-<h6 id="或者："><a href="#或者：" class="headerlink" title="或者：\|"></a>或者：<code>\|</code></h6><p>&emsp;&emsp;示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a\|b: a或b C\|cat: C或cat \(C\|c\)at:Cat或cat</div></pre></td></tr></table></figure></p>
-<h5 id="扩展正则表达式的元字符："><a href="#扩展正则表达式的元字符：" class="headerlink" title="扩展正则表达式的元字符："></a>扩展正则表达式的元字符：</h5><h6 id="字符匹配：-1"><a href="#字符匹配：-1" class="headerlink" title="字符匹配："></a>字符匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">. 任意单个字符</div><div class="line">[] 指定范围的字符</div><div class="line">[^] 不在指定范围的字符</div></pre></td></tr></table></figure>
-<h6 id="次数匹配："><a href="#次数匹配：" class="headerlink" title="次数匹配："></a>次数匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">*：匹配前面字符任意次</div><div class="line">?: 0或1次</div><div class="line">+： 1次或多次</div><div class="line">&#123;m&#125;：匹配m次</div><div class="line">&#123;m,n&#125;：至少m，至多n次</div></pre></td></tr></table></figure>
-<h6 id="位置锚定：-1"><a href="#位置锚定：-1" class="headerlink" title="位置锚定："></a>位置锚定：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">^ :行首</div><div class="line">$ :行尾</div><div class="line">\&lt;, \b :语首</div><div class="line">\&gt;, \b :语尾</div></pre></td></tr></table></figure>
-<h6 id="分组：-1"><a href="#分组：-1" class="headerlink" title="分组："></a>分组：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">()</div><div class="line">后向引用： \1, \2, ...</div></pre></td></tr></table></figure>
-<h6 id="或者：-1"><a href="#或者：-1" class="headerlink" title="或者："></a>或者：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a|b: a或b</div><div class="line">C|cat: C或cat</div><div class="line">(C|c)at:Cat或cat</div></pre></td></tr></table></figure>
+        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>我在自己电脑里使用VMware Warkstation里面装了几台CentOS虚拟机做实验，CentOS虚拟机装了两块网卡分别作为内网卡和外网卡。内网卡使用<code>仅主机模式</code>作为管理口让宿主机来连接。在保证能够正常ping通、而且延时都小于1ms的情况下，宿主机使用SecureCRT通过ssh连接虚拟机的时候，个别主机出现连接时间过长的问题，有一个虚拟机竟然需要等待10-30S！  </p>
+<p>人生苦短，时间宝贵，解决这个问题刻不容缓！  </p>
+<h4 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h4><p>通过其他主机通过ssh连接问题主机：<br>使用<code>ssh</code>命令，通过<code>-v</code>参数来显示连接的详细过程：<br><code>v</code>最多能能加三个，加的越多，显示的越详细；<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]# ssh -v 192.168.25.7</div><div class="line">OpenSSH_5.3p1, OpenSSL 1.0.1e-fips 11 Feb 2013</div><div class="line">debug1: Reading configuration data /etc/ssh/ssh_config</div><div class="line">debug1: Applying options for *</div><div class="line">debug1: Connecting to 192.168.25.7 [192.168.25.7] port 22.</div><div class="line">debug1: Connection established.</div><div class="line">debug1: permanently_set_uid: 0/0</div><div class="line">debug1: identity file /root/.ssh/identity type -1</div><div class="line">debug1: identity file /root/.ssh/identity-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_rsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_rsa-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_dsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_dsa-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_ecdsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_ecdsa-cert type -1</div><div class="line">debug1: Remote protocol version 2.0, remote software version OpenSSH_6.6.1</div><div class="line">debug1: match: OpenSSH_6.6.1 pat OpenSSH*</div><div class="line">debug1: Enabling compatibility mode for protocol 2.0</div><div class="line">debug1: Local version string SSH-2.0-OpenSSH_5.3</div><div class="line">debug1: SSH2_MSG_KEXINIT sent</div><div class="line">debug1: SSH2_MSG_KEXINIT received</div><div class="line">debug1: kex: server-&gt;client aes128-ctr hmac-sha1 none</div><div class="line">debug1: kex: client-&gt;server aes128-ctr hmac-sha1 none</div><div class="line">debug1: SSH2_MSG_KEX_DH_GEX_REQUEST(1024&lt;2048&lt;8192) sent</div><div class="line">debug1: expecting SSH2_MSG_KEX_DH_GEX_GROUP</div><div class="line">debug1: SSH2_MSG_KEX_DH_GEX_INIT sent</div><div class="line">debug1: expecting SSH2_MSG_KEX_DH_GEX_REPLY</div><div class="line">debug1: Host '192.168.25.7' is known and matches the RSA host key.</div><div class="line">debug1: Found key in /root/.ssh/known_hosts:1</div><div class="line">debug1: ssh_rsa_verify: signature correct</div><div class="line">debug1: SSH2_MSG_NEWKEYS sent</div><div class="line">debug1: expecting SSH2_MSG_NEWKEYS</div><div class="line">debug1: SSH2_MSG_NEWKEYS received</div><div class="line">debug1: SSH2_MSG_SERVICE_REQUEST sent</div><div class="line">debug1: SSH2_MSG_SERVICE_ACCEPT received</div><div class="line">debug1: Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mic,password</div><div class="line">debug1: Next authentication method: gssapi-keyex</div><div class="line">debug1: No valid Key exchange context</div><div class="line">debug1: Next authentication method: gssapi-with-mic</div><div class="line">debug1: Unspecified GSS failure.  Minor code may provide more information</div><div class="line">Cannot determine realm for numeric host address</div><div class="line"></div><div class="line">debug1: Unspecified GSS failure.  Minor code may provide more information</div><div class="line">Cannot determine realm for numeric host address</div><div class="line"></div><div class="line">debug1: Next authentication method: publickey</div><div class="line">debug1: Trying private key: /root/.ssh/identity</div><div class="line">debug1: Trying private key: /root/.ssh/id_rsa</div><div class="line">debug1: Trying private key: /root/.ssh/id_dsa</div><div class="line">debug1: Trying private key: /root/.ssh/id_ecdsa</div><div class="line">debug1: Next authentication method: password</div><div class="line">root@192.168.25.7's password: </div><div class="line">debug1: Authentication succeeded (password).</div><div class="line">debug1: channel 0: new [client-session]</div><div class="line">debug1: Requesting no-more-sessions@openssh.com</div><div class="line">debug1: Entering interactive session.</div><div class="line">debug1: Sending environment.</div><div class="line">debug1: Sending env LANG = en_US.UTF-8</div><div class="line">Last login: Thu Aug 10 15:53:06 2017 from gateway</div><div class="line">[root@CentOS7 ~]#</div></pre></td></tr></table></figure></p>
+<p>可以看到如下的错误信息：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">debug1: Next authentication method: gssapi-<span class="keyword">with</span>-mic</div><div class="line">debug1: An invalid name was supplied</div><div class="line">Cannot determine realm <span class="keyword">for</span> numeric host address</div></pre></td></tr></table></figure></p>
+<p>从<code>gssapi-with-mic</code>这一行开始，就开始耗费时间了。  </p>
+<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><p>修改<code>/etc/ssh/sshd_config</code>文件如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim /etc/ssh/sshd_config</div><div class="line">UseDNS no</div><div class="line">GSSAPIAuthentication no</div></pre></td></tr></table></figure></p>
+<p>找到上面的两个字段并修改，然后重启sshd服务：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl restart sshd</div></pre></td></tr></table></figure></p>
+<p>参数说明：<br><code>UseDNS</code>:指定 是否应该对远程主机名进行反向解析，以检查此主机名是否与其IP地址真实对应。默认值为<code>yes</code>,改为<code>no</code>。<br><code>GSSAPIAuthentication</code>:是否允许使用基于 GSSAPI 的用户认证。默认值为<code>yes</code>,改为<code>no</code>。  </p>
+<p>重启sshd服务后，再连接，应该就很快了！</p>
+
       
     </div>
     
@@ -345,13 +336,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></p>
+        <p><span>本文标题:</span><a href="/2017/08/10/内网ssh连接速度很慢的解决方案/">内网ssh连接速度很慢的解决方案</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
-        <p><span>发布时间:</span>2017-07-27, 08:47:21</p>
-        <p><span>最后更新:</span>2017-08-01, 09:23:03</p>
+        <p><span>发布时间:</span>2017-08-10, 08:24:48</p>
+        <p><span>最后更新:</span>2017-08-10, 19:04:09</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/07/27/Linux常用命令总结-9、正则表达式/" title="Linux常用命令总结-9、正则表达式">http://blog.wangbinzhou.com/2017/07/27/Linux常用命令总结-9、正则表达式/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/07/27/Linux常用命令总结-9、正则表达式/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/10/内网ssh连接速度很慢的解决方案/" title="内网ssh连接速度很慢的解决方案">http://blog.wangbinzhou.com/2017/08/10/内网ssh连接速度很慢的解决方案/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/08/10/内网ssh连接速度很慢的解决方案/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -363,16 +354,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/07/27/使用Squid-Stunnel代理上网/">
-                    使用Squid+Stunnel代理上网
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">
-                    Linux常用命令总结-8、vim文本编辑器
+                <a href="/2017/08/05/yum仓库搭建和yum源配置/">
+                    yum仓库搭建和yum源配置
                 </a>
             </div>
         
@@ -384,7 +369,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#程序支持"><span class="toc-number">2.</span> <span class="toc-text">程序支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分类"><span class="toc-number">3.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#元字符"><span class="toc-number">4.</span> <span class="toc-text">元字符</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#基本正则表达式的元字符："><span class="toc-number">4.1.</span> <span class="toc-text">基本正则表达式的元字符：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#字符匹配："><span class="toc-number">4.1.1.</span> <span class="toc-text">字符匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#匹配次数："><span class="toc-number">4.1.2.</span> <span class="toc-text">匹配次数：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#位置锚定："><span class="toc-number">4.1.3.</span> <span class="toc-text">位置锚定：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分组："><span class="toc-number">4.1.4.</span> <span class="toc-text">分组：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#或者："><span class="toc-number">4.1.5.</span> <span class="toc-text">或者：\|</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#扩展正则表达式的元字符："><span class="toc-number">4.2.</span> <span class="toc-text">扩展正则表达式的元字符：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#字符匹配：-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">字符匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#次数匹配："><span class="toc-number">4.2.2.</span> <span class="toc-text">次数匹配：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#位置锚定：-1"><span class="toc-number">4.2.3.</span> <span class="toc-text">位置锚定：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分组：-1"><span class="toc-number">4.2.4.</span> <span class="toc-text">分组：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#或者：-1"><span class="toc-number">4.2.5.</span> <span class="toc-text">或者：</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题描述"><span class="toc-number">1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题分析"><span class="toc-number">2.</span> <span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决方法"><span class="toc-number">3.</span> <span class="toc-text">解决方法</span></a></li></ol>
         
     </div>
     <style>
@@ -420,7 +405,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Linux常用命令总结-9、正则表达式　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"内网ssh连接速度很慢的解决方案　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -440,15 +425,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/27/使用Squid-Stunnel代理上网/" title="上一篇: 使用Squid+Stunnel代理上网">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/" title="下一篇: Linux常用命令总结-8、vim文本编辑器">
+            <a href="/2017/08/05/yum仓库搭建和yum源配置/" title="下一篇: yum仓库搭建和yum源配置">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -199,7 +199,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li></ul>
                     </div>
                 </section>
                 
@@ -279,6 +279,78 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-内网ssh连接速度很慢的解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/10/内网ssh连接速度很慢的解决方案/" class="article-date">
+      <time datetime="2017-08-10T00:24:48.000Z" itemprop="datePublished">2017-08-10</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/10/内网ssh连接速度很慢的解决方案/">内网ssh连接速度很慢的解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>我在自己电脑里使用VMware Warkstation里面装了几台CentOS虚拟机做实验，CentOS虚拟机装了两块网卡分别作为内网卡和外网卡。内网卡使用<code>仅主机模式</code>作为管理口让宿主机来连接。在保证能够正常ping通、而且延时都小于1ms的情况下，宿主机使用SecureCRT通过ssh连接虚拟机的时候，个别主机出现连接时间过长的问题，有一个虚拟机竟然需要等待10-30S！  </p>
+<p>人生苦短，时间宝贵，解决这个问题刻不容缓！  </p>
+<h4 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h4><p>通过其他主机通过ssh连接问题主机：<br>使用<code>ssh</code>命令，通过<code>-v</code>参数来显示连接的详细过程：<br><code>v</code>最多能能加三个，加的越多，显示的越详细；<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]# ssh -v 192.168.25.7</div><div class="line">OpenSSH_5.3p1, OpenSSL 1.0.1e-fips 11 Feb 2013</div><div class="line">debug1: Reading configuration data /etc/ssh/ssh_config</div><div class="line">debug1: Applying options for *</div><div class="line">debug1: Connecting to 192.168.25.7 [192.168.25.7] port 22.</div><div class="line">debug1: Connection established.</div><div class="line">debug1: permanently_set_uid: 0/0</div><div class="line">debug1: identity file /root/.ssh/identity type -1</div><div class="line">debug1: identity file /root/.ssh/identity-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_rsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_rsa-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_dsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_dsa-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_ecdsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_ecdsa-cert type -1</div><div class="line">debug1: Remote protocol version 2.0, remote software version OpenSSH_6.6.1</div><div class="line">debug1: match: OpenSSH_6.6.1 pat OpenSSH*</div><div class="line">debug1: Enabling compatibility mode for protocol 2.0</div><div class="line">debug1: Local version string SSH-2.0-OpenSSH_5.3</div><div class="line">debug1: SSH2_MSG_KEXINIT sent</div><div class="line">debug1: SSH2_MSG_KEXINIT received</div><div class="line">debug1: kex: server-&gt;client aes128-ctr hmac-sha1 none</div><div class="line">debug1: kex: client-&gt;server aes128-ctr hmac-sha1 none</div><div class="line">debug1: SSH2_MSG_KEX_DH_GEX_REQUEST(1024&lt;2048&lt;8192) sent</div><div class="line">debug1: expecting SSH2_MSG_KEX_DH_GEX_GROUP</div><div class="line">debug1: SSH2_MSG_KEX_DH_GEX_INIT sent</div><div class="line">debug1: expecting SSH2_MSG_KEX_DH_GEX_REPLY</div><div class="line">debug1: Host '192.168.25.7' is known and matches the RSA host key.</div><div class="line">debug1: Found key in /root/.ssh/known_hosts:1</div><div class="line">debug1: ssh_rsa_verify: signature correct</div><div class="line">debug1: SSH2_MSG_NEWKEYS sent</div><div class="line">debug1: expecting SSH2_MSG_NEWKEYS</div><div class="line">debug1: SSH2_MSG_NEWKEYS received</div><div class="line">debug1: SSH2_MSG_SERVICE_REQUEST sent</div><div class="line">debug1: SSH2_MSG_SERVICE_ACCEPT received</div><div class="line">debug1: Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mic,password</div><div class="line">debug1: Next authentication method: gssapi-keyex</div><div class="line">debug1: No valid Key exchange context</div><div class="line">debug1: Next authentication method: gssapi-with-mic</div><div class="line">debug1: Unspecified GSS failure.  Minor code may provide more information</div><div class="line">Cannot determine realm for numeric host address</div><div class="line"></div><div class="line">debug1: Unspecified GSS failure.  Minor code may provide more information</div><div class="line">Cannot determine realm for numeric host address</div><div class="line"></div><div class="line">debug1: Next authentication method: publickey</div><div class="line">debug1: Trying private key: /root/.ssh/identity</div><div class="line">debug1: Trying private key: /root/.ssh/id_rsa</div><div class="line">debug1: Trying private key: /root/.ssh/id_dsa</div><div class="line">debug1: Trying private key: /root/.ssh/id_ecdsa</div><div class="line">debug1: Next authentication method: password</div><div class="line">root@192.168.25.7's password: </div><div class="line">debug1: Authentication succeeded (password).</div><div class="line">debug1: channel 0: new [client-session]</div><div class="line">debug1: Requesting no-more-sessions@openssh.com</div><div class="line">debug1: Entering interactive session.</div><div class="line">debug1: Sending environment.</div><div class="line">debug1: Sending env LANG = en_US.UTF-8</div><div class="line">Last login: Thu Aug 10 15:53:06 2017 from gateway</div><div class="line">[root@CentOS7 ~]#</div></pre></td></tr></table></figure></p>
+<p>可以看到如下的错误信息：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">debug1: Next authentication method: gssapi-<span class="keyword">with</span>-mic</div><div class="line">debug1: An invalid name was supplied</div><div class="line">Cannot determine realm <span class="keyword">for</span> numeric host address</div></pre></td></tr></table></figure></p>
+<p>从<code>gssapi-with-mic</code>这一行开始，就开始耗费时间了。  </p>
+<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><p>修改<code>/etc/ssh/sshd_config</code>文件如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim /etc/ssh/sshd_config</div><div class="line">UseDNS no</div><div class="line">GSSAPIAuthentication no</div></pre></td></tr></table></figure></p>
+<p>找到上面的两个字段并修改，然后重启sshd服务：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl restart sshd</div></pre></td></tr></table></figure></p>
+<p>参数说明：<br><code>UseDNS</code>:指定 是否应该对远程主机名进行反向解析，以检查此主机名是否与其IP地址真实对应。默认值为<code>yes</code>,改为<code>no</code>。<br><code>GSSAPIAuthentication</code>:是否允许使用基于 GSSAPI 的用户认证。默认值为<code>yes</code>,改为<code>no</code>。  </p>
+<p>重启sshd服务后，再连接，应该就很快了！</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sshd/">sshd</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-yum仓库搭建和yum源配置" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -943,69 +1015,6 @@
       
 
       
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Linux常用命令总结-2、文件管理类命令" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/" class="article-date">
-      <time datetime="2017-07-25T01:31:58.000Z" itemprop="datePublished">2017-07-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
-    </div>
-
       
       <div class="clearfix"></div>
     </div>
