@@ -280,6 +280,148 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Linux常用命令总结-11、Linux计划任务" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/24/Linux常用命令总结-11、Linux计划任务/" class="article-date">
+      <time datetime="2017-08-24T06:56:59.000Z" itemprop="datePublished">2017-08-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/24/Linux常用命令总结-11、Linux计划任务/">Linux常用命令总结-11、Linux计划任务</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>在生产环境中，我们经常需要在某个时间点执行某个操作，或者需要周期性的重复执行某个操作，这时候我们就需要用到计划任务。  </p>
+<h4 id="计划任务分类"><a href="#计划任务分类" class="headerlink" title="计划任务分类"></a>计划任务分类</h4><ul>
+<li><p>未来的某个时间点执行一次任务</p>
+<blockquote>
+<p>at: 管理员指定时间执行执行指定的任务；<br>batch: 系统自行选择空闲时间去执行此处指定的任务；  </p>
+</blockquote>
+</li>
+<li><p>周期性运行某个任务  </p>
+<blockquote>
+<p>cron  </p>
+</blockquote>
+</li>
+</ul>
+<h4 id="Linux的任务计划"><a href="#Linux的任务计划" class="headerlink" title="Linux的任务计划"></a>Linux的任务计划</h4><h5 id="at任务"><a href="#at任务" class="headerlink" title="at任务"></a>at任务</h5><p>用户可以通过使用at命令在指定的某个时间点执行一次任务。  </p>
+<h6 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h6><ul>
+<li><code>at</code>是一个外部命令，由软件包<code>at</code>提供，所以需要提供atd服务才能实现at任务。  </li>
+<li>at命令详解：<br>使用格式：  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at [option] TIME</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>常用选项：<br><code>-V</code>: 显示版本信息:<br><code>-q QUEUE</code><br><code>-l</code>: 列出指定队列中等待运行的作业；相当于atq<br><code>-d</code>: 删除指定的作业；相当于atrm<br><code>-c</code>: 查看具体作业任务<br><code>-f /path/from/somefile</code>：从指定的文件中读取任务<br><code>-m</code>:当任务被完成之后，将给用户发送邮件，即使没有标准输出  </p>
+<p>TIME:<br>定义执行at这项任务的时间<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">HH:MM [YYYY-mm-dd]</div><div class="line">noon:中午十二点)  </div><div class="line">midnight:半夜<span class="number">12</span>点  </div><div class="line">teatime:下午四点</div><div class="line">tomorrow:明天</div><div class="line">now+<span class="comment">#&#123;minutes,hours,days,OR weeks&#125;</span></div></pre></td></tr></table></figure></p>
+<p>at时间格式：  </p>
+<ul>
+<li><code>HH:MM 02:00</code><br>在今日的 HH:MM 进行，若该时刻已过，则明天此时执行任务  </li>
+<li><code>HH:MM YYYY-MM-DD 02:00 2016-09-20</code><br>规定在某年某月的某一天的特殊时刻进行该项任务  </li>
+<li><p><code>HH:MM[am|pm] [Month] [Date]</code><br>例如：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">04</span>pm March <span class="number">17</span></div><div class="line"><span class="number">17</span>:<span class="number">20</span> tomorrow</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>HH:MM[am|pm] + number [minutes|hours|days|weeks]</code><br>在某个时间点再加几个时间后才进行该项任务<br>例如：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">now + <span class="number">5</span> minutes</div><div class="line"><span class="number">02</span>pm + <span class="number">3</span> days</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h6 id="相关配置文件"><a href="#相关配置文件" class="headerlink" title="相关配置文件"></a>相关配置文件</h6><ol>
+<li><code>/var/spool/at</code><br>at计划任务的队列存放在该目录中  </li>
+<li><code>/etc/at.{allow,deny}</code><br><code>/etc/at.allow</code>默认不存在，只有该文件中的用户才能执行at命令<br><code>/etc/at.deny</code>默认存在，拒绝该文件中用户执行at命令， 而没有在at.deny 文件中的使用者则可执行;  <blockquote>
+<p>注意：如果两个文件都不存在，只有 root 可以执行 at 命令  </p>
+</blockquote>
+</li>
+</ol>
+<h6 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h6><ul>
+<li><p>交互式<br>设置在13:00在屏幕上输出“hello,world!”,并查看当前存在的计划任务  </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]# at 13:00</div><div class="line">at&gt; echo hello,world!       //按Ctrl+D保存并退出at计划任务；</div><div class="line">at&gt; &lt;EOT&gt;</div><div class="line">job 3 at 2017-08-24 13:00</div><div class="line">Can't open /var/run/atd.pid to signal atd. No atd running?</div><div class="line">[root@MyCentOS6 ~]# at -l</div><div class="line">1       2017-08-24 13:00 a root</div></pre></td></tr></table></figure>
+</li>
+<li><p>输入重定向<br>设置14:00在屏幕上输出“wahaha”<br>使用<code>echo</code>重定向：  </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]# echo "echo wahaha" | at 14:00</div><div class="line">job 4 at 2017-08-24 14:00</div><div class="line">Can't open /var/run/atd.pid to signal atd. No atd running?</div><div class="line">[root@MyCentOS6 ~]# at -l</div><div class="line">2       2017-08-24 14:00 a root</div><div class="line">1       2017-08-24 13:00 a root</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用<code>EOF</code>重定向:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment"># at 15:00 &lt;&lt;EOF</span></div><div class="line">&gt; echo wahaha</div><div class="line">&gt; EOF</div><div class="line">job <span class="number">7</span> at <span class="number">2017</span><span class="number">-08</span><span class="number">-24</span> <span class="number">15</span>:<span class="number">00</span></div><div class="line">Can<span class="string">'t open /var/run/atd.pid to signal atd. No atd running?</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>使用<code>at -f /path/to/somefile</code><br>设置15:00运行/root/at/at.sh脚本  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at -f /root/bin/at.sh <span class="number">15</span>:<span class="number">00</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>Note: 作业的执行结果以邮件通知给相关用户  </p>
+</blockquote>
+<h5 id="batch"><a href="#batch" class="headerlink" title="batch"></a>batch</h5><p>让系统自行选择空闲时间去执行此处指定的任务  </p>
+<h4 id="周期性计划任务cron"><a href="#周期性计划任务cron" class="headerlink" title="周期性计划任务cron"></a>周期性计划任务cron</h4><h5 id="相关的程序包"><a href="#相关的程序包" class="headerlink" title="相关的程序包"></a>相关的程序包</h5><ul>
+<li><code>cronie</code>：主程序包，提供了crond守护进程及相关辅助工具；  </li>
+<li><code>cronie-anacron</code>: cronie的补充流程；用于监控cronie任务执行状态；如cronie中的任务在过去该运行的的时间点未能正常运行，则anacron会随后启动一次此任务；  </li>
+<li><code>crontabs</code>: 包含CentOS提供系统维护任务；<br><strong>确保crond任务处于运行状态</strong>  </li>
+</ul>
+<p>CentOS 6:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment"># service crond status</span></div><div class="line">crond (pid  <span class="number">1328</span>) <span class="keyword">is</span> running...</div></pre></td></tr></table></figure></p>
+<p>CentOS 7:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#systemctl status crond</span></div><div class="line">● crond.service - Command Scheduler</div><div class="line">   Loaded: loaded (/usr/lib/systemd/system/crond.service; enabled; vendor preset: enabled)</div><div class="line">   Active: active (running) since Thu <span class="number">2017</span><span class="number">-08</span><span class="number">-24</span> <span class="number">14</span>:<span class="number">07</span>:<span class="number">03</span> CST; <span class="number">11</span>min ago</div><div class="line"> Main PID: <span class="number">674</span> (crond)</div><div class="line">   CGroup: /system.slice/crond.service</div><div class="line">           └─<span class="number">674</span> /usr/sbin/crond -n</div></pre></td></tr></table></figure></p>
+<h5 id="周期性计划任务分类"><a href="#周期性计划任务分类" class="headerlink" title="周期性计划任务分类"></a>周期性计划任务分类</h5><p>计划要周期性执行的任务提交给crond，由其来实现到点运行。  </p>
+<h6 id="系统cron任务"><a href="#系统cron任务" class="headerlink" title="系统cron任务"></a>系统cron任务</h6><p>系统维护作业。<br>相关配置文件<code>/etc/crontab</code>,详情参考<code>man 5 crontab</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 log]<span class="comment"># ll cron</span></div><div class="line">-rw-------. <span class="number">1</span> root root <span class="number">46145</span> Aug <span class="number">24</span> <span class="number">10</span>:<span class="number">10</span> cron</div><div class="line">[root@MyCentOS6 log]<span class="comment"># cat /etc/crontab </span></div><div class="line">SHELL=/bin/bash</div><div class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</div><div class="line">MAILTO=root</div><div class="line">HOME=/</div><div class="line"></div><div class="line"><span class="comment"># For details see man 4 crontabs</span></div><div class="line"></div><div class="line"><span class="comment"># Example of job definition:</span></div><div class="line"><span class="comment"># .---------------- minute (0 - 59)</span></div><div class="line"><span class="comment"># |  .------------- hour (0 - 23)</span></div><div class="line"><span class="comment"># |  |  .---------- day of month (1 - 31)</span></div><div class="line"><span class="comment"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span></div><div class="line"><span class="comment"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span></div><div class="line"><span class="comment"># |  |  |  |  |</span></div><div class="line"><span class="comment"># *  *  *  *  * user-name command to be executed</span></div></pre></td></tr></table></figure></p>
+<p><em>例如：晚上9点10分运行echo命令</em><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">10</span> <span class="number">21</span> * * * centos /bin/echo <span class="string">"Howdy!"</span></div></pre></td></tr></table></figure></p>
+<p>系统的计划任务有：<br><code>/etc/crontab</code><br><code>/etc/cron.d/</code>: 配置文件<br><code>/etc/cron.hourly/</code>: 脚本<br><code>/etc/cron.daily/</code>: 脚本<br><code>/etc/cron.weekly/</code>: 脚本<br><code>/etc/cron.monthly/</code>:脚本</p>
+<h6 id="用户cron任务"><a href="#用户cron任务" class="headerlink" title="用户cron任务"></a>用户cron任务</h6><p>使用crontab命令  </p>
+<h5 id="cron任务时间表示法"><a href="#cron任务时间表示法" class="headerlink" title="cron任务时间表示法"></a>cron任务时间表示法</h5><ol>
+<li>特定值：<br>给定时间点有限取值范围内的值；</li>
+<li><code>*</code><br>给定时间点上有效取值范围内的所有值；表示”每…”;  </li>
+<li>离散取值：<code>#，#，#</code></li>
+<li>连续取值：-，例如：<code>#-#</code>  </li>
+<li>在指定时间范围上，定义歩长<code>/#</code></li>
+</ol>
+<p><em>例如：每3小时echo命令：</em><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">0</span> */<span class="number">3</span> * * * gentoo /bin/echo <span class="string">"howdy!"</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：day 和 week如果都存在时，两者为或的关系，day 或 week都会执行。  </p>
+</blockquote>
+<p>特殊时间格式表示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@reboot         Run once after reboot.</span></div><div class="line"><span class="meta">@yearly         0 0 1 1 *</span></div><div class="line"><span class="meta">@annually       0 0 1 1 *</span></div><div class="line"><span class="meta">@monthly        0 0 1 * *</span></div><div class="line"><span class="meta">@weekly         0 0 * * 0</span></div><div class="line"><span class="meta">@daily          0 0 * * *</span></div><div class="line"><span class="meta">@hourly         0 * * * *</span></div></pre></td></tr></table></figure></p>
+<h5 id="用户cron详解："><a href="#用户cron详解：" class="headerlink" title="用户cron详解："></a>用户cron详解：</h5><p>crontab命令定义,每个用户都有专用的cron任务文件：/var/spool/cron/USERNAME  </p>
+<h6 id="crontab命令："><a href="#crontab命令：" class="headerlink" title="crontab命令："></a>crontab命令：</h6><p>使用格式：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">crontab [-u user] [-l | -r | -e] [-i] [-s]</div></pre></td></tr></table></figure></p>
+<p>常用参数：<br><code>-l</code>: 列出所有任务；<br><code>-e</code>: 编辑任务；<br><code>-r</code>：移出所有任务；<br><code>-i</code>：同-r一同使用，以交互式模式让用户有选择地移除指定任务；<br><code>-u user</code>: 仅root可运行，代为为指定用户管理cron任务；  </p>
+<h6 id="控制用户执行计划任务："><a href="#控制用户执行计划任务：" class="headerlink" title="控制用户执行计划任务："></a>控制用户执行计划任务：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/cron.&#123;allow,deny&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Note:<br>1.运行结果以邮件通知给相关用户：如果不想收到邮件通知，可用使用重定向：<br>2.对于cron任务来讲，%有特殊用途；如果在命令中要使用%，则需要转义；不过，如果把%放置于单引号中，也可以不用转义；</p>
+</blockquote>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-好好敲实验吧，别再瞎折腾了！不做死就不会死！！" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -981,107 +1123,6 @@
       
 
       
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Linux常用命令总结-7、文本处理工具" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/25/Linux常用命令总结-7、文本处理工具/" class="article-date">
-      <time datetime="2017-07-25T05:54:25.000Z" itemprop="datePublished">2017-07-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;作为运维人员，我们经常需要查看、分析和统计日志等信息，在这里，我对初级的文本处理工具的学习做一个小总结。<br><strong>本文提到的命令：</strong><br>&emsp;&emsp;<em>查看文件内容：</em> <code>cat</code>、<code>more</code>、<code>less</code><br>&emsp;&emsp;<em>文件截取：</em> <code>head</code> 和 <code>tail</code><br>&emsp;&emsp;<em>按列抽取:</em>  <code>cut</code><br>&emsp;&emsp;<em>文本数据统计：</em> <code>wc</code><br>&emsp;&emsp;<em>文本排序：</em> <code>sort</code><br>&emsp;&emsp;<em>去重复的行：</em> <code>uniq</code><br>&emsp;&emsp;<em>按关键字抽取：</em><code>grep</code>  </p>
-<h4 id="文件查看命令"><a href="#文件查看命令" class="headerlink" title="文件查看命令"></a>文件查看命令</h4><h5 id="标准输入文件：cat"><a href="#标准输入文件：cat" class="headerlink" title="标准输入文件：cat"></a>标准输入文件：cat</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
-<p><strong>参数:</strong><br><code>-E</code>: 显示行结束符&amp;；<br><code>-n</code>: 对显示出的每一行进行编号；<br><code>-A</code>: 显示所有控制符；<br><code>-b</code>: 非空行编号；<br><code>-s</code>: 压缩连续的空行成一行；  </p>
-<h5 id="分页查看文件：more"><a href="#分页查看文件：more" class="headerlink" title="分页查看文件：more"></a>分页查看文件：more</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">more [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>-d</code>: 显示翻页及退出提示；</p>
-<h5 id="按页查看文件：less"><a href="#按页查看文件：less" class="headerlink" title="按页查看文件：less"></a>按页查看文件：less</h5><p><strong>用法:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">less [FILE]...</div></pre></td></tr></table></figure></p>
-<p><em>查看时常用的命令：</em><br><code>/文本</code>: 搜索“文本”；<br><code>n/N</code>: 跳到<code>下一个</code>或<code>上一个</code>匹配；</p>
-<blockquote>
-<p>Note: man命令使用的就是less分页器；</p>
-</blockquote>
-<h5 id="显示文本前-行的内容：head"><a href="#显示文本前-行的内容：head" class="headerlink" title="显示文本前#行的内容：head"></a>显示文本前#行的内容：head</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">head [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>-c #</code>: 指定获取前#字节；<br><code>-n #</code>: 指定获取前#字节；<br><code>-#</code>: 指定行数；  </p>
-<h5 id="显示文本后-行的内容：tail"><a href="#显示文本后-行的内容：tail" class="headerlink" title="显示文本后#行的内容：tail"></a>显示文本后#行的内容：tail</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>-c #</code>: 指定获取后#字节；<br><code>-n #</code>: 指定获取后#字节；<br><code>- #</code>: 指定行数；<br><code>-f</code>: 跟踪显示文件新追加的内容，常用日志监控；  </p>
-<h4 id="文本处理类命令："><a href="#文本处理类命令：" class="headerlink" title="文本处理类命令："></a>文本处理类命令：</h4><h5 id="按列抽取文本：cut"><a href="#按列抽取文本：cut" class="headerlink" title="按列抽取文本：cut"></a>按列抽取文本：cut</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cut [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>-d DELIMITER</code>: 指明分隔符，默认tab；<br><code>-f FILEDS</code>:<br>&emsp;&emsp;<code>#</code>: 第#字段；<br>&emsp;&emsp;<code>#,#[,#]</code>: 离散的多个字段，例如1,3,6；<br>&emsp;&emsp;<code>#-#</code>: 1-3,7;<br>&emsp;&emsp;<code>-c</code>: 按字符切割；<br>&emsp;&emsp;<code>--output-delimiter=STRING</code>指明输出分隔符；<br><strong>示例：</strong><br>显示文件或STDIN数据的指定列：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$cut</span> -d: -f1 /etc/passwd</div><div class="line"><span class="variable">$cat</span> /etc/passwd | cut -d: -f7</div><div class="line"><span class="variable">$cut</span> -c2-5 /usr/share/dict/words</div></pre></td></tr></table></figure></p>
-<h5 id="合并两个文件同行号的列到一行：paste"><a href="#合并两个文件同行号的列到一行：paste" class="headerlink" title="合并两个文件同行号的列到一行：paste"></a>合并两个文件同行号的列到一行：paste</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">paste [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>-d 分隔符</code>: 指定分隔符，默认用TAB;<br><code>-s</code>: 所有行合成一行显示；<br><strong>示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$paste</span> f1 f2</div><div class="line"><span class="variable">$paste</span> -s f1 f2</div></pre></td></tr></table></figure></p>
-<h5 id="文本数据统计：wc"><a href="#文本数据统计：wc" class="headerlink" title="文本数据统计：wc"></a>文本数据统计：wc</h5><p>&emsp;&emsp;对文件或STDIN（标准输出）的数据，做单词总数、行总数、字节总数字符总数的统计。<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wc [OPTION]...[FILE]...</div><div class="line"></div><div class="line"><span class="variable">$wc</span> story.txt</div><div class="line">39      237     1901        story.txt</div><div class="line">行数    字数    字符数</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>-l</code>: 只统计行数；<br><code>-w</code>: 只统计单词总数；<br><code>-c</code>: 只统计字节总数；<br><code>-m</code>: 只统计字符总数；  </p>
-<h5 id="文本排序：-sort"><a href="#文本排序：-sort" class="headerlink" title="文本排序： sort"></a>文本排序： sort</h5><p>&emsp;&emsp;把整理过的文本显示在标准输出，不会改变原始文件。<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sort [OPTIONS]...[FILES]...</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>-r</code>: 执行反方向（由上至下）整理；<br><code>-n</code>: 执行按数字大小整理；<br><code>-f</code>: 选项忽略（fold）字符串中的字符大小写；<br><code>-u</code>: 选项（独特，unique）删除输出中的重复行；<br><code>-t c</code>: 选项使用<code>c</code>作为字符界定符；<br><code>-k X</code>: 选项安装使用<code>c</code>字符分隔的<code>X</code>列来整理能够使用多次；  </p>
-<h5 id="去除重复的行：uniq"><a href="#去除重复的行：uniq" class="headerlink" title="去除重复的行：uniq"></a>去除重复的行：uniq</h5><p>&emsp;&emsp;从输入中删除前后相接的重复的行；<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uniq [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>-c</code>: 显示每行重复出现的次数；<br><code>-d</code>: 仅显示重复出现的行；<br><code>-u</code>: 仅显示不曾重复的行；</p>
-<blockquote>
-<p>Note: 连续且完全想用方为重复；<br>常和sort命令一起配合使用：<code>sort userlist.txt | uniq -c</code></p>
-</blockquote>
-<h5 id="文件对比：diff-和-patch"><a href="#文件对比：diff-和-patch" class="headerlink" title="文件对比：diff 和 patch"></a>文件对比：diff 和 patch</h5><h6 id="比较文件：diff"><a href="#比较文件：diff" class="headerlink" title="比较文件：diff"></a>比较文件：diff</h6><p>&emsp;&emsp;比较两个文件之间的区别；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$diff foo.conf-broken foo.conf-works5c5</div><div class="line">&lt;   use_widgets = no</div><div class="line">---</div><div class="line">&gt;   use_widgets = yes</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注明第5行有区别（改变）。  </p>
-</blockquote>
-<h6 id="复制对文件改变：patch"><a href="#复制对文件改变：patch" class="headerlink" title="复制对文件改变：patch"></a>复制对文件改变：patch</h6><p><code>diff</code>: 命令的输入被保存在一种叫做“补丁”的文件中。 </p>
-<blockquote>
-<p>使用<code>-u</code>选项来输出“统一的（unified）”diff格式文件，最适用于补丁文件。<br><code>patch</code>: 复制在其它文件中进行的改变（要谨慎使用）<br>使用<code>-b</code>选项来自动备份改变了的文件；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$diff -u foo.conf-broken foo.conf-works &gt; foo.patch</div><div class="line">$patch -b foo.conf-broken foo.patch</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h4 id="文本过滤：grep"><a href="#文本过滤：grep" class="headerlink" title="文本过滤：grep"></a>文本过滤：grep</h4><p>&emsp;&emsp;文本搜索工具，根据用户指定的正则表达式字符及文本字符所编写的过滤条件，对目标文本逐行进行匹配检查，打印匹配到的行。<br><strong>用法：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">grep [OPTIONS] PATTERN [FILE...]</div><div class="line">    grep root /etc/passwd</div><div class="line">    grep <span class="string">"$USER"</span> /etc/passwd</div><div class="line">    grep <span class="string">'$USER'</span> /etc/passwd</div><div class="line">    grep `whoami` /etc/passwd</div></pre></td></tr></table></figure></p>
-<p><strong>参数：</strong><br><code>--color=auto</code>: 对匹配到的文本着色显示；（Centos 7默认已使用alias设置此参数）<br><code>-v</code>: 显示不被pattern匹配到的行；<br><code>-i</code>: 忽略字符大小写；<br><code>-n</code>: 显示匹配的行号；<br><code>-c</code>: 统计匹配的行数；<br><code>-o</code>: 仅显示匹配到的字符串；<br><code>-q</code>: 静默模式，不输出任何信息;<br><code>-A #</code> : after,同时显示匹配行的后#行;<br><code>-B #</code>: before,同时显示匹配行的前#行；<br><code>-c #</code>: context,同时显示匹配行的前后各#行；<br><code>-e</code>: 实现多个选项间的逻辑or关系；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grep -e <span class="string">'cat'</span> -e <span class="string">'dog'</span> file</div></pre></td></tr></table></figure></p>
-<p><code>-w</code>: 匹配整个单词；<br><code>-E</code>: 使用ERE;<br><code>-F</code>: 相当于fgrep，不支持正则表达式；</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
-    </div>
-
       
       <div class="clearfix"></div>
     </div>
