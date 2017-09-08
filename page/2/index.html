@@ -199,7 +199,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -279,6 +279,107 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-yum仓库搭建和yum源配置" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/05/yum仓库搭建和yum源配置/" class="article-date">
+      <time datetime="2017-08-05T03:28:37.000Z" itemprop="datePublished">2017-08-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>yum(Yellowdog Update Modifier)是rpm的前端程序，能够很好的解决软件包的相关依赖性。在日常工作中，我们可以使用安装光盘作为yum源，也可以使用阿里、网易或者搜狐提供的公共yum源。<br>在公司的网络环境中如果有很多台Centos服务器，我们就很有必要自己搭建一个yum仓库来统一管理和安装软件。这样既保证了软件包的来源合法性，又能够节省出口带宽、提高效率。  </p>
+<h4 id="搭建yum仓库"><a href="#搭建yum仓库" class="headerlink" title="搭建yum仓库"></a>搭建yum仓库</h4><p>yum仓库有四种搭建方式，分别是：<code>http://</code>、<code>https://</code>、<code>ftp://</code>和<code>file://</code>；<br>在这里，我们分别使用<code>ftp://</code>和<code>http://</code>这两种方式进行仓库的搭建；  </p>
+<h5 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h5><ul>
+<li>yum仓库系统环境：CentOS 7.3  </li>
+<li>http服务软件：httpd-2.4.6-45.el7.centos.4.x86_64  </li>
+<li>ftp服务软件：vsftpd-3.0.2-21.el7.x86_64  </li>
+<li>为避免干扰，临时关闭了SElinux和Firewalld；<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#setenforce 0       //临时关闭SElinux</span></div><div class="line"><span class="comment">#getenforce         //检查SElinux状态</span></div><div class="line"> Permissive			//打印警告而不是强制执行。</div><div class="line"><span class="comment">#systemctl stop firewalld   //关闭Firewalld防火墙；</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="使用ftp方式搭建yum仓库"><a href="#使用ftp方式搭建yum仓库" class="headerlink" title="使用ftp方式搭建yum仓库"></a>使用ftp方式搭建yum仓库</h5><p>yum安装vsftpd软件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y vsftpd</span></div><div class="line"><span class="comment">#systemctl start vsftpd     //启动vsftpd服务；</span></div><div class="line"><span class="comment">#systemctl enable vsftpd    //设置vsftpd开机自启；</span></div></pre></td></tr></table></figure></p>
+<p>查看vsftpd安装后的相关目录：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rpm -ql vsftpd</span></div><div class="line">/etc/logrotate.d/vsftpd</div><div class="line">/etc/pam.d/vsftpd</div><div class="line">/etc/vsftpd/ftpusers</div><div class="line">/etc/vsftpd/user_list</div><div class="line">/etc/vsftpd/vsftpd.conf     //主配置文件</div><div class="line">    ...省略若干...</div><div class="line">/etc/vsftpd/vsftpd_conf_migrate.sh</div><div class="line">/usr/sbin/vsftpd</div><div class="line">/var/ftp/pub    //ftp文件共享目录；</div></pre></td></tr></table></figure></p>
+<p>在这里，我们将CentOS安装光盘里面的软件包拷贝到yum仓库目录下，如有条件，也可以从公共的镜像站点下载相关软件包；<br><strong>yum仓库主要文件：</strong>  </p>
+<ul>
+<li>Packages&emsp;&emsp;//软件包目录</li>
+<li>repodata&emsp;&emsp;//存储众多rpm包和包相关元数据文件，yum客户端通过查找该文件来判断yum仓库内是否有自己需要的rpm包；  </li>
+<li>RPM-GPG-KEY-CentOS-7&emsp;&emsp;//软件包来源合法性校验KEY</li>
+</ul>
+<blockquote>
+<p>Note: 这三个文件是yum仓库的必备文件，安装光盘里面的其他文件可拷可不拷；  </p>
+</blockquote>
+<p>在FTP目录下创建相关版本的目录：<br>创建一个系统主目录“centos”，并在目录下创建版本目录“6”和“7”：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mkdir -pv /var/ftp/put/centos/&#123;6,7&#125;</span></div></pre></td></tr></table></figure></p>
+<p>分别挂载CentOS6、7系列的光盘，并将光盘里的内容拷贝到FTP对应的目录下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mount /dev/sr0 /media/cdrom</span></div><div class="line"><span class="comment">#cp -r /media/cdrom/* /var/ftp/pub/centos/6</span></div></pre></td></tr></table></figure></p>
+<p>测试：在浏览器里面输入ftp://yum仓库IP；<br>如果能够正常访问并看到我们从光盘里面拷贝的软件包，就说明yum仓库搭建成功；  </p>
+<h5 id="使用http方式搭建yum仓库"><a href="#使用http方式搭建yum仓库" class="headerlink" title="使用http方式搭建yum仓库"></a>使用http方式搭建yum仓库</h5><p>安装httpd软件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y httpd</span></div><div class="line"><span class="comment">#systemctl start httpd      //启动httpd软件；</span></div><div class="line"><span class="comment">#systemctl enable httpd     //设置httpd开机自启；</span></div></pre></td></tr></table></figure></p>
+<p>查看httpd软件安装生成的相关配置目录：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rpm -ql httpd</span></div><div class="line">/etc/httpd</div><div class="line">/etc/httpd/conf</div><div class="line">...省略若干...</div><div class="line">/usr/sbin/apachectl</div><div class="line">/usr/sbin/fcgistarter</div><div class="line">/usr/sbin/htcacheclean</div><div class="line">/usr/sbin/httpd</div><div class="line">/usr/sbin/rotatelogs</div><div class="line">/usr/sbin/suexec</div><div class="line">/var/cache/httpd</div><div class="line">/var/cache/httpd/proxy</div><div class="line">/var/lib/dav</div><div class="line">/var/log/httpd</div><div class="line">/var/www/cgi-bin</div><div class="line">/var/www/html       //项目存放目录</div></pre></td></tr></table></figure></p>
+<p>在/var/www/html下创建项目目录并将系统安装盘内容拷贝到相应目录下；（因为与FTP操作相同，在此省略相应操作）<br>下载<code>createrepo</code>，用来生成<code>repodata</code>文件。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">createrepo /var/www/html/centos/</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note:如果使用系统安装光盘里面的软件包，并且不再往里面添加其他rpm包的话，可以直接使用系统盘自带的<code>repodata</code>文件；如果需要往里面添加新的rpm包组，或者自己搭建第三方yum仓库的话，就需要用<code>createrepo</code>软件生成<code>repodata</code>文件，否则yum客户端就找不到新添加的rpm包；<br>至此，我们的yum仓库已经搭建好了。接下来我们配置客户端的yum源。  </p>
+</blockquote>
+<h4 id="配置yum源"><a href="#配置yum源" class="headerlink" title="配置yum源"></a>配置yum源</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>yum客户端配置文件有两个：<br>1、为所有仓库提供公共配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/yum.conf</div></pre></td></tr></table></figure></p>
+<p>2、为仓库的指向提供配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/yum.repos.d/*.repo</div></pre></td></tr></table></figure></p>
+<p>yum仓库指向的主要项有：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[repoID]</div><div class="line">name=<span class="string">"yum仓库名字"</span></div><div class="line">baseurl=<span class="string">"url指向yum仓库的系统相同版本目录下的repodata父目录即可"</span></div><div class="line">gpgcheck=&#123;<span class="number">1</span>|<span class="number">0</span>&#125;  //是否启用软件包来源合法性校验；</div><div class="line">gpgkey=<span class="string">"URL"</span>    //若启用校验，此处填写yum仓库的GPGKEY的url；</div><div class="line">enabled=&#123;<span class="number">0</span>|<span class="number">1</span>&#125;   //是否启用该yum源；<span class="number">0</span>为禁用，<span class="number">1</span>是启用；</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note：使用yum的时候会到<code>/etc/yum.repos.d/</code>目录下查找<code>*.repo</code>文件，所有我们把系统的默认文件删除或移动到其他目录下，自己新建一个<code>*.repo</code>文件。  </p>
+</blockquote>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>将yum源修改为阿里云的yum源：<br>先把系统默认的yum源修改为.bak后缀作为备份：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#find /etc/yum.repos.d/ -name "*.repo" -exec mv &#123;&#125; &#123;&#125;.bak \;</span></div></pre></td></tr></table></figure></p>
+<p>配置阿里云的yum源：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#vim /etc/yum.repos.d/centos.repo</span></div><div class="line">[aliyun]</div><div class="line">name=aliyun_yum</div><div class="line">baseurl=https://mirrors.aliyun.com/centos/$releasever/os/$basearch/</div><div class="line">gpgcheck=<span class="number">1</span></div><div class="line">gpgkey=https://mirrors.aliyun.com/centos/$releasever/os/$basearch/RPM-GPG-KEY-CentOS<span class="number">-7</span></div><div class="line">enabled=<span class="number">1</span></div></pre></td></tr></table></figure></p>
+<p>验证修改是否已切换为阿里云的yum源：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum repolist all</span></div><div class="line">Loaded plugins: fastestmirror</div><div class="line">aliyun                                                          					| <span class="number">3.6</span> kB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>     </div><div class="line">(<span class="number">1</span>/<span class="number">2</span>): aliyun/primary_db                                        					| <span class="number">5.6</span> MB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">06</span>     </div><div class="line">(<span class="number">2</span>/<span class="number">2</span>): aliyun/group_gz                                         						| <span class="number">155</span> kB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">15</span>     </div><div class="line">Loading mirror speeds <span class="keyword">from</span> cached hostfile</div><div class="line">repo id                                 	repo name                                   status</div><div class="line">aliyun                                  	aliyun_yum                                  <span class="number">9</span>,<span class="number">363</span></div><div class="line">repolist: <span class="number">9</span>,<span class="number">363</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Linux常用命令总结：10、文件查找之locate和find" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -898,88 +999,6 @@
       
     <div class="article-category tagcloud">
     <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Linux常用命令总结-1、线上查询及帮助命令" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/" class="article-date">
-      <time datetime="2017-07-25T01:30:13.000Z" itemprop="datePublished">2017-07-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;Linux命令分为<strong>内部命令</strong>和<strong>外部命令</strong>；<br>&emsp;&emsp;<strong>内部命令：</strong> 由shell自带的命令。在系统启动时就调入内存，是常驻内存的，所以执行效率高。<br>&emsp;&emsp;<strong>外部命令：</strong> 由系统的软件提供的命令；，用户需要时才从硬盘中读入内存；  </p>
-<h4 id="判断一个命令是否为内部命令：type"><a href="#判断一个命令是否为内部命令：type" class="headerlink" title="判断一个命令是否为内部命令：type"></a>判断一个命令是否为内部命令：type</h4><p>&emsp;&emsp;<strong>常见用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">type</span> COMMAND</div></pre></td></tr></table></figure></p>
-<h4 id="显示内部命令列表：help"><a href="#显示内部命令列表：help" class="headerlink" title="显示内部命令列表：help"></a>显示内部命令列表：help</h4><p>&emsp;&emsp;<strong>常见用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#help</span></div></pre></td></tr></table></figure></p>
-<h4 id="列出内部命令列表：enable"><a href="#列出内部命令列表：enable" class="headerlink" title="列出内部命令列表：enable"></a>列出内部命令列表：enable</h4><p>&emsp;&emsp;<strong>常见用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">enable</span> COMMAND: 启用内部命令；</div><div class="line">        -n COMMAND: 禁用某个命令；</div><div class="line">        -n：查看被禁用的所有内部命令；</div></pre></td></tr></table></figure></p>
-<h4 id="hash缓存表："><a href="#hash缓存表：" class="headerlink" title="hash缓存表："></a>hash缓存表：</h4><p>&emsp;&emsp;系统初始hash表为空，当外部命令执行时，默认会从PATH路径下寻找该命令，找到后会将这条命令的路径记录到hash表中，当再次使用该命令时， shell解释器首先会查看hash表，存在将执行之，如果不存在，将会去PATH路径下寻找。利用hash缓存表可大大提高命令的调用速率。<br>&emsp;&emsp;<strong>常见用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">hash</span>: 显示<span class="built_in">hash</span>缓存</div><div class="line"><span class="built_in">hash</span> –l: 显示<span class="built_in">hash</span>缓存，可作为输入使用</div><div class="line"><span class="built_in">hash</span> –p path name: 将命令全路径path起别名为name</div><div class="line"><span class="built_in">hash</span> –t name: 打印缓存中name的路径</div><div class="line"><span class="built_in">hash</span> –d name: 清除name缓存</div><div class="line"><span class="built_in">hash</span> –r: 清除缓存</div></pre></td></tr></table></figure></p>
-<h4 id="使用命令帮助：man"><a href="#使用命令帮助：man" class="headerlink" title="使用命令帮助：man"></a>使用命令帮助：man</h4><p>&emsp;&emsp;手册存放在<code>/usr/share/man</code>里，几乎每个命令都有man的“页面”;<br>&emsp;&emsp;<strong>配置文件：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/man.config | man_db.conf</div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<strong>常用选项：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">man [OPTION] COMMAND</div><div class="line">    -M：到指定位置下搜索COMMAND命令的手册页并显示；</div><div class="line">    -a：列出所有帮助；</div><div class="line">    -k：列出所有匹配的页面，使用whatis数据库；</div><div class="line">    -f：相当于whatis；</div><div class="line">    -w：打印man帮助的文件路径；</div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<strong>man命令的操作方法：使用less命令实现</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">space,^v,^f，^F: 向文件尾部翻屏；</div><div class="line">b,^b: 向文首部翻屏；</div><div class="line">d,^d: 向文件尾部翻半屏；</div><div class="line">u，^u: 向文件首部翻半屏；</div><div class="line">RETURN,^N,e,^E or ^J: 向文件尾部翻一行；</div><div class="line">y or ^Y or ^P or k or ^K：向文件首部翻一行</div><div class="line">q: 退出</div><div class="line"><span class="comment">#：跳转至第#行</span></div><div class="line">1G: 回到文件首部</div><div class="line">G：翻至文件尾部</div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<strong>使用man搜索：</strong><br>&emsp;&emsp;&emsp;<strong>/KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp; &emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件尾部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：上一个</strong><br>&emsp;&emsp;&emsp;<strong>?KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp;&emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件首部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 跟搜索命令同方向，下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：跟搜索命令反方向，上一个</strong>  </p>
-<h4 id="info-适合通用文档参考"><a href="#info-适合通用文档参考" class="headerlink" title="info: 适合通用文档参考:"></a>info: 适合通用文档参考:</h4><p>&emsp;&emsp;<strong>使用方法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#info COMMAND</span></div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;没有参数，列出所有的页面；页面结构就想一个网站，每一页分为“节点”，链接节点之前*<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">方向键: PgUp， PgDn 导航  </div><div class="line">Tab键: 移动到下一个链接  </div><div class="line">d: 显示主题目录  </div><div class="line">Home: 显示主题首部  </div><div class="line">Enter: 进入选定链接  </div><div class="line">n/p/u/l: 进入下/前/上一层/最后一个链接  </div><div class="line">s: 文字 文本搜索  </div><div class="line">q: 退出 info</div></pre></td></tr></table></figure></p>
-<h4 id="查看命令或文件的的路径-whereis"><a href="#查看命令或文件的的路径-whereis" class="headerlink" title="查看命令或文件的的路径: whereis"></a>查看命令或文件的的路径: whereis</h4><p>&emsp;&emsp;显示命令的简短描述；(需要使用数据库，刚安装后不可立即使用)<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;makewhatis | mandb 制作数据库<br>&emsp;&emsp;&emsp;&emsp;<strong>使用示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">whatis cal </div><div class="line">    或 </div><div class="line">man -f cal</div></pre></td></tr></table></figure></p>
-<h4 id="查看外部命令的路径which："><a href="#查看外部命令的路径which：" class="headerlink" title="查看外部命令的路径which："></a>查看外部命令的路径which：</h4><p>&emsp;&emsp;查看可执行程序文件的路径<br>&emsp;&emsp;<strong>常用选项：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">which</span> [OPTION]...COMMAND</div><div class="line">        -a: 查看全部</div><div class="line">        --skip-alias：忽略别名</div></pre></td></tr></table></figure></p>
-<h4 id="命令别名：alias"><a href="#命令别名：alias" class="headerlink" title="命令别名：alias"></a>命令别名：alias</h4><p>&emsp;&emsp;<strong>使用示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">alias</span> NAME=<span class="string">'VALUE'</span>   //定义别名NAME,其相当于执行命令VALUE:  </div><div class="line"><span class="built_in">alias</span>：显示当前shell进程所有可用的命令别名；</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p><strong>Note:</strong> 在命令行中定义的别名，仅对当前shell进程有效，如果想永久有效，要定义在配置文件中：<br>&emsp;&emsp;&emsp;&emsp;<strong>仅对当前用户：</strong>~/.bashrc<br>&emsp;&emsp;&emsp;&emsp;<strong>对所有用户有效：</strong>/etc/bashrc<br>&emsp;&emsp;&emsp;编辑配置给出的新配置不会立即生效，需要使用source重新读取配置文件；</p>
-</blockquote>
-<h4 id="撤销命令别名：-unalias"><a href="#撤销命令别名：-unalias" class="headerlink" title="撤销命令别名：    unalias"></a>撤销命令别名：    unalias</h4><p>&emsp;&emsp;<strong>使用示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">unalias</span> [OPTION] NAME</div><div class="line">        -a：取消所有别名；</div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<strong>如果别名同原命令同名，如果要执行原命令，可以使用：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">\COMMAND</div><div class="line"><span class="string">'COMMAND'</span></div><div class="line">/PATH/COMMAND:外部命令</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux常用命令/">Linux常用命令</a>
     </div>
 
 

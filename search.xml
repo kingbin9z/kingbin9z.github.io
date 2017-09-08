@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title><![CDATA[CentOS7启动流程图--转载]]></title>
+      <url>/2017/09/08/CentOS7%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%9B%BE-%E8%BD%AC%E8%BD%BD/</url>
+      <content type="html"><![CDATA[<p>马哥教育Linux线下培训第25期的<a href="http://www.pojun.tech" target="_blank" rel="external">大神xiaoshuaigege</a>画的<em>CentOS 7启动流程图</em>，画的非常严谨细致，在此分享学习~~<br><img src="http://ovnpik36u.bkt.clouddn.com/201709/centosstart/centos7start.png" alt="image"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux原理 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[CentOS7内核编译安装]]></title>
       <url>/2017/09/04/CentOS7%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</url>
       <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>Linux内核是操作系统的核心，也是操作系统最基本的部分。  </p>
