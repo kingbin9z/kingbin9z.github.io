@@ -16,7 +16,7 @@
 
 
 <meta name="description" content="简介Linux内核是操作系统的核心，也是操作系统最基本的部分。   Linux内核的体积结构是单内核的、但是他充分采用了微内核的设计思想、使得虽然是单内核、但工作在模块化的方式下、并且这个模块可以动态装载或卸载；Linux负责管理系统的进程、内存、设备驱动程序、文件和网络系统，决定着系统的性能和稳定性。如是我们在了解Linux内核的基础上根据自己的需要、量身定制一个更高效，更稳定的内核，就需要我们">
-<meta name="keywords" content="Linux  Linux实验">
+<meta name="keywords" content="Linux, Linux实验">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS7内核编译安装">
 <meta property="og:url" content="http://blog.wangbinzhou.com/2017/09/04/CentOS7内核编译安装/index.html">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/201709/kernel/05.png">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/201709/kernel/06.png">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/201709/kernel/07.png">
-<meta property="og:updated_time" content="2017-09-04T09:37:45.049Z">
+<meta property="og:updated_time" content="2017-09-08T06:52:25.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7内核编译安装">
 <meta name="twitter:description" content="简介Linux内核是操作系统的核心，也是操作系统最基本的部分。   Linux内核的体积结构是单内核的、但是他充分采用了微内核的设计思想、使得虽然是单内核、但工作在模块化的方式下、并且这个模块可以动态装载或卸载；Linux负责管理系统的进程、内存、设备驱动程序、文件和网络系统，决定着系统的性能和稳定性。如是我们在了解Linux内核的基础上根据自己的需要、量身定制一个更高效，更稳定的内核，就需要我们">
@@ -203,7 +203,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux  Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -316,7 +316,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux-Linux实验/">Linux  Linux实验</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -354,12 +354,7 @@
 <h4 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h4><h5 id="下载内核"><a href="#下载内核" class="headerlink" title="下载内核"></a>下载内核</h5><p>Linux内核的官方网址是<a href="https://www.kernel.org/" target="_blank" rel="external">https://www.kernel.org/</a>，界面做的还是蛮清爽的<br><img src="http://ovnpik36u.bkt.clouddn.com/201709/kernel/01.png" alt="image"><br>在这里，我下载的是2017年8月30日刚发行的稳定版<code>4.12.10</code>的源码<br>在CentOS 7上下载并解压<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~/download]<span class="comment">#wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.12.10.tar.xz</span></div><div class="line">[root@CentOS7 ~/download]<span class="comment">#tar xvf linux-4.12.10.tar.xz</span></div><div class="line">[root@CentOS7 ~/download]<span class="comment">#ll -h linux-4.12.10.tar.xz </span></div><div class="line">-rw-r--r--. 1 root root 95M Aug 30 16:34 linux-4.12.10.tar.xz</div><div class="line">[root@CentOS7 ~/download]<span class="comment"># cd linux-4.12.10/</span></div><div class="line">[root@CentOS7 ~/download/linux-4.12.10]<span class="comment">#du -sh</span></div><div class="line">837M    .</div></pre></td></tr></table></figure></p>
 <p>解压前只有95M，解压后837M。837M的源码编译后会生成多大的文件呢？所以，<strong>硬盘一定要预留出10G以上的空间</strong>  </p>
 <h4 id="内核模块管理"><a href="#内核模块管理" class="headerlink" title="内核模块管理"></a>内核模块管理</h4><p>CentOS已安装的内核模块的记录文件：<code>/boot/config-3.10.0-514.el7.x86_64</code>,随后我们在选择模块功能的时候，可以在这个文件的基础上进行添加或删除，不然整个工作量就太大了。    </p>
-<h5 id="内核模块选项的参数说明"><a href="#内核模块选项的参数说明" class="headerlink" title="内核模块选项的参数说明"></a>内核模块选项的参数说明</h5><p>是否启用内核某功能总共有三个参数  </p>
-<ul>
-<li><code>[ ]</code>: 没有启用  </li>
-<li><code>[M]</code>: 将该功能安装在/lib/modules/目录下  </li>
-<li><code>[*]</code>: 将该文件安装在内核文件中  </li>
-</ul>
+<h5 id="内核模块选项的参数说明"><a href="#内核模块选项的参数说明" class="headerlink" title="内核模块选项的参数说明"></a>内核模块选项的参数说明</h5><p>是否启用内核某功能总共有三个参数<br><code>[  ]</code>: 没有启用<br><code>[M]</code>: 将该功能安装在/lib/modules/目录下<br>ss<code>[*]</code>: 将该文件安装在内核文件中  </p>
 <h5 id="内核模块管理命令"><a href="#内核模块管理命令" class="headerlink" title="内核模块管理命令"></a>内核模块管理命令</h5><ul>
 <li><code>lsmod</code>:显示由核心已经装载的内核模块,显示的内容来自于:/proc/modules文件  </li>
 <li><code>modinfo</code>:显示模块的详细描述信息  <ul>
@@ -372,7 +367,7 @@
 </li>
 <li>modprobe命令：装载或卸载内核模块  <ul>
 <li>配置文件： /etc/modprobe.conf,/etc/modprobe.d/*.conf  </li>
-<li>modprobe [ -C config-file ] [ modulename ] [ module<br>parame-ters… ]  </li>
+<li>modprobe [ -C config-file ] [ modulename ] [ moduleparame-ters… ]  </li>
 <li>modprobe [ -r ] modulename…  </li>
 </ul>
 </li>
@@ -427,7 +422,7 @@
         <p><span>本文标题:</span><a href="/2017/09/04/CentOS7内核编译安装/">CentOS7内核编译安装</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
         <p><span>发布时间:</span>2017-09-04, 17:33:55</p>
-        <p><span>最后更新:</span>2017-09-04, 17:37:45</p>
+        <p><span>最后更新:</span>2017-09-08, 14:52:25</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/04/CentOS7内核编译安装/" title="CentOS7内核编译安装">http://blog.wangbinzhou.com/2017/09/04/CentOS7内核编译安装/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/09/04/CentOS7内核编译安装/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
