@@ -348,7 +348,8 @@
 </ul>
 <p>因条件有限，在这里主要演示Linux和Window系统上使用SSH基于Key认证的配置过程。  </p>
 <h4 id="Linux客户端"><a href="#Linux客户端" class="headerlink" title="Linux客户端"></a>Linux客户端</h4><p>1、在客户端生成密钥对<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa [-P <span class="string">''</span>] [-f “~/.ssh/id_rsa<span class="string">"]</span></div></pre></td></tr></table></figure></p>
-<p>参数说明：<br><code>-t</code>: 指定加密类型<br>2、把公钥文件传输至远程服务器对应用户的家目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id [-i [identity_file]] [user@]host</div></pre></td></tr></table></figure></p>
+<p>参数说明：<br><code>-t</code>: 指定加密类型<br><code>-P</code>: 设置对密钥加密的密码，可选项，不指定也可以在交互界面设定<br><code>-f</code>: 指定密钥保存位置和名称，默认为<code>-f “~/.ssh/id_rsa&quot;</code>  </p>
+<p>2、把公钥文件传输至远程服务器对应用户的家目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id [-i [identity_file]] [user@]host</div></pre></td></tr></table></figure></p>
 <p><em>示例：</em>  </p>
 <table>
 <thead>

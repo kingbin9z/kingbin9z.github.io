@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt1.gif">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt2.png">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt3.gif">
-<meta property="og:updated_time" content="2017-09-13T06:03:38.682Z">
+<meta property="og:updated_time" content="2017-09-13T06:10:17.407Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH基于密钥的登录认证">
 <meta name="twitter:description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程   SSH协议版本 v1: 基于CRC-32做MAC，不安全； man-in-middle   v2">
@@ -365,7 +365,8 @@
 </ul>
 <p>因条件有限，在这里主要演示Linux和Window系统上使用SSH基于Key认证的配置过程。  </p>
 <h4 id="Linux客户端"><a href="#Linux客户端" class="headerlink" title="Linux客户端"></a>Linux客户端</h4><p>1、在客户端生成密钥对<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa [-P <span class="string">''</span>] [-f “~/.ssh/id_rsa<span class="string">"]</span></div></pre></td></tr></table></figure></p>
-<p>参数说明：<br><code>-t</code>: 指定加密类型<br>2、把公钥文件传输至远程服务器对应用户的家目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id [-i [identity_file]] [user@]host</div></pre></td></tr></table></figure></p>
+<p>参数说明：<br><code>-t</code>: 指定加密类型<br><code>-P</code>: 设置对密钥加密的密码，可选项，不指定也可以在交互界面设定<br><code>-f</code>: 指定密钥保存位置和名称，默认为<code>-f “~/.ssh/id_rsa&quot;</code>  </p>
+<p>2、把公钥文件传输至远程服务器对应用户的家目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id [-i [identity_file]] [user@]host</div></pre></td></tr></table></figure></p>
 <p><em>示例：</em>  </p>
 <table>
 <thead>
@@ -411,7 +412,7 @@
         <p><span>本文标题:</span><a href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
         <p><span>发布时间:</span>2017-09-13, 14:01:39</p>
-        <p><span>最后更新:</span>2017-09-13, 14:03:38</p>
+        <p><span>最后更新:</span>2017-09-13, 14:10:17</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/13/SSH基于密钥的登录认证/" title="SSH基于密钥的登录认证">http://blog.wangbinzhou.com/2017/09/13/SSH基于密钥的登录认证/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/09/13/SSH基于密钥的登录认证/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
