@@ -199,7 +199,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -279,6 +279,143 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-SSH基于密钥的登录认证" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/13/SSH基于密钥的登录认证/" class="article-date">
+      <time datetime="2017-09-13T06:01:39.000Z" itemprop="datePublished">2017-09-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="SSH简介"><a href="#SSH简介" class="headerlink" title="SSH简介"></a>SSH简介</h3><p>SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。  </p>
+<h4 id="具体的软件实现："><a href="#具体的软件实现：" class="headerlink" title="具体的软件实现："></a>具体的软件实现：</h4><ul>
+<li>OpenSSH: ssh协议的开源实现,CentOS默认安装  </li>
+<li>Dropbear：另一个开源实现  </li>
+</ul>
+<p><em>在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程</em>  </p>
+<h4 id="SSH协议版本"><a href="#SSH协议版本" class="headerlink" title="SSH协议版本"></a>SSH协议版本</h4><ul>
+<li>v1: 基于CRC-32做MAC，不安全； man-in-middle  </li>
+<li>v2：双方主机协议选择安全的MAC方式<br>基于DH算法做密钥交换，使用RSA或DSA实现身份认证   </li>
+</ul>
+<h4 id="用户登录认证的两种方式："><a href="#用户登录认证的两种方式：" class="headerlink" title="用户登录认证的两种方式："></a>用户登录认证的两种方式：</h4><ul>
+<li>基于Password的认证  </li>
+<li>基于Key的认证  </li>
+</ul>
+<p>因为系统默认使用的是<code>基于Password的认证</code>，而且<code>基于Password的认证</code>使用起来比较上手、配置起来比较简单，但是批量管理的时候会有一定的复杂性和安全问题。所以，在这里我们使用<code>基于Kye的认证</code>。  </p>
+<h3 id="基于密钥的登录认证过程"><a href="#基于密钥的登录认证过程" class="headerlink" title="基于密钥的登录认证过程"></a>基于密钥的登录认证过程</h3><ul>
+<li>首先在客户端生成一对密钥（ssh-keygen）  </li>
+<li>并将客户端的公钥ssh-copy-id 拷贝到服务端  </li>
+<li>当客户端再次发送一个连接请求，包括ip、用户名  </li>
+<li>服务端得到客户端的请求后，会到<code>authorized_keys</code>中查找，如果有响应的IP和用户，就会随机生成一个字符串例如:acdf  </li>
+<li>服务端将使用客户端拷贝过来的公钥进行加密，然后发送给客户端  </li>
+<li>得到服务端发来的消息后，客户端会使用私钥进行解密，然后将解密后的字符串发送给服务端  </li>
+<li>服务端接受到客户端发来的字符串后，跟之前的字符串进行对比，如果一致，就允许免密码登录  </li>
+</ul>
+<h3 id="基于Key认证的配置过程"><a href="#基于Key认证的配置过程" class="headerlink" title="基于Key认证的配置过程"></a>基于Key认证的配置过程</h3><p>SSH客户端根据操作系统的种类，主要分为三种：  </p>
+<ul>
+<li>Linux  <ul>
+<li>openssh-clients-6.6  </li>
+</ul>
+</li>
+<li>Windows<ul>
+<li>Xshell</li>
+<li>SecureCRT  </li>
+</ul>
+</li>
+<li>Mac OS  </li>
+</ul>
+<p>因条件有限，在这里主要演示Linux和Window系统上使用SSH基于Key认证的配置过程。  </p>
+<h4 id="Linux客户端"><a href="#Linux客户端" class="headerlink" title="Linux客户端"></a>Linux客户端</h4><p>1、在客户端生成密钥对<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa [-P <span class="string">''</span>] [-f “~/.ssh/id_rsa<span class="string">"]</span></div></pre></td></tr></table></figure></p>
+<p>参数说明：<br><code>-t</code>: 指定加密类型<br>2、把公钥文件传输至远程服务器对应用户的家目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id [-i [identity_file]] [user@]host</div></pre></td></tr></table></figure></p>
+<p><em>示例：</em>  </p>
+<table>
+<thead>
+<tr>
+<th>主机信息</th>
+<th>主机名</th>
+<th>IP地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务端</td>
+<td>MyCentOS6.9</td>
+<td>192.168.25.20</td>
+</tr>
+<tr>
+<td>客户端</td>
+<td>CentOS7.com</td>
+<td>192.168.25.7</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#hostname</span></div><div class="line">CentOS7.com</div><div class="line">[root@CentOS7 ~]<span class="comment">#ssh-keygen -t rsa  //在客户端使用RSA加密生成密钥</span></div><div class="line">Generating public/private rsa key pair.</div><div class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa): //生成密钥的默认保存路径</div><div class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): //对密钥进行加密的密码，可选，推荐使用！</div><div class="line">Enter same passphrase again: //再次确认密码</div><div class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.</div><div class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub.</div><div class="line">The key fingerprint is:</div><div class="line">6a:cb:c3:38:d3:72:58:78:80:be:c7:c6:57:28:f2:f6 root@CentOS7.com</div><div class="line">The key<span class="string">'s randomart image is:</span></div><div class="line">+--[ RSA 2048]----+</div><div class="line">|                 |</div><div class="line">|                 |</div><div class="line">|   .             |</div><div class="line">|  . .            |</div><div class="line">| .   o .S        |</div><div class="line">|  o o +..        |</div><div class="line">|   * Oo.         |</div><div class="line">|  . &amp;o*.         |</div><div class="line">|   + BE.         |</div><div class="line">+-----------------+</div><div class="line">[root@CentOS7 ~]#ls .ssh/       //查看生成的公钥和私钥</div><div class="line">id_rsa  id_rsa.pub  known_hosts</div><div class="line">[root@CentOS7 ~]#ssh-copy-id -i .ssh/id_rsa.pub root@192.168.25.20  //将公钥传入远程服务器，不指定用户名默认使用root</div><div class="line">/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed</div><div class="line">/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys</div><div class="line">root@192.168.25.20's password:  //远程服务器的密码</div><div class="line"></div><div class="line">Number of key(s) added: 1</div><div class="line"></div><div class="line">Now try logging into the machine, with:   <span class="string">"ssh 'root@192.168.25.20'"</span></div><div class="line">and check to make sure that only the key(s) you wanted were added.</div><div class="line"></div><div class="line">[root@CentOS7 ~]<span class="comment">#ssh 192.168.25.20  //ssh远程连接服务器测试</span></div><div class="line">Enter passphrase <span class="keyword">for</span> key <span class="string">'/root/.ssh/id_rsa'</span>:   //输入对私钥进行加密的密码即可</div><div class="line">Last login: Mon Sep 11 00:31:30 2017 from 192.168.25.1</div><div class="line">[root@MyCentOS6 ~]<span class="comment">#hostname     //成功通过密钥登录远程服务器</span></div><div class="line">MyCentOS6.9</div><div class="line">[root@MyCentOS6 ~]<span class="comment">#cat .ssh/authorized_keys //查看导入的客户端的公钥</span></div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDiQBHFcGusqKHo0HZpX/K0PeSExDwDwRczDURpnKQpX04CM2RoXp7qzjHY468Y9Lf22IA6PSS4ecmazqlxO+dntDVvsUVklQAM9UEel97tZBPrlb9yGU8G0yfffMM6kQgEvgzICPsu8HQtRCyttoFWpMK1M0Sxb+gzl2Ktpfkr9HvTPzFx4hkLDAd20dT/sONqO1WyaJOM2MWNUQf1wsY4Im3FguyKIkX+8y61acW9xGaBRBWdQGpuA8VQp5YXBOl9bRIguMk9YdIXCyrXOzrOgKK9aYY43KHPzmDRtGDEa18FZcRcokw4LXur3oGw2Kny344bV84M0qm4/M5xwtzh root@CentOS7.com</div></pre></td></tr></table></figure>
+<h4 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h4><h5 id="Xshell"><a href="#Xshell" class="headerlink" title="Xshell"></a>Xshell</h5><p>1、在Xshell客户端生成密钥，并导出公钥<br>在Xshell中找到<code>工具 --&gt; 新建用户密钥生成向导</code>，按照提示依次操作<br><img src="http://ovnpik36u.bkt.clouddn.com/20170913/xshell/xshell1.gif" alt="image">  </p>
+<p>在设置完密码后，先不要点击“完成”。继续点击<code>下一步</code>后，选择<code>保存为文件</code>。<br><code>保存为文件</code>会导出公钥，随后我们需要将公钥上传到SSH服务端。  </p>
+<p>2、使用<code>rz</code>命令，将导出的公钥上传到SSH服务端<br><img src="http://ovnpik36u.bkt.clouddn.com/20170913/xshell/xshell2.gif" alt="image">  </p>
+<p>3、将导入的公钥内容追到到<code>~/.ssh/authorized_keys</code>中<br>如果之前使用过密钥认证，<code>authorized_keys</code>文件存在，可以使用cat将公钥追加进去：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#cat id_rsa_2048.pub &gt;&gt; .ssh/authorized_keys</span></div></pre></td></tr></table></figure></p>
+<p>如果<code>authorized_keys</code>文件不存在，也可以将<code>id_rsa_2048.pub</code>文件直接复制改名为<code>authorized_keys</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#cp id_rsa_2048.pub .ssh/authorized_keys</span></div></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong><br><code>authorized_keys</code>文件的权限必须是600,确保不能被其他用户随意的读写<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#ll .ssh/authorized_keys </span></div><div class="line">-rw------- 1 root root 778 Sep 12 13:28 .ssh/authorized_keys</div></pre></td></tr></table></figure></p>
+<p>导入文件后，我们就可以在Xshell上愉快的使用密钥直接登录了<br><img src="http://ovnpik36u.bkt.clouddn.com/20170913/xshell/xshell3.gif" alt="image">  </p>
+<h5 id="SecureCRT"><a href="#SecureCRT" class="headerlink" title="SecureCRT"></a>SecureCRT</h5><p>1、使用SecureCRT生成密钥<br>在SecureCRT中找到<code>Tools --&gt; Create Public Key...</code>，按照提示生成密钥<br><img src="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt1.gif" alt="image">  </p>
+<p>2、使用<code>rz</code>命令，将导出的公钥上传到SSH服务端后，把公钥导入<code>authorized_key</code>文件<br><img src="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt2.png" alt="image"><br>_生成密钥时，如果最后保存Key选择的是“OpenSSH Key Format(new)”选项，则可以直接将公钥追加到<code>authorized_keys</code>文件；_<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#cat Identity.pub &gt;&gt; .ssh/authorized_keys</span></div></pre></td></tr></table></figure></p>
+<p>_如果选择的是<code>Standard Public Key and VanDyke Private Key format</code>选项，则需要转换格式后导入<code>authorized_keys</code>文件_<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#ssh-keygen -i -f Identity.pub &gt;&gt; .ssh/authorized_keys</span></div></pre></td></tr></table></figure></p>
+<p>3、使用SecureCRT客户端通过密钥连接SSH服务器<br><img src="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt3.gif" alt="image"><br>第一次使用密钥连接，会提示输入密钥加密时设置的密码，后期连接就不再需要密码了~~~</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-机器人三定律" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1100,75 +1237,6 @@
       
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-CentOS系列使用Tab命令补全" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/21/CentOS系列使用Tab命令补全/" class="article-date">
-      <time datetime="2017-08-21T14:07:12.000Z" itemprop="datePublished">2017-08-21</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/21/CentOS系列使用Tab命令补全/">CentOS系列使用Tab命令补全</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>使用CentOS系列的时候，有的系统能够在命令行终端使用Tab补全命令或显示命令的后续参数，有的就不可以。这是因为有的系统是最小化安装，没有安装<code>bash-completion.noarch</code>软件包。  </p>
-<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><h5 id="CenOS-7系列可以直接使用yum安装"><a href="#CenOS-7系列可以直接使用yum安装" class="headerlink" title="CenOS 7系列可以直接使用yum安装"></a>CenOS 7系列可以直接使用yum安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y bash-completion</div></pre></td></tr></table></figure>
-<h5 id="CenOS-6系列解决办法"><a href="#CenOS-6系列解决办法" class="headerlink" title="CenOS 6系列解决办法"></a>CenOS 6系列解决办法</h5><p>在CentOS 6系列中，这个软件存在EPEL源里，所有我们需要先配置一个可用的EPEL源，可参考<a href="http://blog.wangbinzhou.com/2017/08/05/yum%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA%E5%92%8Cyum%E6%BA%90%E9%85%8D%E7%BD%AE/">yum源配置方法</a>然后再使用yum安装,这里就不写详细步骤了；  </p>
-<blockquote>
-<p>注意: 配置完成之后，需要重新登陆后才能生效。 </p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux小技巧/">Linux小技巧</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
     </div>
 
       
