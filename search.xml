@@ -93,6 +93,8 @@
             
             <tag> SSH </tag>
             
+            <tag> openssh-client </tag>
+            
         </tags>
         
     </entry>

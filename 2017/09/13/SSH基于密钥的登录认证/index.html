@@ -16,7 +16,7 @@
 
 
 <meta name="description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程   SSH协议版本 v1: 基于CRC-32做MAC，不安全； man-in-middle   v2">
-<meta name="keywords" content="SSH">
+<meta name="keywords" content="SSH,openssh-client">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSH基于密钥的登录认证">
 <meta property="og:url" content="http://blog.wangbinzhou.com/2017/09/13/SSH基于密钥的登录认证/index.html">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt1.gif">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt2.png">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt3.gif">
-<meta property="og:updated_time" content="2017-09-13T06:10:17.407Z">
+<meta property="og:updated_time" content="2017-09-13T14:37:17.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH基于密钥的登录认证">
 <meta name="twitter:description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程   SSH协议版本 v1: 基于CRC-32做MAC，不安全； man-in-middle   v2">
@@ -97,6 +97,16 @@
 
 
 
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?3c05068834beb5df940fd3ca767f2305";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 
 
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
@@ -203,7 +213,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssh-client/">openssh-client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -316,7 +326,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openssh-client/">openssh-client</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -412,7 +422,7 @@
         <p><span>本文标题:</span><a href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
         <p><span>发布时间:</span>2017-09-13, 14:01:39</p>
-        <p><span>最后更新:</span>2017-09-13, 14:10:17</p>
+        <p><span>最后更新:</span>2017-09-13, 22:37:17</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/13/SSH基于密钥的登录认证/" title="SSH基于密钥的登录认证">http://blog.wangbinzhou.com/2017/09/13/SSH基于密钥的登录认证/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/09/13/SSH基于密钥的登录认证/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -598,14 +608,14 @@ ga('send', 'pageview');
     
         var oOpenInNew = {
             
-            
-            
-            
-            
-            
+             title: "a.article-title, .article-more-link a", 
+             post: ".article-entry a[href], .copyright a[href]", 
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
              archives: ".archive-article-title", 
              miniArchives: "a.post-list-link", 
-            
+             menu: ".header-menu a", 
              friends: "#js-friends a", 
              socail: ".social a" 
         }
