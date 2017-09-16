@@ -120,6 +120,8 @@
         </hgroup>
 
         
+        <p class="header-subtitle">王彬州</p>
+        
 
         
             <form id="search-form">
@@ -254,6 +256,8 @@
             <hgroup>
               <h1 class="header-author"><a href="/" title="回到主页">WangBinZhou</a></h1>
             </hgroup>
+            
+            <p class="header-subtitle">王彬州</p>
             
             <nav class="header-menu">
                 <ul>
@@ -1267,10 +1271,1194 @@
 
 
   
+    <article id="post-CentOS系列使用Tab命令补全" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+    <div class="article-meta">
+      <a href="/2017/08/21/CentOS系列使用Tab命令补全/" class="article-date">
+      <time datetime="2017-08-21T14:07:12.000Z" itemprop="datePublished">2017-08-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/21/CentOS系列使用Tab命令补全/">CentOS系列使用Tab命令补全</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>使用CentOS系列的时候，有的系统能够在命令行终端使用Tab补全命令或显示命令的后续参数，有的就不可以。这是因为有的系统是最小化安装，没有安装<code>bash-completion.noarch</code>软件包。  </p>
+<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><h5 id="CenOS-7系列可以直接使用yum安装"><a href="#CenOS-7系列可以直接使用yum安装" class="headerlink" title="CenOS 7系列可以直接使用yum安装"></a>CenOS 7系列可以直接使用yum安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y bash-completion</div></pre></td></tr></table></figure>
+<h5 id="CenOS-6系列解决办法"><a href="#CenOS-6系列解决办法" class="headerlink" title="CenOS 6系列解决办法"></a>CenOS 6系列解决办法</h5><p>在CentOS 6系列中，这个软件存在EPEL源里，所有我们需要先配置一个可用的EPEL源，可参考<a href="http://blog.wangbinzhou.com/2017/08/05/yum%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA%E5%92%8Cyum%E6%BA%90%E9%85%8D%E7%BD%AE/">yum源配置方法</a>然后再使用yum安装,这里就不写详细步骤了；  </p>
+<blockquote>
+<p>注意: 配置完成之后，需要重新登陆后才能生效。 </p>
+</blockquote>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux小技巧/">Linux小技巧</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-CentOS7网卡命名方式详解及修改为传统eth格式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/" class="article-date">
+      <time datetime="2017-08-20T13:11:12.000Z" itemprop="datePublished">2017-08-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/">CentOS7网卡命名方式详解及修改为传统eth格式</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>CentOS系统传统的网卡命名是使用以太网<code>eth[0,1,2,...]</code>和<code>wlan[0,1,2,...]</code>来命名的。但是到了CentOS 7系列，CentOS系统抛弃了传统的命名方式、采用了新的网卡命名机制来命名。新的命名机制避免了网卡名的冲突，但是也不给我们对系统网络的统一管理带来了不便，在这里我们详细介绍一下CentOS 7系列的网卡命名机制，以及修改回传统命名方式的方法。  </p>
+<h4 id="网卡命名机制"><a href="#网卡命名机制" class="headerlink" title="网卡命名机制"></a>网卡命名机制</h4><p>CentOS 7系统对网络设备的命名方式：  </p>
+<ol>
+<li>如果Firmware或BIOS为主板上集成的设备提供的索引信息可用，且可预测则根据此索引进行命名，例如eno1；  </li>
+<li>如果Firmware或BIOS为PCI-E扩展槽所提供的索引信息可用，且可预测，则根据此索引进行命名，例如ens1；  </li>
+<li>如果硬件接口的物理位置信息可用，则根据此信息进行命名，例如enp2s0；  </li>
+<li>如果用户显式启用，也可根据MAC地址进行命名，enx2387a2387a1dc56；  </li>
+<li>上述均可不用时，则使用传统的<code>eth</code>命名机制；  </li>
+</ol>
+<p>上述命名机制中，有的需要biosdevname程序的参与；  </p>
+<h4 id="网卡名称组成格式："><a href="#网卡名称组成格式：" class="headerlink" title="网卡名称组成格式："></a>网卡名称组成格式：</h4><h5 id="网卡名称的前两个字符"><a href="#网卡名称的前两个字符" class="headerlink" title="网卡名称的前两个字符"></a>网卡名称的前两个字符</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">en：ethernet    以太网</div><div class="line">wl: wlan        无线局域网</div><div class="line">ww: wwan        无线广域网</div></pre></td></tr></table></figure>
+<h5 id="网卡名称的第三个字符根据设备类型选择："><a href="#网卡名称的第三个字符根据设备类型选择：" class="headerlink" title="网卡名称的第三个字符根据设备类型选择："></a>网卡名称的第三个字符根据设备类型选择：</h5><p><code>o&lt;index&gt;</code>: 集成设备的设备索引号；<br><code>s&lt;slot&gt;</code>: 扩展插槽的索引号；<br><code>x&lt;MAC&gt;</code>: 基于MAC地址的命名；<br><code>p&lt;bus&gt;s&lt;slot&gt;</code>: enp2s1  </p>
+<h4 id="网卡设备的命名过程："><a href="#网卡设备的命名过程：" class="headerlink" title="网卡设备的命名过程："></a>网卡设备的命名过程：</h4><h5 id="第一步："><a href="#第一步：" class="headerlink" title="第一步："></a>第一步：</h5><p><code>udev</code>，辅助工具程序<code>/lib/udev/rename_device</code>,<code>/usr/lib/udev/rules.d/60-net.rules</code>  </p>
+<h5 id="第二歩："><a href="#第二歩：" class="headerlink" title="第二歩："></a>第二歩：</h5><p><code>biosdevname</code> 会根据<code>/usr/lib/udev/rules.d/71-biosdevname.rules</code>  </p>
+<h5 id="第三步："><a href="#第三步：" class="headerlink" title="第三步："></a>第三步：</h5><p>通过检测网络接口设备，根据<code>/usr/lib/udev/rules.d/75-net-description</code><br>ID_NET_NAME_ONBOARD, ID_NET_NAME_SLOT, ID_NET_NAME_PATH  </p>
+<h4 id="修改回传统的命名方式："><a href="#修改回传统的命名方式：" class="headerlink" title="修改回传统的命名方式："></a>修改回传统的命名方式：</h4><p>配置前查看网卡命名：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#ifconfig</span></div><div class="line">ens32: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</div><div class="line">        inet 172.18.234.200  netmask 255.255.0.0  broadcast 172.18.255.255</div><div class="line">        inet6 fe80::20c:29ff:fe06:99e7  prefixlen 64  scopeid 0x20&lt;link&gt;</div><div class="line">        ether 00:0c:29:06:99:e7  txqueuelen 1000  (Ethernet)</div><div class="line">        RX packets 2875  bytes 237906 (232.3 KiB)</div><div class="line">        RX errors 0  dropped 0  overruns 0  frame 0</div><div class="line">        TX packets 12  bytes 888 (888.0 B)</div><div class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</div><div class="line"></div><div class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</div><div class="line">        inet 127.0.0.1  netmask 255.0.0.0</div><div class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</div><div class="line">        loop  txqueuelen 1  (Local Loopback)</div><div class="line">        RX packets 0  bytes 0 (0.0 B)</div><div class="line">        RX errors 0  dropped 0  overruns 0  frame 0</div><div class="line">        TX packets 0  bytes 0 (0.0 B)</div><div class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</div></pre></td></tr></table></figure></p>
+<h5 id="1-编辑-etc-default-grub配置文件"><a href="#1-编辑-etc-default-grub配置文件" class="headerlink" title="(1) 编辑/etc/default/grub配置文件"></a>(1) 编辑/etc/default/grub配置文件</h5><p>找到<code>GRUB_CMDLINE_LINUX</code>修改如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vim /etc/default/grub</div><div class="line">GRUB_TIMEOUT=5</div><div class="line">GRUB_DISTRIBUTOR=<span class="string">"<span class="variable">$(sed 's, release .*$,,g' /etc/system-release)</span>"</span></div><div class="line">GRUB_DEFAULT=saved</div><div class="line">GRUB_DISABLE_SUBMENU=<span class="literal">true</span></div><div class="line">GRUB_TERMINAL_OUTPUT=<span class="string">"console"</span></div><div class="line">GRUB_COMLINE_LINUX=<span class="string">"net.ifnames=0 rhgb quiet"</span></div><div class="line">GRUB_DISABLE_RECOVERY=<span class="string">"true"</span></div></pre></td></tr></table></figure></p>
+<h5 id="2-为grub2生成其配置文件"><a href="#2-为grub2生成其配置文件" class="headerlink" title="(2) 为grub2生成其配置文件"></a>(2) 为grub2生成其配置文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub2-mkconfig -o /etc/grub2.cfg</div></pre></td></tr></table></figure>
+<h5 id="3-重启系统"><a href="#3-重启系统" class="headerlink" title="(3) 重启系统"></a>(3) 重启系统</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reboot</div></pre></td></tr></table></figure>
+<p>检查是否网卡名称修改为eth的传统命名：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#ifconfig</span></div><div class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</div><div class="line">        inet 172.18.251.228  netmask 255.255.0.0  broadcast 172.18.255.255</div><div class="line">        inet6 fe80::4463:d483:3b87:1c36  prefixlen 64  scopeid 0x20&lt;link&gt;</div><div class="line">        ether 00:0c:29:06:99:e7  txqueuelen 1000  (Ethernet)</div><div class="line">        RX packets 42  bytes 3400 (3.3 KiB)</div><div class="line">        RX errors 0  dropped 0  overruns 0  frame 0</div><div class="line">        TX packets 13  bytes 1490 (1.4 KiB)</div><div class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</div><div class="line"></div><div class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</div><div class="line">        inet 127.0.0.1  netmask 255.0.0.0</div><div class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</div><div class="line">        loop  txqueuelen 1  (Local Loopback)</div><div class="line">        RX packets 0  bytes 0 (0.0 B)</div><div class="line">        RX errors 0  dropped 0  overruns 0  frame 0</div><div class="line">        TX packets 0  bytes 0 (0.0 B)</div><div class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</div></pre></td></tr></table></figure></p>
+<h5 id="4-删除原来的网络配置文件ens32后创建新配置文件eth0，完成后重启网络服务即可"><a href="#4-删除原来的网络配置文件ens32后创建新配置文件eth0，完成后重启网络服务即可" class="headerlink" title="(4) 删除原来的网络配置文件ens32后创建新配置文件eth0，完成后重启网络服务即可"></a>(4) 删除原来的网络配置文件ens32后创建新配置文件eth0，完成后重启网络服务即可</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#cd /etc/sysconfig/network-scripts/</span></div><div class="line">[root@CentOS7 /etc/sysconfig/network-scripts]<span class="comment">#mv ifcfg-ens32 /tmp/</span></div><div class="line">[root@CentOS7 /etc/sysconfig/network-scripts]<span class="comment">#vim ifcfg-eth0</span></div><div class="line">TYPE=<span class="string">"Ethernet"</span></div><div class="line">BOOTPROTO=<span class="string">"static"</span></div><div class="line">IPADDR=<span class="string">"172.18.1.200"</span></div><div class="line">PREFIX=16</div><div class="line">GATEWAY=172.18.0.1</div><div class="line">DNS1=172.18.0.1</div><div class="line">DNS2=114.114.114.114</div><div class="line">DEFROUTE=<span class="string">"yes"</span></div><div class="line">PEERDNS=<span class="string">"yes"</span></div><div class="line">PEERROUTES=<span class="string">"yes"</span></div><div class="line">IPV4_FAILURE_FATAL=<span class="string">"no"</span></div><div class="line">NAME=<span class="string">"eth0"</span></div><div class="line">UUID=<span class="string">"4c86fd71-0281-4d10-a331-6ff63b387ec9"</span></div><div class="line">DEVICE=<span class="string">"eth0"</span></div><div class="line">ONBOOT=<span class="string">"yes"</span></div><div class="line">[root@CentOS7 ~]<span class="comment">#systemctl restart network</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>Note: ifcfg-ens32 文件最好删除掉，否则重启 network 服务时会报错。</p>
+</blockquote>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-内网ssh连接速度很慢的解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/10/内网ssh连接速度很慢的解决方案/" class="article-date">
+      <time datetime="2017-08-10T00:24:48.000Z" itemprop="datePublished">2017-08-10</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/10/内网ssh连接速度很慢的解决方案/">内网ssh连接速度很慢的解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>我在自己电脑上使用VMware Warkstation装了几台CentOS虚拟机做实验，CentOS虚拟机装了两块网卡分别作为内网卡和外网卡。内网卡使用<code>仅主机模式</code>作为管理口让宿主机来连接。在保证能够正常ping通、而且延时都小于1ms的情况下，宿主机使用SecureCRT通过ssh连接虚拟机的时候，个别主机出现连接时间过长的问题，有一个虚拟机竟然需要等待10-30S！  </p>
+<p>人生苦短，时间宝贵，解决这个问题刻不容缓！  </p>
+<h4 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h4><p>通过其他主机通过ssh连接问题主机：<br>使用<code>ssh</code>命令，通过<code>-v</code>参数来显示连接的详细过程：<br><code>v</code>最多能能加三个，加的越多，显示的越详细；<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]# ssh -v 192.168.25.7</div><div class="line">OpenSSH_5.3p1, OpenSSL 1.0.1e-fips 11 Feb 2013</div><div class="line">debug1: Reading configuration data /etc/ssh/ssh_config</div><div class="line">debug1: Applying options for *</div><div class="line">debug1: Connecting to 192.168.25.7 [192.168.25.7] port 22.</div><div class="line">debug1: Connection established.</div><div class="line">debug1: permanently_set_uid: 0/0</div><div class="line">debug1: identity file /root/.ssh/identity type -1</div><div class="line">debug1: identity file /root/.ssh/identity-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_rsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_rsa-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_dsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_dsa-cert type -1</div><div class="line">debug1: identity file /root/.ssh/id_ecdsa type -1</div><div class="line">debug1: identity file /root/.ssh/id_ecdsa-cert type -1</div><div class="line">debug1: Remote protocol version 2.0, remote software version OpenSSH_6.6.1</div><div class="line">debug1: match: OpenSSH_6.6.1 pat OpenSSH*</div><div class="line">debug1: Enabling compatibility mode for protocol 2.0</div><div class="line">debug1: Local version string SSH-2.0-OpenSSH_5.3</div><div class="line">debug1: SSH2_MSG_KEXINIT sent</div><div class="line">debug1: SSH2_MSG_KEXINIT received</div><div class="line">debug1: kex: server-&gt;client aes128-ctr hmac-sha1 none</div><div class="line">debug1: kex: client-&gt;server aes128-ctr hmac-sha1 none</div><div class="line">debug1: SSH2_MSG_KEX_DH_GEX_REQUEST(1024&lt;2048&lt;8192) sent</div><div class="line">debug1: expecting SSH2_MSG_KEX_DH_GEX_GROUP</div><div class="line">debug1: SSH2_MSG_KEX_DH_GEX_INIT sent</div><div class="line">debug1: expecting SSH2_MSG_KEX_DH_GEX_REPLY</div><div class="line">debug1: Host '192.168.25.7' is known and matches the RSA host key.</div><div class="line">debug1: Found key in /root/.ssh/known_hosts:1</div><div class="line">debug1: ssh_rsa_verify: signature correct</div><div class="line">debug1: SSH2_MSG_NEWKEYS sent</div><div class="line">debug1: expecting SSH2_MSG_NEWKEYS</div><div class="line">debug1: SSH2_MSG_NEWKEYS received</div><div class="line">debug1: SSH2_MSG_SERVICE_REQUEST sent</div><div class="line">debug1: SSH2_MSG_SERVICE_ACCEPT received</div><div class="line">debug1: Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mic,password</div><div class="line">debug1: Next authentication method: gssapi-keyex</div><div class="line">debug1: No valid Key exchange context</div><div class="line">debug1: Next authentication method: gssapi-with-mic</div><div class="line">debug1: Unspecified GSS failure.  Minor code may provide more information</div><div class="line">Cannot determine realm for numeric host address</div><div class="line"></div><div class="line">debug1: Unspecified GSS failure.  Minor code may provide more information</div><div class="line">Cannot determine realm for numeric host address</div><div class="line"></div><div class="line">debug1: Next authentication method: publickey</div><div class="line">debug1: Trying private key: /root/.ssh/identity</div><div class="line">debug1: Trying private key: /root/.ssh/id_rsa</div><div class="line">debug1: Trying private key: /root/.ssh/id_dsa</div><div class="line">debug1: Trying private key: /root/.ssh/id_ecdsa</div><div class="line">debug1: Next authentication method: password</div><div class="line">root@192.168.25.7's password: </div><div class="line">debug1: Authentication succeeded (password).</div><div class="line">debug1: channel 0: new [client-session]</div><div class="line">debug1: Requesting no-more-sessions@openssh.com</div><div class="line">debug1: Entering interactive session.</div><div class="line">debug1: Sending environment.</div><div class="line">debug1: Sending env LANG = en_US.UTF-8</div><div class="line">Last login: Thu Aug 10 15:53:06 2017 from gateway</div><div class="line">[root@CentOS7 ~]#</div></pre></td></tr></table></figure></p>
+<p>可以看到如下的错误信息：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">debug1: Next authentication method: gssapi-<span class="keyword">with</span>-mic</div><div class="line">debug1: An invalid name was supplied</div><div class="line">Cannot determine realm <span class="keyword">for</span> numeric host address</div></pre></td></tr></table></figure></p>
+<p>从<code>gssapi-with-mic</code>这一行开始，就开始耗费时间了。  </p>
+<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><p>修改<code>/etc/ssh/sshd_config</code>文件如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vim /etc/ssh/sshd_config</div><div class="line">UseDNS no</div><div class="line">GSSAPIAuthentication no</div></pre></td></tr></table></figure></p>
+<p>找到上面的两个字段并修改，然后重启sshd服务：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl restart sshd</div></pre></td></tr></table></figure></p>
+<p>参数说明：<br><code>UseDNS</code>:指定 是否应该对远程主机名进行反向解析，以检查此主机名是否与其IP地址真实对应。默认值为<code>yes</code>,改为<code>no</code>。<br><code>GSSAPIAuthentication</code>:是否允许使用基于 GSSAPI 的用户认证。默认值为<code>yes</code>,改为<code>no</code>。  </p>
+<p>重启sshd服务后，再连接，应该就很快了！</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sshd/">sshd</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-yum仓库搭建和yum源配置" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/05/yum仓库搭建和yum源配置/" class="article-date">
+      <time datetime="2017-08-05T03:28:37.000Z" itemprop="datePublished">2017-08-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>yum(Yellowdog Update Modifier)是rpm的前端程序，能够很好的解决软件包的相关依赖性。在日常工作中，我们可以使用安装光盘作为yum源，也可以使用阿里、网易或者搜狐提供的公共yum源。<br>在公司的网络环境中如果有很多台Centos服务器，我们就很有必要自己搭建一个yum仓库来统一管理和安装软件。这样既保证了软件包的来源合法性，又能够节省出口带宽、提高效率。  </p>
+<h4 id="搭建yum仓库"><a href="#搭建yum仓库" class="headerlink" title="搭建yum仓库"></a>搭建yum仓库</h4><p>yum仓库有四种搭建方式，分别是：<code>http://</code>、<code>https://</code>、<code>ftp://</code>和<code>file://</code>；<br>在这里，我们分别使用<code>ftp://</code>和<code>http://</code>这两种方式进行仓库的搭建；  </p>
+<h5 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h5><ul>
+<li>yum仓库系统环境：CentOS 7.3  </li>
+<li>http服务软件：httpd-2.4.6-45.el7.centos.4.x86_64  </li>
+<li>ftp服务软件：vsftpd-3.0.2-21.el7.x86_64  </li>
+<li>为避免干扰，临时关闭了SElinux和Firewalld；<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#setenforce 0       //临时关闭SElinux</span></div><div class="line"><span class="comment">#getenforce         //检查SElinux状态</span></div><div class="line"> Permissive			//打印警告而不是强制执行。</div><div class="line"><span class="comment">#systemctl stop firewalld   //关闭Firewalld防火墙；</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="使用ftp方式搭建yum仓库"><a href="#使用ftp方式搭建yum仓库" class="headerlink" title="使用ftp方式搭建yum仓库"></a>使用ftp方式搭建yum仓库</h5><p>yum安装vsftpd软件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y vsftpd</span></div><div class="line"><span class="comment">#systemctl start vsftpd     //启动vsftpd服务；</span></div><div class="line"><span class="comment">#systemctl enable vsftpd    //设置vsftpd开机自启；</span></div></pre></td></tr></table></figure></p>
+<p>查看vsftpd安装后的相关目录：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rpm -ql vsftpd</span></div><div class="line">/etc/logrotate.d/vsftpd</div><div class="line">/etc/pam.d/vsftpd</div><div class="line">/etc/vsftpd/ftpusers</div><div class="line">/etc/vsftpd/user_list</div><div class="line">/etc/vsftpd/vsftpd.conf     //主配置文件</div><div class="line">    ...省略若干...</div><div class="line">/etc/vsftpd/vsftpd_conf_migrate.sh</div><div class="line">/usr/sbin/vsftpd</div><div class="line">/var/ftp/pub    //ftp文件共享目录；</div></pre></td></tr></table></figure></p>
+<p>在这里，我们将CentOS安装光盘里面的软件包拷贝到yum仓库目录下，如有条件，也可以从公共的镜像站点下载相关软件包；<br><strong>yum仓库主要文件：</strong>  </p>
+<ul>
+<li>Packages&emsp;&emsp;//软件包目录</li>
+<li>repodata&emsp;&emsp;//存储众多rpm包和包相关元数据文件，yum客户端通过查找该文件来判断yum仓库内是否有自己需要的rpm包；  </li>
+<li>RPM-GPG-KEY-CentOS-7&emsp;&emsp;//软件包来源合法性校验KEY</li>
+</ul>
+<blockquote>
+<p>Note: 这三个文件是yum仓库的必备文件，安装光盘里面的其他文件可拷可不拷；  </p>
+</blockquote>
+<p>在FTP目录下创建相关版本的目录：<br>创建一个系统主目录“centos”，并在目录下创建版本目录“6”和“7”：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mkdir -pv /var/ftp/put/centos/&#123;6,7&#125;</span></div></pre></td></tr></table></figure></p>
+<p>分别挂载CentOS6、7系列的光盘，并将光盘里的内容拷贝到FTP对应的目录下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mount /dev/sr0 /media/cdrom</span></div><div class="line"><span class="comment">#cp -r /media/cdrom/* /var/ftp/pub/centos/6</span></div></pre></td></tr></table></figure></p>
+<p>测试：在浏览器里面输入ftp://yum仓库IP；<br>如果能够正常访问并看到我们从光盘里面拷贝的软件包，就说明yum仓库搭建成功；  </p>
+<h5 id="使用http方式搭建yum仓库"><a href="#使用http方式搭建yum仓库" class="headerlink" title="使用http方式搭建yum仓库"></a>使用http方式搭建yum仓库</h5><p>安装httpd软件：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y httpd</span></div><div class="line"><span class="comment">#systemctl start httpd      //启动httpd软件；</span></div><div class="line"><span class="comment">#systemctl enable httpd     //设置httpd开机自启；</span></div></pre></td></tr></table></figure></p>
+<p>查看httpd软件安装生成的相关配置目录：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#rpm -ql httpd</span></div><div class="line">/etc/httpd</div><div class="line">/etc/httpd/conf</div><div class="line">...省略若干...</div><div class="line">/usr/sbin/apachectl</div><div class="line">/usr/sbin/fcgistarter</div><div class="line">/usr/sbin/htcacheclean</div><div class="line">/usr/sbin/httpd</div><div class="line">/usr/sbin/rotatelogs</div><div class="line">/usr/sbin/suexec</div><div class="line">/var/cache/httpd</div><div class="line">/var/cache/httpd/proxy</div><div class="line">/var/lib/dav</div><div class="line">/var/log/httpd</div><div class="line">/var/www/cgi-bin</div><div class="line">/var/www/html       //项目存放目录</div></pre></td></tr></table></figure></p>
+<p>在/var/www/html下创建项目目录并将系统安装盘内容拷贝到相应目录下；（因为与FTP操作相同，在此省略相应操作）<br>下载<code>createrepo</code>，用来生成<code>repodata</code>文件。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">createrepo /var/www/html/centos/</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note:如果使用系统安装光盘里面的软件包，并且不再往里面添加其他rpm包的话，可以直接使用系统盘自带的<code>repodata</code>文件；如果需要往里面添加新的rpm包组，或者自己搭建第三方yum仓库的话，就需要用<code>createrepo</code>软件生成<code>repodata</code>文件，否则yum客户端就找不到新添加的rpm包；<br>至此，我们的yum仓库已经搭建好了。接下来我们配置客户端的yum源。  </p>
+</blockquote>
+<h4 id="配置yum源"><a href="#配置yum源" class="headerlink" title="配置yum源"></a>配置yum源</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>yum客户端配置文件有两个：<br>1、为所有仓库提供公共配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/yum.conf</div></pre></td></tr></table></figure></p>
+<p>2、为仓库的指向提供配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/yum.repos.d/*.repo</div></pre></td></tr></table></figure></p>
+<p>yum仓库指向的主要项有：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[repoID]</div><div class="line">name=<span class="string">"yum仓库名字"</span></div><div class="line">baseurl=<span class="string">"url指向yum仓库的系统相同版本目录下的repodata父目录即可"</span></div><div class="line">gpgcheck=&#123;<span class="number">1</span>|<span class="number">0</span>&#125;  //是否启用软件包来源合法性校验；</div><div class="line">gpgkey=<span class="string">"URL"</span>    //若启用校验，此处填写yum仓库的GPGKEY的url；</div><div class="line">enabled=&#123;<span class="number">0</span>|<span class="number">1</span>&#125;   //是否启用该yum源；<span class="number">0</span>为禁用，<span class="number">1</span>是启用；</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note：使用yum的时候会到<code>/etc/yum.repos.d/</code>目录下查找<code>*.repo</code>文件，所有我们把系统的默认文件删除或移动到其他目录下，自己新建一个<code>*.repo</code>文件。  </p>
+</blockquote>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>将yum源修改为阿里云的yum源：<br>先把系统默认的yum源修改为.bak后缀作为备份：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#find /etc/yum.repos.d/ -name "*.repo" -exec mv &#123;&#125; &#123;&#125;.bak \;</span></div></pre></td></tr></table></figure></p>
+<p>配置阿里云的yum源：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#vim /etc/yum.repos.d/centos.repo</span></div><div class="line">[aliyun]</div><div class="line">name=aliyun_yum</div><div class="line">baseurl=https://mirrors.aliyun.com/centos/$releasever/os/$basearch/</div><div class="line">gpgcheck=<span class="number">1</span></div><div class="line">gpgkey=https://mirrors.aliyun.com/centos/$releasever/os/$basearch/RPM-GPG-KEY-CentOS<span class="number">-7</span></div><div class="line">enabled=<span class="number">1</span></div></pre></td></tr></table></figure></p>
+<p>验证修改是否已切换为阿里云的yum源：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum repolist all</span></div><div class="line">Loaded plugins: fastestmirror</div><div class="line">aliyun                                                          					| <span class="number">3.6</span> kB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>     </div><div class="line">(<span class="number">1</span>/<span class="number">2</span>): aliyun/primary_db                                        					| <span class="number">5.6</span> MB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">06</span>     </div><div class="line">(<span class="number">2</span>/<span class="number">2</span>): aliyun/group_gz                                         						| <span class="number">155</span> kB  <span class="number">00</span>:<span class="number">00</span>:<span class="number">15</span>     </div><div class="line">Loading mirror speeds <span class="keyword">from</span> cached hostfile</div><div class="line">repo id                                 	repo name                                   status</div><div class="line">aliyun                                  	aliyun_yum                                  <span class="number">9</span>,<span class="number">363</span></div><div class="line">repolist: <span class="number">9</span>,<span class="number">363</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结：10、文件查找之locate和find" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/" class="article-date">
+      <time datetime="2017-08-01T01:00:09.000Z" itemprop="datePublished">2017-08-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">Linux常用命令总结：10、文件查找之locate和find</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;在日常生活中，有时候我们需要在Linux系统上查找符合特定条件的文件，可以通过命令<code>locate</code>和<code>find</code>来查找。<br><strong>区别：</strong><br><code>locate</code>: 非实时查找，每天会定时更新生成一个数据库，通过数据库查找；<br><code>find</code>: 实时查找；  </p>
+<h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><p>&emsp;&emsp;<code>locate</code>命令依赖于系统系统在较为空闲时自动构建（周期性任务）的一个文件索引数据库<code>/var/lib/mlocate/mlocate.db</code>进行查找文件。索引构建过程需要遍历整个根文件系统，极消耗资源。管理员可以通过命令<code>updatedb</code>手动更新数据库。<br><strong>工作特点：</strong>  </p>
+<ul>
+<li>查找速度快；  </li>
+<li>模糊查找；</li>
+<li>非实时查找；</li>
+<li>搜索的是文件的全路径，不仅仅是文件名；</li>
+<li>可能只搜索用户具备读取和执行权限的目录；<br><strong>用法：</strong>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">locate [OPTION]... PATTERN...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>常用参数：</strong><br><code>-i</code>: 不区分大小写的搜索；<br><code>-n N</code>: 只列举前N个匹配项目；<br><code>-r</code>: 使用正则表达式搜索；<br><strong>示例：</strong><br><code>locate conf</code>: 搜索名称或路径中带有“conf”的文件；<br><code>locate -r &#39;\.conf$&#39;</code>: 使用正则表达式来搜索以“.conf”结尾的文件；  </p>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>&emsp;&emsp;实时查找工具，通过遍历指定路径完成文件查找；  </p>
+<h5 id="工作特点"><a href="#工作特点" class="headerlink" title="工作特点"></a>工作特点</h5><ul>
+<li>查找速度略慢；  </li>
+<li>精确查找；  </li>
+<li>实时查找；  </li>
+<li>可能只搜素用户具备读取和执行权限的目录；  </li>
+</ul>
+<h5 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find [OPTIOON]...[查找路径] [查找条件] [处理动作]</div></pre></td></tr></table></figure>
+<p>查找路径：指定具体目标路径；默认为当前目录；<br>查找条件：指定的查找标准，可以是文件名、大小、类型、权限等标准进行；默认为找出指定路径下的所有文件；<br>处理动作：对符合条件的文件做操作，默认输出至屏幕；  </p>
+<h6 id="查找条件："><a href="#查找条件：" class="headerlink" title="查找条件："></a>查找条件：</h6><p>指定搜索层级：<br><code>-maxdepth level</code>：最大搜索目录深度，指定目录为1级；<br><code>-mindepth level</code>：最小搜索目录深度；<br>根据文件名和inode查找：<br><code>-name &quot;文件名称&quot;</code>: 支持使用glob:<code>*,?,[],[^]</code>;<br><code>-iname &quot;文件名称&quot;</code>：不区分字母大小写；<br><code>inum n</code>: 按inode好查找；<br><code>-samefile name</code>: 相同inode号的文件；<br><code>-links n</code>: 链接数为n的文件；<br><code>-regex &quot;PATTERN&quot;</code>: 以PATTERN匹配整个文件路径字符串，而不仅仅是文件名称；<br>根据属主、属组查找：<br><code>-user USERNAME</code>:查找属主为指定用户（UID）的文件；<br><code>-group GRPNAME</code>:查找属组为指定组（GID）的文件；<br><code>uid UserID</code>:查找属主为指定的UID号的文件；<br><code>gid GroupID</code>:查找属组为指定的GID号的文件；<br><code>-nouser</code>:查找没有属主的文件；<br><code>-nogroup</code>:  查找没有属组的文件；<br>根据文件类型查找：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-<span class="built_in">type</span> TYPE:  </div><div class="line">            f: 普通文件</div><div class="line">            d: 目录文件</div><div class="line">            l: 符号链接文件</div><div class="line">            s: 套接字文件</div><div class="line">            b：块设备文件</div><div class="line">            c: 字符设备文件</div><div class="line">            p: 管道文件</div></pre></td></tr></table></figure></p>
+<p>组合条件：<br>&emsp;&emsp;&emsp;&emsp;与：<code>-a</code><br>&emsp;&emsp;&emsp;&emsp;或：<code>-o</code><br>&emsp;&emsp;&emsp;&emsp;非：<code>-not,!</code><br>德·摩根定律：<br>&emsp;&emsp;&emsp;&emsp;&emsp;<code>(非 A) 或 (非 B) = 非(A 且 B)</code><br>&emsp;&emsp;&emsp;&emsp;&emsp;<code>(非 A) 且 (非 B) = 非(A 或 B)</code><br>&emsp;&emsp;示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">!A -a !B = !(A - oB)</div><div class="line">!A -O !B = !(A -a B)</div></pre></td></tr></table></figure></p>
+<p>find示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">find -name snow.png     //搜索名为snow.png的文件</div><div class="line">find -iname snow.png    //不区分大小写地搜索名为snow.png、Snow.png、SNOW.PNG等等的文件</div><div class="line">find / -name <span class="string">"*.txt"</span>    //搜索/目录下.txt后缀的文件</div><div class="line">find /var -name <span class="string">"*log*"</span>     //搜索名称包含<span class="built_in">log</span>字符的文件</div><div class="line">find -user joe -group joe   //搜索被用户joe以及群组joe所拥有的文件</div><div class="line">find -user joe -not -group joe</div><div class="line">find -user joe -o -user jane</div><div class="line">find -not \( -user joe -o -user jane \)</div><div class="line">find / -user joe -o -uid 500</div></pre></td></tr></table></figure></p>
+<p>&emsp;找出/tmp目录下，属主不是root，且文件名不以f开头的文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">find /tmp \( -not -user root -a -not -name <span class="string">'f*'</span> \) -ls</div><div class="line">find /tmp -not \( -user root -o -name <span class="string">'f*'</span> \) -ls</div></pre></td></tr></table></figure></p>
+<p>&emsp;排除目录：<br>&emsp;&emsp;<em>示例：查找/etc/下，除/etc/sane.d目录的其他所有.conf后缀的文件</em><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">find /etc -path <span class="string">'/etc/sane.d'</span> -a -prune -o -name <span class="string">"*.conf"</span></div><div class="line">find /etc \(-path <span class="string">'/etc/sane.d'</span> -o -path <span class="string">'/etc/fonts'</span> \) -a prune -o name <span class="string">"*.conf"</span></div></pre></td></tr></table></figure></p>
+<p>根据文件大小来查找：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">-size [+|-]<span class="comment">#UNIT    常用单位:k,M,G,c(byte)</span></div><div class="line"><span class="comment">#UNIT: (#-1,#]</span></div><div class="line">    如： 6k 表示（5k,6k]</div><div class="line">-<span class="comment">#UNIT: [0,#-1]</span></div><div class="line">    如： -6k 表示[0,5k]</div><div class="line">+<span class="comment">#UNIT： (#,∞)</span></div><div class="line">    如： +6k 表示(6k,∞)</div></pre></td></tr></table></figure></p>
+<p>根据时间戳：<br>&emsp;<em>以“天”为单位：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-atime [+|-]<span class="comment">#,</span></div><div class="line">	<span class="comment">#: [#,#+1)</span></div><div class="line">	+<span class="comment">#: [#+1,∞]</span></div><div class="line">    -<span class="comment">#: [0,#)</span></div><div class="line">    -mtime</div><div class="line">    -ctime</div></pre></td></tr></table></figure></p>
+<p>&emsp;<em>以“分钟”为单位:</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-amin</div><div class="line">-mmin</div><div class="line">-cmin</div></pre></td></tr></table></figure></p>
+<p>根据权限查找：<br><code>-perm [/|-]MODE</code><br>&emsp;<code>MODE</code>: 精确权限匹配<br>&emsp;<code>/MODE</code>：任何一类(u,g,o)对象的权限中只要能一位匹配即可，或关系， + 从centos7开始淘汰<br>&emsp;<code>-MODE</code>：每一类对象都必须同时拥有指定权限，与关系0 表示不关注  </p>
+<blockquote>
+<p>Note:<br>&emsp;&emsp;&emsp;find -perm 755 会匹配权限模式恰好是755的文件<br>&emsp;&emsp;&emsp;只要当任意人有写权限时， find -perm +222就会匹配<br>&emsp;&emsp;&emsp;只有当每个人都有写权限时， find -perm -222才会匹配<br>&emsp;&emsp;&emsp;只有当其它人（other）有写权限时， find -perm -002才会匹配</p>
+</blockquote>
+<h6 id="处理动作："><a href="#处理动作：" class="headerlink" title="处理动作："></a>处理动作：</h6><p><code>-print</code>：默认的处理动作，显示至屏幕<br><code>-ls</code>：类似于对查找到的文件执行“ls -l”命令<br><code>-delete</code>：删除查找到的文件<br><code>-fls file</code>：查找到的所有文件的长格式信息保存至指定文件中<br><code>-ok COMMAND {} \;</code>: 对查找到的每个文件执行由COMMAND指定的命令，对于每个文件执行命令之前，都会交互式要求用户确认<br><code>-exec COMMAND {} \;</code> 对查找到的每个文件执行由COMMAND指定的命令<br><code>{}</code>: 用于引用查找到的文件名称自身find传递查找到的文件至后面指定的命令时，查找到所有符合条件的文件一次性传递给后面的命令  </p>
+<h6 id="参数替换xargs："><a href="#参数替换xargs：" class="headerlink" title="参数替换xargs："></a>参数替换xargs：</h6><p>由于很多命令不支持管道|来传递参数，而日常工作中有这个必要，所以就有了xargs命令。xargs用于产生某个命令的参数， xargs 可以读入 stdin的数据，并且以空格符或回车符将 stdin 的数据分隔成为arguments。  </p>
+<blockquote>
+<p>注意：文件名或者是其他意义的名词内含有空格符的情况有些命令不能接受过多参数，命令执行可能会失败， xargs可以解决.  </p>
+</blockquote>
+<p>&emsp;示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ls f* |xargs rm</div><div class="line">find /sbin -perm +700 |ls -l 这个命令是错误的</div><div class="line">find /sbin -perm +7000 | xargs ls –l</div><div class="line">find和xargs格式： find | xargs COMMAND</div></pre></td></tr></table></figure></p>
+<h5 id="find示例："><a href="#find示例：" class="headerlink" title="find示例："></a>find示例：</h5><p>备份配置文件，添加.orig这个扩展名:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find -name “*.conf” -<span class="keyword">exec</span> cp &#123;&#125; &#123;&#125;.orig \;</div></pre></td></tr></table></figure></p>
+<p>提示删除存在时间超过３天以上的joe的临时文件:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /tmp -ctime +<span class="number">3</span> -user joe -ok rm &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>提示删除存在时间超过３天以上的joe的临时文件:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find ~ -perm <span class="number">-002</span> -<span class="keyword">exec</span> chmod o-w &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>搜索/data目录下权限为644、后缀为“.sh”的普通文件后，把权限修改为755；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /data –type f -perm <span class="number">644</span> -name “*.sh” –<span class="keyword">exec</span> chmod <span class="number">755</span> &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>搜索/home下的目录文件，并列表查看：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /home –type d -ls</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-使用Squid-Stunnel代理上网" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/27/使用Squid-Stunnel代理上网/" class="article-date">
+      <time datetime="2017-07-27T12:51:43.000Z" itemprop="datePublished">2017-07-27</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
+<h5 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h5><p>&emsp;&emsp;<strong>服务端：</strong>阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;<strong>软件：</strong>squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;<strong>客户端：</strong>stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;<strong>原理：</strong>当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
+<h5 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h5><h6 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h6> <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y squid                   //yum安装Squid</span></div><div class="line"><span class="comment">#vim /etc/squid/squid.conf              //修改配置文件</span></div><div class="line">    <span class="comment"># And finally deny all other access to this proxy</span></div><div class="line">    <span class="comment">#http_access deny all               //注释掉该行</span></div><div class="line">    http_access allow all               //复制上一行，将“deny”改为“allow”</div><div class="line">    <span class="comment"># Squid normally listens to port 3128</span></div><div class="line">    http_port <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3128</span>            //在端口前加入本地回环地址，只允许本地访问；</div></pre></td></tr></table></figure>
+<h6 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y stunnel     //yum安装Stunnel</span></div></pre></td></tr></table></figure>
+<h6 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#cd /etc/stunnel</span></div><div class="line"><span class="comment">#openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem     //生成证书</span></div><div class="line">Generating a <span class="number">2048</span> bit RSA private key</div><div class="line">.....+++</div><div class="line">....+++</div><div class="line">writing new private key to <span class="string">'stunnel.pem'</span></div><div class="line">-----</div><div class="line">You are about to be asked to enter information that will be incorporated</div><div class="line">into your certificate request.</div><div class="line">What you are about to enter <span class="keyword">is</span> what <span class="keyword">is</span> called a Distinguished Name <span class="keyword">or</span> a DN.</div><div class="line">There are quite a few fields but you can leave some blank</div><div class="line">For some fields there will be a default value,</div><div class="line">If you enter <span class="string">'.'</span>, the field will be left blank.</div><div class="line">-----</div><div class="line">Country Name (<span class="number">2</span> letter code) [XX]:CN                            //国家字母代码</div><div class="line">State <span class="keyword">or</span> Province Name (full name) []:BeiJing                   //省份</div><div class="line">Locality Name (eg, city) [Default City]:BeiJing                 //城市</div><div class="line">Organization Name (eg, company) [Default Company Ltd]:          //组织名称</div><div class="line">Organizational Unit Name (eg, section) []:                      //组织单位名称</div><div class="line">Common Name (eg, your name <span class="keyword">or</span> your serve<span class="string">r's hostname) []:       //当前系统的主机名</span></div><div class="line">Email Address []:                                               //邮件地址</div></pre></td></tr></table></figure>
+<p>&emsp;结束后会在/etc/stunnel/目录下生成一个stunnel.pem的文件；</p>
+<h6 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span></div><div class="line">client = no</div><div class="line">cert = /etc/stunnel/stunnel.pem     //配置加密代理证书</div><div class="line">CAfile = /etc/stunnel/stunnel.pem</div><div class="line">[https]</div><div class="line">accept = <span class="number">34567</span>                      //服务端口</div><div class="line">connect = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3128</span>            //指向本地的Squid服务端口</div></pre></td></tr></table></figure>
+<h6 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#systemctl start squid.service      //启动Squid；</span></div><div class="line"><span class="comment">#stunnel        //启动Stunnel；</span></div><div class="line"><span class="comment">#ss -tunlp      //检测端口判断服务是否启动；</span></div><div class="line">Netid State      Recv-Q Send-Q       Local Address:Port        Peer Address:Port</div><div class="line">tcp   LISTEN     <span class="number">0</span>      <span class="number">128</span>              <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3128</span>                   *:*           //squid服务            </div><div class="line">tcp   LISTEN     <span class="number">0</span>      <span class="number">128</span>                      *:<span class="number">34567</span>                  *:*           //Stunnel服务</div></pre></td></tr></table></figure>
+<h6 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h6><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#firewall-cmd --zone=public --add-port=34567/tcp --permanent</span></div></pre></td></tr></table></figure></p>
+<p>&emsp;在阿里云控制台里面添加端口映射后，在客户端上面测试是否能够正常访问Stunnel端口：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\wang&gt;telnet Service_IP <span class="number">34567</span></div></pre></td></tr></table></figure></p>
+<p>&emsp;如果命令执行后没有报错，cmd.exe窗口显示的是一个黑屏，说明服务能够正常使用；</p>
+<h5 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h5><h6 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h6><h6 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h6><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">client=yes</div><div class="line">[https]</div><div class="line">accept=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8088</span>       //在浏览器里面添加的代理地址和端口号；</div><div class="line">connect=Service_IP:<span class="number">34567</span>      //对应服务器的IP和端口；</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;我使用的是Chrome浏览器，在里面添加了Proxy SwitchyOmega扩展程序，能够灵活的设置代理上网，也可以添加相应的匹配规则，让需要代理网址的走Stunnel访问，国内的网站正常（不走Stunnel）的访问；</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-9、正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/27/Linux常用命令总结-9、正则表达式/" class="article-date">
+      <time datetime="2017-07-27T00:47:21.000Z" itemprop="datePublished">2017-07-27</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;<strong>正则表达式（REGEXP）</strong>是一类字符所书写的模式，其中很多字符不表示其字面意义，而是表达控制或通配等功能。通常被用来检索、替换那些符合某个规则的文本。  </p>
+<h4 id="程序支持"><a href="#程序支持" class="headerlink" title="程序支持"></a>程序支持</h4><p>&emsp;&emsp;<em>Grep,Sed,Awk,Vim, Less,Nginx,Varnish等;</em>  </p>
+<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><p>&emsp;&emsp;基本正则表达式：BRE<br>&emsp;&emsp;扩展正则表达式：ERE  </p>
+<h4 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h4><p>&emsp;&emsp;不表示其字面意义，而用于额外功能性描述；<br>&emsp;&emsp;<strong>元字符分类:</strong>字符匹配、匹配次数、位置锚定，分组；  </p>
+<h5 id="基本正则表达式的元字符："><a href="#基本正则表达式的元字符：" class="headerlink" title="基本正则表达式的元字符："></a>基本正则表达式的元字符：</h5><h6 id="字符匹配："><a href="#字符匹配：" class="headerlink" title="字符匹配："></a>字符匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">. 匹配任意单个字符</div><div class="line">[] 匹配指定范围内的任意单个字符</div><div class="line">[^] 匹配指定范围外的任意单个字符</div><div class="line">[0-9],[:digit:] 十进制数字 </div><div class="line">[a-z],[:lower:] 小写字母</div><div class="line">[A-Z],[:upper:] 大写字母</div><div class="line">[:alpha:] 代表任何英文大小写字符，亦即 A-Z, a-z</div><div class="line">[:alnum:] 字母和数字</div><div class="line">[:space:] 水平和垂直的空白字符（比[:blank:]包含的范围广）</div><div class="line">[:blank:] 空白字符（空格和制表符）</div><div class="line">[:cntrl:] 不可打印的控制字符（退格、删除、警铃...）</div><div class="line">[:xdigit:]十六进制数字</div><div class="line">[:graph:] 可打印的非空白字符</div><div class="line">[:<span class="built_in">print</span>:] 可打印字符</div><div class="line">[:punct:] 标点符号</div></pre></td></tr></table></figure>
+<h6 id="匹配次数："><a href="#匹配次数：" class="headerlink" title="匹配次数："></a>匹配次数：</h6><p>&emsp;&emsp;<strong>作用:</strong> 用于实现指定其前面的字符所能够出现的次数.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">* 匹配前面的字符任意次，包括0次(贪婪模式：尽可能长的匹配)</div><div class="line">.* 任意长度的任意字符</div><div class="line">\? 匹配其前面的字符0或1次</div><div class="line">\+ 匹配其前面的字符至少1次</div><div class="line">\&#123;n\&#125; 匹配前面的字符n次</div><div class="line">\&#123;m,n\&#125; 匹配前面的字符至少m次，至多n次</div><div class="line">\&#123;,n\&#125; 匹配前面的字符至多n次</div><div class="line">\&#123;n,\&#125; 匹配前面的字符至少n次</div></pre></td></tr></table></figure></p>
+<h6 id="位置锚定："><a href="#位置锚定：" class="headerlink" title="位置锚定："></a>位置锚定：</h6><p>&emsp;&emsp;<strong>作用:</strong> 定位出现的位置；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">^ 行首锚定，写在模式的最左侧</div><div class="line">$ 行尾锚定，写在模式的最右侧</div><div class="line">^PATTERN$ 用于模式匹配整行</div><div class="line">^$ 空行</div><div class="line">^[[:space:]]*$ 空白行</div><div class="line">\&lt; 或 \b 词首锚定，用于单词模式的左侧   </div><div class="line">\&gt; 或 \b 词尾锚定；用于单词模式的右侧</div><div class="line">\&lt;PATTERN\&gt; 匹配整个单词</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note:不包含特殊字符的连续字符组成的串叫单词：</p>
+</blockquote>
+<h6 id="分组："><a href="#分组：" class="headerlink" title="分组："></a>分组：</h6><p>&emsp;&emsp;<code>\(\)</code>将一个或多个字符捆绑在一起，当作一个整体进行处理.<br>&emsp;&emsp;<strong>如：</strong> <code>\(root\)\+</code></p>
+<p>&emsp;&emsp;分组括号中的模式匹配到的内容会被正则表达式引擎记录于内部的变量中,这些变量的命名方式为:<code>\1, \2, \3, ...</code><br>&emsp;&emsp;<code>\1</code> 表示从左侧起第一个左括号以及与之匹配右括号之间的模式所匹配到的字符<br><strong>示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">\(string1\+\(string2\)*\)</div><div class="line">\1 ： string1\+\(string2\)*</div><div class="line">\2 ： string2</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<strong>后向引用：</strong>引用前面的分组括号中的模式所匹配字符，而非模式本身.  </p>
+<h6 id="或者："><a href="#或者：" class="headerlink" title="或者：\|"></a>或者：<code>\|</code></h6><p>&emsp;&emsp;示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a\|b: a或b C\|cat: C或cat \(C\|c\)at:Cat或cat</div></pre></td></tr></table></figure></p>
+<h5 id="扩展正则表达式的元字符："><a href="#扩展正则表达式的元字符：" class="headerlink" title="扩展正则表达式的元字符："></a>扩展正则表达式的元字符：</h5><h6 id="字符匹配：-1"><a href="#字符匹配：-1" class="headerlink" title="字符匹配："></a>字符匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">. 任意单个字符</div><div class="line">[] 指定范围的字符</div><div class="line">[^] 不在指定范围的字符</div></pre></td></tr></table></figure>
+<h6 id="次数匹配："><a href="#次数匹配：" class="headerlink" title="次数匹配："></a>次数匹配：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">*：匹配前面字符任意次</div><div class="line">?: 0或1次</div><div class="line">+： 1次或多次</div><div class="line">&#123;m&#125;：匹配m次</div><div class="line">&#123;m,n&#125;：至少m，至多n次</div></pre></td></tr></table></figure>
+<h6 id="位置锚定：-1"><a href="#位置锚定：-1" class="headerlink" title="位置锚定："></a>位置锚定：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">^ :行首</div><div class="line">$ :行尾</div><div class="line">\&lt;, \b :语首</div><div class="line">\&gt;, \b :语尾</div></pre></td></tr></table></figure>
+<h6 id="分组：-1"><a href="#分组：-1" class="headerlink" title="分组："></a>分组：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">()</div><div class="line">后向引用： \1, \2, ...</div></pre></td></tr></table></figure>
+<h6 id="或者：-1"><a href="#或者：-1" class="headerlink" title="或者："></a>或者：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a|b: a或b</div><div class="line">C|cat: C或cat</div><div class="line">(C|c)at:Cat或cat</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-8、vim文本编辑器" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/" class="article-date">
+      <time datetime="2017-07-25T05:54:44.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-7、文本处理工具" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-7、文本处理工具/" class="article-date">
+      <time datetime="2017-07-25T05:54:25.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;作为运维人员，我们经常需要查看、分析和统计日志等信息，在这里，我对初级的文本处理工具的学习做一个小总结。<br><strong>本文提到的命令：</strong><br>&emsp;&emsp;<em>查看文件内容：</em> <code>cat</code>、<code>more</code>、<code>less</code><br>&emsp;&emsp;<em>文件截取：</em> <code>head</code> 和 <code>tail</code><br>&emsp;&emsp;<em>按列抽取:</em>  <code>cut</code><br>&emsp;&emsp;<em>文本数据统计：</em> <code>wc</code><br>&emsp;&emsp;<em>文本排序：</em> <code>sort</code><br>&emsp;&emsp;<em>去重复的行：</em> <code>uniq</code><br>&emsp;&emsp;<em>按关键字抽取：</em><code>grep</code>  </p>
+<h4 id="文件查看命令"><a href="#文件查看命令" class="headerlink" title="文件查看命令"></a>文件查看命令</h4><h5 id="标准输入文件：cat"><a href="#标准输入文件：cat" class="headerlink" title="标准输入文件：cat"></a>标准输入文件：cat</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数:</strong><br><code>-E</code>: 显示行结束符&amp;；<br><code>-n</code>: 对显示出的每一行进行编号；<br><code>-A</code>: 显示所有控制符；<br><code>-b</code>: 非空行编号；<br><code>-s</code>: 压缩连续的空行成一行；  </p>
+<h5 id="分页查看文件：more"><a href="#分页查看文件：more" class="headerlink" title="分页查看文件：more"></a>分页查看文件：more</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">more [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-d</code>: 显示翻页及退出提示；</p>
+<h5 id="按页查看文件：less"><a href="#按页查看文件：less" class="headerlink" title="按页查看文件：less"></a>按页查看文件：less</h5><p><strong>用法:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">less [FILE]...</div></pre></td></tr></table></figure></p>
+<p><em>查看时常用的命令：</em><br><code>/文本</code>: 搜索“文本”；<br><code>n/N</code>: 跳到<code>下一个</code>或<code>上一个</code>匹配；</p>
+<blockquote>
+<p>Note: man命令使用的就是less分页器；</p>
+</blockquote>
+<h5 id="显示文本前-行的内容：head"><a href="#显示文本前-行的内容：head" class="headerlink" title="显示文本前#行的内容：head"></a>显示文本前#行的内容：head</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">head [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-c #</code>: 指定获取前#字节；<br><code>-n #</code>: 指定获取前#字节；<br><code>-#</code>: 指定行数；  </p>
+<h5 id="显示文本后-行的内容：tail"><a href="#显示文本后-行的内容：tail" class="headerlink" title="显示文本后#行的内容：tail"></a>显示文本后#行的内容：tail</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-c #</code>: 指定获取后#字节；<br><code>-n #</code>: 指定获取后#字节；<br><code>- #</code>: 指定行数；<br><code>-f</code>: 跟踪显示文件新追加的内容，常用日志监控；  </p>
+<h4 id="文本处理类命令："><a href="#文本处理类命令：" class="headerlink" title="文本处理类命令："></a>文本处理类命令：</h4><h5 id="按列抽取文本：cut"><a href="#按列抽取文本：cut" class="headerlink" title="按列抽取文本：cut"></a>按列抽取文本：cut</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cut [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-d DELIMITER</code>: 指明分隔符，默认tab；<br><code>-f FILEDS</code>:<br>&emsp;&emsp;<code>#</code>: 第#字段；<br>&emsp;&emsp;<code>#,#[,#]</code>: 离散的多个字段，例如1,3,6；<br>&emsp;&emsp;<code>#-#</code>: 1-3,7;<br>&emsp;&emsp;<code>-c</code>: 按字符切割；<br>&emsp;&emsp;<code>--output-delimiter=STRING</code>指明输出分隔符；<br><strong>示例：</strong><br>显示文件或STDIN数据的指定列：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$cut</span> -d: -f1 /etc/passwd</div><div class="line"><span class="variable">$cat</span> /etc/passwd | cut -d: -f7</div><div class="line"><span class="variable">$cut</span> -c2-5 /usr/share/dict/words</div></pre></td></tr></table></figure></p>
+<h5 id="合并两个文件同行号的列到一行：paste"><a href="#合并两个文件同行号的列到一行：paste" class="headerlink" title="合并两个文件同行号的列到一行：paste"></a>合并两个文件同行号的列到一行：paste</h5><p><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">paste [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-d 分隔符</code>: 指定分隔符，默认用TAB;<br><code>-s</code>: 所有行合成一行显示；<br><strong>示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$paste</span> f1 f2</div><div class="line"><span class="variable">$paste</span> -s f1 f2</div></pre></td></tr></table></figure></p>
+<h5 id="文本数据统计：wc"><a href="#文本数据统计：wc" class="headerlink" title="文本数据统计：wc"></a>文本数据统计：wc</h5><p>&emsp;&emsp;对文件或STDIN（标准输出）的数据，做单词总数、行总数、字节总数字符总数的统计。<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wc [OPTION]...[FILE]...</div><div class="line"></div><div class="line"><span class="variable">$wc</span> story.txt</div><div class="line">39      237     1901        story.txt</div><div class="line">行数    字数    字符数</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-l</code>: 只统计行数；<br><code>-w</code>: 只统计单词总数；<br><code>-c</code>: 只统计字节总数；<br><code>-m</code>: 只统计字符总数；  </p>
+<h5 id="文本排序：-sort"><a href="#文本排序：-sort" class="headerlink" title="文本排序： sort"></a>文本排序： sort</h5><p>&emsp;&emsp;把整理过的文本显示在标准输出，不会改变原始文件。<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sort [OPTIONS]...[FILES]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-r</code>: 执行反方向（由上至下）整理；<br><code>-n</code>: 执行按数字大小整理；<br><code>-f</code>: 选项忽略（fold）字符串中的字符大小写；<br><code>-u</code>: 选项（独特，unique）删除输出中的重复行；<br><code>-t c</code>: 选项使用<code>c</code>作为字符界定符；<br><code>-k X</code>: 选项安装使用<code>c</code>字符分隔的<code>X</code>列来整理能够使用多次；  </p>
+<h5 id="去除重复的行：uniq"><a href="#去除重复的行：uniq" class="headerlink" title="去除重复的行：uniq"></a>去除重复的行：uniq</h5><p>&emsp;&emsp;从输入中删除前后相接的重复的行；<br><strong>用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uniq [OPTION]...[FILE]...</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>-c</code>: 显示每行重复出现的次数；<br><code>-d</code>: 仅显示重复出现的行；<br><code>-u</code>: 仅显示不曾重复的行；</p>
+<blockquote>
+<p>Note: 连续且完全想用方为重复；<br>常和sort命令一起配合使用：<code>sort userlist.txt | uniq -c</code></p>
+</blockquote>
+<h5 id="文件对比：diff-和-patch"><a href="#文件对比：diff-和-patch" class="headerlink" title="文件对比：diff 和 patch"></a>文件对比：diff 和 patch</h5><h6 id="比较文件：diff"><a href="#比较文件：diff" class="headerlink" title="比较文件：diff"></a>比较文件：diff</h6><p>&emsp;&emsp;比较两个文件之间的区别；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$diff foo.conf-broken foo.conf-works5c5</div><div class="line">&lt;   use_widgets = no</div><div class="line">---</div><div class="line">&gt;   use_widgets = yes</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注明第5行有区别（改变）。  </p>
+</blockquote>
+<h6 id="复制对文件改变：patch"><a href="#复制对文件改变：patch" class="headerlink" title="复制对文件改变：patch"></a>复制对文件改变：patch</h6><p><code>diff</code>: 命令的输入被保存在一种叫做“补丁”的文件中。 </p>
+<blockquote>
+<p>使用<code>-u</code>选项来输出“统一的（unified）”diff格式文件，最适用于补丁文件。<br><code>patch</code>: 复制在其它文件中进行的改变（要谨慎使用）<br>使用<code>-b</code>选项来自动备份改变了的文件；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$diff -u foo.conf-broken foo.conf-works &gt; foo.patch</div><div class="line">$patch -b foo.conf-broken foo.patch</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="文本过滤：grep"><a href="#文本过滤：grep" class="headerlink" title="文本过滤：grep"></a>文本过滤：grep</h4><p>&emsp;&emsp;文本搜索工具，根据用户指定的正则表达式字符及文本字符所编写的过滤条件，对目标文本逐行进行匹配检查，打印匹配到的行。<br><strong>用法：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">grep [OPTIONS] PATTERN [FILE...]</div><div class="line">    grep root /etc/passwd</div><div class="line">    grep <span class="string">"$USER"</span> /etc/passwd</div><div class="line">    grep <span class="string">'$USER'</span> /etc/passwd</div><div class="line">    grep `whoami` /etc/passwd</div></pre></td></tr></table></figure></p>
+<p><strong>参数：</strong><br><code>--color=auto</code>: 对匹配到的文本着色显示；（Centos 7默认已使用alias设置此参数）<br><code>-v</code>: 显示不被pattern匹配到的行；<br><code>-i</code>: 忽略字符大小写；<br><code>-n</code>: 显示匹配的行号；<br><code>-c</code>: 统计匹配的行数；<br><code>-o</code>: 仅显示匹配到的字符串；<br><code>-q</code>: 静默模式，不输出任何信息;<br><code>-A #</code> : after,同时显示匹配行的后#行;<br><code>-B #</code>: before,同时显示匹配行的前#行；<br><code>-c #</code>: context,同时显示匹配行的前后各#行；<br><code>-e</code>: 实现多个选项间的逻辑or关系；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grep -e <span class="string">'cat'</span> -e <span class="string">'dog'</span> file</div></pre></td></tr></table></figure></p>
+<p><code>-w</code>: 匹配整个单词；<br><code>-E</code>: 使用ERE;<br><code>-F</code>: 相当于fgrep，不支持正则表达式；</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-6、用户组和权限管理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/" class="article-date">
+      <time datetime="2017-07-25T05:53:41.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-5、重定向和管道" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-5、重定向和管道/" class="article-date">
+      <time datetime="2017-07-25T05:53:13.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-4、文件管理类命令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/" class="article-date">
+      <time datetime="2017-07-25T05:52:47.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-2、文件管理类命令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/" class="article-date">
+      <time datetime="2017-07-25T01:31:58.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-1、线上查询及帮助命令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/" class="article-date">
+      <time datetime="2017-07-25T01:30:13.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;Linux命令分为<strong>内部命令</strong>和<strong>外部命令</strong>；<br>&emsp;&emsp;<strong>内部命令：</strong> 由shell自带的命令。在系统启动时就调入内存，是常驻内存的，所以执行效率高。<br>&emsp;&emsp;<strong>外部命令：</strong> 由系统的软件提供的命令；，用户需要时才从硬盘中读入内存；  </p>
+<h4 id="判断一个命令是否为内部命令：type"><a href="#判断一个命令是否为内部命令：type" class="headerlink" title="判断一个命令是否为内部命令：type"></a>判断一个命令是否为内部命令：type</h4><p>&emsp;&emsp;<strong>常见用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">type</span> COMMAND</div></pre></td></tr></table></figure></p>
+<h4 id="显示内部命令列表：help"><a href="#显示内部命令列表：help" class="headerlink" title="显示内部命令列表：help"></a>显示内部命令列表：help</h4><p>&emsp;&emsp;<strong>常见用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#help</span></div></pre></td></tr></table></figure></p>
+<h4 id="列出内部命令列表：enable"><a href="#列出内部命令列表：enable" class="headerlink" title="列出内部命令列表：enable"></a>列出内部命令列表：enable</h4><p>&emsp;&emsp;<strong>常见用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">enable</span> COMMAND: 启用内部命令；</div><div class="line">        -n COMMAND: 禁用某个命令；</div><div class="line">        -n：查看被禁用的所有内部命令；</div></pre></td></tr></table></figure></p>
+<h4 id="hash缓存表："><a href="#hash缓存表：" class="headerlink" title="hash缓存表："></a>hash缓存表：</h4><p>&emsp;&emsp;系统初始hash表为空，当外部命令执行时，默认会从PATH路径下寻找该命令，找到后会将这条命令的路径记录到hash表中，当再次使用该命令时， shell解释器首先会查看hash表，存在将执行之，如果不存在，将会去PATH路径下寻找。利用hash缓存表可大大提高命令的调用速率。<br>&emsp;&emsp;<strong>常见用法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">hash</span>: 显示<span class="built_in">hash</span>缓存</div><div class="line"><span class="built_in">hash</span> –l: 显示<span class="built_in">hash</span>缓存，可作为输入使用</div><div class="line"><span class="built_in">hash</span> –p path name: 将命令全路径path起别名为name</div><div class="line"><span class="built_in">hash</span> –t name: 打印缓存中name的路径</div><div class="line"><span class="built_in">hash</span> –d name: 清除name缓存</div><div class="line"><span class="built_in">hash</span> –r: 清除缓存</div></pre></td></tr></table></figure></p>
+<h4 id="使用命令帮助：man"><a href="#使用命令帮助：man" class="headerlink" title="使用命令帮助：man"></a>使用命令帮助：man</h4><p>&emsp;&emsp;手册存放在<code>/usr/share/man</code>里，几乎每个命令都有man的“页面”;<br>&emsp;&emsp;<strong>配置文件：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/man.config | man_db.conf</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<strong>常用选项：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">man [OPTION] COMMAND</div><div class="line">    -M：到指定位置下搜索COMMAND命令的手册页并显示；</div><div class="line">    -a：列出所有帮助；</div><div class="line">    -k：列出所有匹配的页面，使用whatis数据库；</div><div class="line">    -f：相当于whatis；</div><div class="line">    -w：打印man帮助的文件路径；</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<strong>man命令的操作方法：使用less命令实现</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">space,^v,^f，^F: 向文件尾部翻屏；</div><div class="line">b,^b: 向文首部翻屏；</div><div class="line">d,^d: 向文件尾部翻半屏；</div><div class="line">u，^u: 向文件首部翻半屏；</div><div class="line">RETURN,^N,e,^E or ^J: 向文件尾部翻一行；</div><div class="line">y or ^Y or ^P or k or ^K：向文件首部翻一行</div><div class="line">q: 退出</div><div class="line"><span class="comment">#：跳转至第#行</span></div><div class="line">1G: 回到文件首部</div><div class="line">G：翻至文件尾部</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<strong>使用man搜索：</strong><br>&emsp;&emsp;&emsp;<strong>/KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp; &emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件尾部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：上一个</strong><br>&emsp;&emsp;&emsp;<strong>?KEYWORD:</strong><br>&emsp;&emsp;&emsp;&emsp;&emsp;以KEYWORD指定的字符串为关键字，从当前位置向文件首部搜索；不区分字符大小写；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<strong>n: 跟搜索命令同方向，下一个<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;N：跟搜索命令反方向，上一个</strong>  </p>
+<h4 id="info-适合通用文档参考"><a href="#info-适合通用文档参考" class="headerlink" title="info: 适合通用文档参考:"></a>info: 适合通用文档参考:</h4><p>&emsp;&emsp;<strong>使用方法：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#info COMMAND</span></div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;没有参数，列出所有的页面；页面结构就想一个网站，每一页分为“节点”，链接节点之前*<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">方向键: PgUp， PgDn 导航  </div><div class="line">Tab键: 移动到下一个链接  </div><div class="line">d: 显示主题目录  </div><div class="line">Home: 显示主题首部  </div><div class="line">Enter: 进入选定链接  </div><div class="line">n/p/u/l: 进入下/前/上一层/最后一个链接  </div><div class="line">s: 文字 文本搜索  </div><div class="line">q: 退出 info</div></pre></td></tr></table></figure></p>
+<h4 id="查看命令或文件的的路径-whereis"><a href="#查看命令或文件的的路径-whereis" class="headerlink" title="查看命令或文件的的路径: whereis"></a>查看命令或文件的的路径: whereis</h4><p>&emsp;&emsp;显示命令的简短描述；(需要使用数据库，刚安装后不可立即使用)<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;makewhatis | mandb 制作数据库<br>&emsp;&emsp;&emsp;&emsp;<strong>使用示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">whatis cal </div><div class="line">    或 </div><div class="line">man -f cal</div></pre></td></tr></table></figure></p>
+<h4 id="查看外部命令的路径which："><a href="#查看外部命令的路径which：" class="headerlink" title="查看外部命令的路径which："></a>查看外部命令的路径which：</h4><p>&emsp;&emsp;查看可执行程序文件的路径<br>&emsp;&emsp;<strong>常用选项：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">which</span> [OPTION]...COMMAND</div><div class="line">        -a: 查看全部</div><div class="line">        --skip-alias：忽略别名</div></pre></td></tr></table></figure></p>
+<h4 id="命令别名：alias"><a href="#命令别名：alias" class="headerlink" title="命令别名：alias"></a>命令别名：alias</h4><p>&emsp;&emsp;<strong>使用示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">alias</span> NAME=<span class="string">'VALUE'</span>   //定义别名NAME,其相当于执行命令VALUE:  </div><div class="line"><span class="built_in">alias</span>：显示当前shell进程所有可用的命令别名；</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><strong>Note:</strong> 在命令行中定义的别名，仅对当前shell进程有效，如果想永久有效，要定义在配置文件中：<br>&emsp;&emsp;&emsp;&emsp;<strong>仅对当前用户：</strong>~/.bashrc<br>&emsp;&emsp;&emsp;&emsp;<strong>对所有用户有效：</strong>/etc/bashrc<br>&emsp;&emsp;&emsp;编辑配置给出的新配置不会立即生效，需要使用source重新读取配置文件；</p>
+</blockquote>
+<h4 id="撤销命令别名：-unalias"><a href="#撤销命令别名：-unalias" class="headerlink" title="撤销命令别名：    unalias"></a>撤销命令别名：    unalias</h4><p>&emsp;&emsp;<strong>使用示例：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">unalias</span> [OPTION] NAME</div><div class="line">        -a：取消所有别名；</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<strong>如果别名同原命令同名，如果要执行原命令，可以使用：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">\COMMAND</div><div class="line"><span class="string">'COMMAND'</span></div><div class="line">/PATH/COMMAND:外部命令</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令/">Linux常用命令</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-目录" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-目录/" class="article-date">
+      <time datetime="2017-07-25T01:28:21.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="Linux常用命令总结"><a href="#Linux常用命令总结" class="headerlink" title="Linux常用命令总结"></a>Linux常用命令总结</h4><h6 id="1、线上查询及帮助命令"><a href="#1、线上查询及帮助命令" class="headerlink" title="1、线上查询及帮助命令"></a><a href="http://blog.wangbinzhou.com/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-1%E3%80%81%E7%BA%BF%E4%B8%8A%E6%9F%A5%E8%AF%A2%E5%8F%8A%E5%B8%AE%E5%8A%A9%E5%91%BD%E4%BB%A4/">1、线上查询及帮助命令</a></h6><h6 id="2、文件管理类命令"><a href="#2、文件管理类命令" class="headerlink" title="2、文件管理类命令"></a><a href="http://blog.wangbinzhou.com/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-2%E3%80%81%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B1%BB%E5%91%BD%E4%BB%A4/">2、文件管理类命令</a></h6><h6 id="3、查看命令历史"><a href="#3、查看命令历史" class="headerlink" title="3、查看命令历史"></a><a href="http://blog.wangbinzhou.com/2017/07/22/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-3%E3%80%81%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E5%8E%86%E5%8F%B2/">3、查看命令历史</a></h6><h6 id="4、文件管理类命令"><a href="#4、文件管理类命令" class="headerlink" title="4、文件管理类命令"></a><a href="http://blog.wangbinzhou.com/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-4%E3%80%81%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B1%BB%E5%91%BD%E4%BB%A4/">4、文件管理类命令</a></h6><h6 id="5、重定向和管道"><a href="#5、重定向和管道" class="headerlink" title="5、重定向和管道"></a><a href="http://blog.wangbinzhou.com/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-5%E3%80%81%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E7%AE%A1%E9%81%93/">5、重定向和管道</a></h6><h6 id="6、用户组和权限管理"><a href="#6、用户组和权限管理" class="headerlink" title="6、用户组和权限管理"></a><a href="http://blog.wangbinzhou.com/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-6%E3%80%81%E7%94%A8%E6%88%B7%E7%BB%84%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">6、用户组和权限管理</a></h6><h6 id="7、文本处理工具"><a href="#7、文本处理工具" class="headerlink" title="7、文本处理工具"></a><a href="http://blog.wangbinzhou.com/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-7%E3%80%81%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/">7、文本处理工具</a></h6><h6 id="8、vim文本编辑器"><a href="#8、vim文本编辑器" class="headerlink" title="8、vim文本编辑器"></a><a href="http://blog.wangbinzhou.com/2017/07/25/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-8%E3%80%81vim%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/">8、vim文本编辑器</a></h6><h6 id="9、正则表达式"><a href="#9、正则表达式" class="headerlink" title="9、正则表达式"></a><a href="http://blog.wangbinzhou.com/2017/07/27/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-9%E3%80%81%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">9、正则表达式</a></h6><h6 id="10、文件查找之locate和find"><a href="#10、文件查找之locate和find" class="headerlink" title="10、文件查找之locate和find"></a><a href="http://blog.wangbinzhou.com/2017/08/01/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93%EF%BC%9A10%E3%80%81%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E4%B9%8Blocate%E5%92%8Cfind/">10、文件查找之locate和find</a></h6><h6 id="11、Linux计划任务"><a href="#11、Linux计划任务" class="headerlink" title="11、Linux计划任务"></a><a href="http://blog.wangbinzhou.com/2017/08/24/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93-11%E3%80%81Linux%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">11、Linux计划任务</a></h6>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-3、查看命令历史" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/22/Linux常用命令总结-3、查看命令历史/" class="article-date">
+      <time datetime="2017-07-22T11:21:49.000Z" itemprop="datePublished">2017-07-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><h5 id="emsp-1、说明："><a href="#emsp-1、说明：" class="headerlink" title="&emsp;1、说明："></a>&emsp;1、说明：</h5><p>&emsp;&emsp;&emsp;<strong>history是Shell的内置命令，用来查看以前执行过的命令。</strong>  </p>
+<h5 id="emsp-2、配置文件"><a href="#emsp-2、配置文件" class="headerlink" title="&emsp;2、配置文件"></a>&emsp;2、配置文件</h5><p>&emsp;&emsp;&emsp;<strong>当登陆Shell时，会读取命令历史文件~/.bash_history中记录下的命令。登录进shell后新执行的命令只会记录在缓存中，这些命令在用户退出时会“追加”至命令历史文件~/.bash_history中。</strong></p>
+<h4 id="二、相关参数"><a href="#二、相关参数" class="headerlink" title="二、相关参数"></a>二、相关参数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">history</span>:</div><div class="line">		-c: 清空历史命令；  </div><div class="line">		-d: 删除历史中的第N个命令；  </div><div class="line">		 N: 显示最近的N条历史；  </div><div class="line">		-a: 追加本次会话新执行的命令至命令历史文件中;  </div><div class="line">		-n: 读命令历史文件中未读过的行到历史列表；  </div><div class="line">		-r: 读命令历史文件附加到历史列表；  </div><div class="line">		-w: 保存历史列表到指定的命令历史文件中；  </div><div class="line">		-p: 展开历史参数成多行，但不存在历史列表中；  </div><div class="line">		-s: 展开历史参数成一行，附加在历史列表后；</div></pre></td></tr></table></figure>
+<h4 id="三、history的常用快捷方式"><a href="#三、history的常用快捷方式" class="headerlink" title="三、history的常用快捷方式"></a>三、history的常用快捷方式</h4><h5 id="emsp-1-重复前一个命令的4个方法："><a href="#emsp-1-重复前一个命令的4个方法：" class="headerlink" title="&emsp;1. 重复前一个命令的4个方法："></a>&emsp;1. 重复前一个命令的4个方法：</h5><h6 id="emsp-emsp-emsp-按↑键并回车执行"><a href="#emsp-emsp-emsp-按↑键并回车执行" class="headerlink" title="&emsp;&emsp;&emsp;按↑键并回车执行;"></a>&emsp;&emsp;&emsp;按<strong>↑</strong>键并回车执行;</h6><h6 id="emsp-emsp-emsp-按-并执行回车；"><a href="#emsp-emsp-emsp-按-并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按 !!并执行回车；"></a>&emsp;&emsp;&emsp;按 <strong>!!</strong>并执行回车；</h6><h6 id="emsp-emsp-emsp-输入-1并执行回车"><a href="#emsp-emsp-emsp-输入-1并执行回车" class="headerlink" title="&emsp;&emsp;&emsp;输入!-1并执行回车;"></a>&emsp;&emsp;&emsp;输入<strong>!-1</strong>并执行回车;</h6><h6 id="emsp-emsp-emsp-按Ctrl-P并执行回车；"><a href="#emsp-emsp-emsp-按Ctrl-P并执行回车；" class="headerlink" title="&emsp;&emsp;&emsp;按Ctrl+P并执行回车；"></a>&emsp;&emsp;&emsp;按<strong>Ctrl+P</strong>并执行回车；</h6><h5 id="emsp-2-在命令历史中搜索命令："><a href="#emsp-2-在命令历史中搜索命令：" class="headerlink" title="&emsp;2. 在命令历史中搜索命令："></a>&emsp;2. 在命令历史中搜索命令：</h5><h6 id="emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；"><a href="#emsp-emsp-emsp-Ctrl-r-在命令历史中搜索命令；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + r : 在命令历史中搜索命令；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + r</strong> : 在命令历史中搜索命令；</h6><h6 id="emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；"><a href="#emsp-emsp-emsp-Ctrl-g-从命令历史搜索模式中退出；" class="headerlink" title="&emsp;&emsp;&emsp;Ctrl + g : 从命令历史搜索模式中退出；"></a>&emsp;&emsp;&emsp;<strong>Ctrl + g</strong> : 从命令历史搜索模式中退出；</h6><h5 id="emsp-3-要重新调用前一个命令中最后一个参数："><a href="#emsp-3-要重新调用前一个命令中最后一个参数：" class="headerlink" title="&emsp;3. 要重新调用前一个命令中最后一个参数："></a>&emsp;3. 要重新调用前一个命令中最后一个参数：</h5><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Alt + .:	按住Alt键的同时点击 . 键</div><div class="line">Esc, . :	点击Esc键后松开，然后点击 . 键</div><div class="line">	 !$:	表示</div></pre></td></tr></table></figure>
+<h5 id="emsp-4-其他命令历史快捷方式"><a href="#emsp-4-其他命令历史快捷方式" class="headerlink" title="&emsp;4. 其他命令历史快捷方式"></a>&emsp;4. 其他命令历史快捷方式</h5><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">				  !n:	执行history命令输出对应序列号n的命令；  </div><div class="line">				 !-n:	执行history历史中倒数第n个命令；  </div><div class="line">				 !:<span class="number">0</span>:	执行前一条命令(去除参数);  </div><div class="line">			Ctrl + n:	显示当前历史中的下一条命令，但不执行；  </div><div class="line">			Ctrl + j:	执行当前命令；  </div><div class="line">			 !string:	重复前一个以“string”开头的命令；  </div><div class="line">			!?string:	重复前一个包含string的命令；  </div><div class="line">		   !string:p:	仅打印历史命令而不执行；  </div><div class="line">			 ^string:	删除上一条命令中第一个string；  </div><div class="line">	^string1^string2:	将上一条命令中的第一个string1替换为string2；  </div><div class="line">!:gs/string1/string2:	将上一条命令中所有的string1都替换为string2;</div></pre></td></tr></table></figure>
+<h5 id="emsp-5-调用历史参数："><a href="#emsp-5-调用历史参数：" class="headerlink" title="&emsp;5. 调用历史参数："></a>&emsp;5. 调用历史参数：</h5><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">command !^: 利用上一个命令的第一个参数做<span class="built_in">cmd</span>的参数;  </div><div class="line">command !$: 利用上一个命令的最后一个参数做<span class="built_in">cmd</span>的参数;  </div><div class="line">command !*: 利用上一个命令的全部参数做<span class="built_in">cmd</span>的参数;  </div><div class="line">command !:n: 利用上一个命令的第n个参数做<span class="built_in">cmd</span>的参数;  </div><div class="line">command !n:^: 调用第n条命令的第一个参数;  </div><div class="line">command !n:$: 调用第n条命令的最后一个参数;  </div><div class="line">command !n:m: 调用第n条命令的第m个参数;  </div><div class="line">command !n:*: 调用第n条命令的所有参数;  </div><div class="line">command !string:^: 从命令历史中搜索以 string 开头的命令，并获取它的第一个参数;  </div><div class="line">command !string:$: 从命令历史中搜索以 string 开头的命令,并获取它的最后一个参数;  </div><div class="line">command !string:n: 从命令历史中搜索以 string 开头的命令，并获取它的第n个参数;  </div><div class="line">command !string:*: 从命令历史中搜索以 string 开头的命令，并获取它的所有参数;  </div><div class="line">```  </div><div class="line">##### 四、命令历史相关环节变量：</div><div class="line">```dos</div><div class="line">HISTSIZE：命令历史记录的条数;  </div><div class="line">HISTFILE：指定历史文件，默认为~/.bash_history;  </div><div class="line">HISTFILESIZE：命令历史文件记录历史的条数;  </div><div class="line">HISTTIMEFORMAT="%F %T"：显示时间;  </div><div class="line">HISTIGNORE="str1:str2*:…"：忽略str1命令， str2开头的历史;</div></pre></td></tr></table></figure>
+<h5 id="五、控制命令历史的记录方式："><a href="#五、控制命令历史的记录方式：" class="headerlink" title="五、控制命令历史的记录方式："></a>五、控制命令历史的记录方式：</h5><p>&emsp;<strong>通过修改环境变量：HISTCONTROL的相关参数来控制历史命令的记录方式：</strong></p>
+<p>&emsp;&emsp;&emsp;<strong>HISTCONTROL相关参数：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ignoredups:默认，忽略重复的命令，连续且相同为“重复”  </div><div class="line">ignorespace:忽略所有以空白开头的命令  </div><div class="line">ignoreboth:相当于ignoredups, ignorespace的组合  </div><div class="line">erasedups:删除重复命令 </div><div class="line">``` </div><div class="line">&amp;emsp;&amp;emsp;&amp;emsp;**修改方式：**</div><div class="line">```bash</div><div class="line"><span class="comment">#export HISCONTROL="参数"  </span></div><div class="line">文件存放在 /etc/profile 或 ~/.bash_profile</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
   
 </div>
       <footer id="footer">
@@ -1307,6 +2495,8 @@
 </footer>
     </div>
     
+    <script src="/js/GithubRepoWidget.js"></script>
+
 <script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
 
     <script>
@@ -1351,14 +2541,14 @@ ga('send', 'pageview');
     // Open in New Window
     
         var oOpenInNew = {
-            
+             github: ".github-widget a", 
             
              post: ".article-entry a[href], .copyright a[href]", 
             
             
             
-             archives: ".archive-article-title", 
-             miniArchives: "a.post-list-link", 
+            
+            
             
              friends: "#js-friends a", 
              socail: ".social a" 
