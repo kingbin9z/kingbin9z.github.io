@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /tags/
+Allow: /about/
+
+Disallow: /vendors/
+
+
+Sitemap: http://blog.wangbinzhou.com/sitemap.xml
+Sitemap: http://blog.wangbinzhou.com/baidusitemap.xml
