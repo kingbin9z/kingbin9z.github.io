@@ -11,6 +11,7 @@
 <li>Dropbear：另一个开源实现  </li>
 </ul>
 <p><em>在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程</em>  </p>
+<a id="more"></a>
 <h4 id="SSH协议版本"><a href="#SSH协议版本" class="headerlink" title="SSH协议版本"></a>SSH协议版本</h4><ul>
 <li>v1: 基于CRC-32做MAC，不安全； man-in-middle  </li>
 <li>v2：双方主机协议选择安全的MAC方式<br>基于DH算法做密钥交换，使用RSA或DSA实现身份认证   </li>
@@ -103,6 +104,7 @@
       <title><![CDATA[机器人三定律]]></title>
       <url>/2017/09/13/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%89%E5%AE%9A%E5%BE%8B/</url>
       <content type="html"><![CDATA[<p><img src="http://ovnpik36u.bkt.clouddn.com/20170913/irobot/irobot.png" alt="image"><br><em>电影《I,Robot》剧照</em></p>
+<a id="more"></a>
 <h4 id="第零定律"><a href="#第零定律" class="headerlink" title="第零定律"></a>第零定律</h4><p><strong>机器人必须保护人类的整体利益不受伤害。</strong>  </p>
 <h4 id="第一定律"><a href="#第一定律" class="headerlink" title="第一定律"></a>第一定律</h4><p><strong>机器人不得伤害人类个体，或者目睹人类个体将遭受危险而袖手不管，除非这违反了机器人学第零定律。</strong>  </p>
 <h4 id="第二定律"><a href="#第二定律" class="headerlink" title="第二定律"></a>第二定律</h4><p><strong>机器人必须服从人给予它的命令，当该命令与第零定律或者第一定律冲突时例外。</strong>  </p>
@@ -124,7 +126,7 @@
     <entry>
       <title><![CDATA[Windows10启用Linux子系统]]></title>
       <url>/2017/09/12/Windows10%E5%90%AF%E7%94%A8Linux%E5%AD%90%E7%B3%BB%E7%BB%9F/</url>
-      <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在去年的Build 2016上，微软向全世界介绍了他们还处于Beta阶段的Windows下的 Linux 子系统<code>Windows Subsystem for Linux（WSL）</code>，它可以让开发者们在 Windows 10 下通过 Bash shell 运行原生的Ubuntu用户态二进制程序。不得不说，这是对缺少Money换MAC的IT工作者的福音！  </p>
+      <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在去年的Build 2016上，微软向全世界介绍了他们还处于Beta阶段的Windows下的 Linux 子系统<code>Windows Subsystem for Linux（WSL）</code>，它可以让开发者们在 Windows 10 下通过 Bash shell 运行原生的Ubuntu用户态二进制程序。不得不说，这是对缺少Money换MAC的IT工作者的福音！<br><a id="more"></a></p>
 <h2 id="安装说明"><a href="#安装说明" class="headerlink" title="安装说明"></a>安装说明</h2><h3 id="安装要求"><a href="#安装要求" class="headerlink" title="安装要求"></a>安装要求</h3><ul>
 <li>操作系统版本需要是<code>1607+</code>  </li>
 <li>操作系统需要是<code>64位</code>  </li>
@@ -160,7 +162,9 @@
     <entry>
       <title><![CDATA[CentOS7启动流程图--转载]]></title>
       <url>/2017/09/08/CentOS7%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%9B%BE-%E8%BD%AC%E8%BD%BD/</url>
-      <content type="html"><![CDATA[<p>马哥教育Linux线下培训第25期的大神<a href="http://www.pojun.tech" target="_blank" rel="external">xiaoshuaigege</a>画的<strong>CentOS 7启动流程图</strong>，整个启动过程描述的非常细致，在此分享学习~~<br><img src="http://ovnpik36u.bkt.clouddn.com/201709/centosstart/centos7start.png" alt="image"></p>
+      <content type="html"><![CDATA[<p>马哥教育Linux线下培训第25期的大神<a href="http://www.pojun.tech" target="_blank" rel="external">xiaoshuaigege</a>画的<strong>CentOS 7启动流程图</strong>，整个启动过程描述的非常细致，在此分享学习~~  </p>
+<a id="more"></a>
+<p><img src="http://ovnpik36u.bkt.clouddn.com/201709/centosstart/centos7start.png" alt="image"></p>
 ]]></content>
       
         <categories>
@@ -182,7 +186,7 @@
       <title><![CDATA[CentOS7内核编译安装]]></title>
       <url>/2017/09/04/CentOS7%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</url>
       <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>Linux内核是操作系统的核心，也是操作系统最基本的部分。  </p>
-<p>Linux内核的体积结构是单内核的、但是他充分采用了微内核的设计思想、使得虽然是单内核、但工作在模块化的方式下、并且这个模块可以动态装载或卸载；Linux负责管理系统的进程、内存、设备驱动程序、文件和网络系统，决定着系统的性能和稳定性。如是我们在了解Linux内核的基础上根据自己的需要、量身定制一个更高效，更稳定的内核，就需要我们手动去编译和配置内核里的各项相关的参数和信息了。  </p>
+<p>Linux内核的体积结构是单内核的、但是他充分采用了微内核的设计思想、使得虽然是单内核、但工作在模块化的方式下、并且这个模块可以动态装载或卸载；Linux负责管理系统的进程、内存、设备驱动程序、文件和网络系统，决定着系统的性能和稳定性。如是我们在了解Linux内核的基础上根据自己的需要、量身定制一个更高效，更稳定的内核，就需要我们手动去编译和配置内核里的各项相关的参数和信息了。<br><a id="more"></a></p>
 <h5 id="CentOS系统中内核的组成部分"><a href="#CentOS系统中内核的组成部分" class="headerlink" title="CentOS系统中内核的组成部分"></a>CentOS系统中内核的组成部分</h5><ul>
 <li>内核核心：<code>vmlinuz-VERSION-RELEASE</code>  </li>
 <li>内核对象: 主要是一些硬件驱动文件，一般放置于<code>/lib/modules/VERSION-RELEASE/</code>目录下  </li>

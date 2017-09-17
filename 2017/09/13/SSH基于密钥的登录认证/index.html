@@ -15,13 +15,13 @@
 
 
 
-<meta name="description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程   SSH协议版本 v1: 基于CRC-32做MAC，不安全； man-in-middle   v2">
+<meta name="description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程">
 <meta name="keywords" content="SSH,openssh-client">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSH基于密钥的登录认证">
 <meta property="og:url" content="http://blog.wangbinzhou.com/2017/09/13/SSH基于密钥的登录认证/index.html">
 <meta property="og:site_name" content="WangBinZhou">
-<meta property="og:description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程   SSH协议版本 v1: 基于CRC-32做MAC，不安全； man-in-middle   v2">
+<meta property="og:description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/xshell/xshell1.gif">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/xshell/xshell2.gif">
@@ -29,10 +29,10 @@
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt1.gif">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt2.png">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/crt/crt3.gif">
-<meta property="og:updated_time" content="2017-09-13T14:37:17.784Z">
+<meta property="og:updated_time" content="2017-09-17T11:16:20.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH基于密钥的登录认证">
-<meta name="twitter:description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程   SSH协议版本 v1: 基于CRC-32做MAC，不安全； man-in-middle   v2">
+<meta name="twitter:description" content="SSH简介SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。   具体的软件实现： OpenSSH: ssh协议的开源实现,CentOS默认安装   Dropbear：另一个开源实现    在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程">
 <meta name="twitter:image" content="http://ovnpik36u.bkt.clouddn.com/20170913/xshell/xshell1.gif">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -346,6 +346,7 @@
 <li>Dropbear：另一个开源实现  </li>
 </ul>
 <p><em>在这里，我们主要介绍OpenSSH基于密钥的登录验证配置过程</em>  </p>
+<a id="more"></a>
 <h4 id="SSH协议版本"><a href="#SSH协议版本" class="headerlink" title="SSH协议版本"></a>SSH协议版本</h4><ul>
 <li>v1: 基于CRC-32做MAC，不安全； man-in-middle  </li>
 <li>v2：双方主机协议选择安全的MAC方式<br>基于DH算法做密钥交换，使用RSA或DSA实现身份认证   </li>
@@ -426,7 +427,7 @@
         <p><span>本文标题:</span><a href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
         <p><span>发布时间:</span>2017-09-13, 14:01:39</p>
-        <p><span>最后更新:</span>2017-09-13, 22:37:17</p>
+        <p><span>最后更新:</span>2017-09-17, 19:16:20</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/13/SSH基于密钥的登录认证/" title="SSH基于密钥的登录认证">http://blog.wangbinzhou.com/2017/09/13/SSH基于密钥的登录认证/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/09/13/SSH基于密钥的登录认证/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
