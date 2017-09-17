@@ -5,10 +5,10 @@
     
   <url>
     <loc>http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers%E8%AF%A6%E8%A7%A3/</loc>
-    <lastmod>2017-09-17T12:41:19.161Z</lastmod>
+    <lastmod>2017-09-17T13:01:22.699Z</lastmod>
     <data>
         <display>
-        <title>TCP_Wrappers(hosts.alow和hosts.deny)详解</title>
+        <title>TCP_Wrappers(hosts.allow和hosts.deny)详解</title>
         <pubTime>2017-09-17T12:38:02.000Z</pubTime>
         
         <tag>Linux系统安全</tag>

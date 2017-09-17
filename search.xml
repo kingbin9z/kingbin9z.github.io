@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[TCP_Wrappers(hosts.alow和hosts.deny)详解]]></title>
+      <title><![CDATA[TCP_Wrappers(hosts.allow和hosts.deny)详解]]></title>
       <url>/2017/09/17/TCP-Wrappers%E8%AF%A6%E8%A7%A3/</url>
       <content type="html"><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。<br>原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。<br><a id="more"></a></p>
 <h4 id="判断进程是否支持librap控制"><a href="#判断进程是否支持librap控制" class="headerlink" title="判断进程是否支持librap控制"></a>判断进程是否支持librap控制</h4><p>某进程是否接受libwrap的控制取决于发起此进程的程序在编译时是否针对libwrap进行编译的<br>判断服务程序是否能够由tcp_wrapper进行访问控制的方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ldd /PATH/TO/PROGRAM|grep libwrap.so</div><div class="line">strings PATH/TO/PROGRAM|grep libwrap.so</div></pre></td></tr></table></figure></p>

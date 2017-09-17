@@ -18,14 +18,14 @@
 <meta name="description" content="介绍TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。">
 <meta name="keywords" content="Linux系统安全,访问控制">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TCP_Wrappers(hosts.alow和hosts.deny)详解">
+<meta property="og:title" content="TCP_Wrappers(hosts.allow和hosts.deny)详解">
 <meta property="og:url" content="http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers详解/index.html">
 <meta property="og:site_name" content="WangBinZhou">
 <meta property="og:description" content="介绍TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-17T12:41:19.161Z">
+<meta property="og:updated_time" content="2017-09-17T13:01:22.699Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TCP_Wrappers(hosts.alow和hosts.deny)详解">
+<meta name="twitter:title" content="TCP_Wrappers(hosts.allow和hosts.deny)详解">
 <meta name="twitter:description" content="介绍TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>TCP_Wrappers(hosts.alow和hosts.deny)详解 | WangBinZhou</title>
+<title>TCP_Wrappers(hosts.allow和hosts.deny)详解 | WangBinZhou</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -308,7 +308,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      TCP_Wrappers(hosts.alow和hosts.deny)详解
+      TCP_Wrappers(hosts.allow和hosts.deny)详解
     </h1>
   
 
@@ -407,12 +407,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/09/17/TCP-Wrappers详解/">TCP_Wrappers(hosts.alow和hosts.deny)详解</a></p>
+        <p><span>本文标题:</span><a href="/2017/09/17/TCP-Wrappers详解/">TCP_Wrappers(hosts.allow和hosts.deny)详解</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
         <p><span>发布时间:</span>2017-09-17, 20:38:02</p>
-        <p><span>最后更新:</span>2017-09-17, 20:41:19</p>
+        <p><span>最后更新:</span>2017-09-17, 21:01:22</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/09/17/TCP-Wrappers详解/" title="TCP_Wrappers(hosts.alow和hosts.deny)详解">http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers详解/</a>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/17/TCP-Wrappers详解/" title="TCP_Wrappers(hosts.allow和hosts.deny)详解">http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers详解/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers详解/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -476,7 +476,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"TCP_Wrappers(hosts.alow和hosts.deny)详解　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"TCP_Wrappers(hosts.allow和hosts.deny)详解　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -508,7 +508,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/TCP-Wrappers详解/">TCP_Wrappers(hosts.alow和hosts.deny)详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/机器人三定律/">机器人三定律</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/Windows10启用Linux子系统/">Windows10启用Linux子系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/CentOS7启动流程图-转载/">CentOS7启动流程图--转载</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/CentOS7内核编译安装/">CentOS7内核编译安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-启动相关的破坏性实验/">CentOS6.9启动系列--启动相关的破坏性实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-为Grub设置密码/">CentOS6.9启动系列--为Grub设置密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/牛顿第一定律-很有哲理！/">牛顿第一定律--很有哲理！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/Linux常用命令总结-11、Linux计划任务/">Linux常用命令总结-11、Linux计划任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/好好敲实验吧，别再瞎折腾了！不做死就不会死！！/">好好敲实验吧，别再瞎折腾了！不做死就不会死！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/CentOS系列使用Tab命令补全/">CentOS系列使用Tab命令补全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/">CentOS7网卡命名方式详解及修改为传统eth格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/内网ssh连接速度很慢的解决方案/">内网ssh连接速度很慢的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">Linux常用命令总结：10、文件查找之locate和find</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/TCP-Wrappers详解/">TCP_Wrappers(hosts.allow和hosts.deny)详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/机器人三定律/">机器人三定律</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/Windows10启用Linux子系统/">Windows10启用Linux子系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/CentOS7启动流程图-转载/">CentOS7启动流程图--转载</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/CentOS7内核编译安装/">CentOS7内核编译安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-启动相关的破坏性实验/">CentOS6.9启动系列--启动相关的破坏性实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-为Grub设置密码/">CentOS6.9启动系列--为Grub设置密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/牛顿第一定律-很有哲理！/">牛顿第一定律--很有哲理！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/Linux常用命令总结-11、Linux计划任务/">Linux常用命令总结-11、Linux计划任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/好好敲实验吧，别再瞎折腾了！不做死就不会死！！/">好好敲实验吧，别再瞎折腾了！不做死就不会死！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/CentOS系列使用Tab命令补全/">CentOS系列使用Tab命令补全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/">CentOS7网卡命名方式详解及修改为传统eth格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/内网ssh连接速度很慢的解决方案/">内网ssh连接速度很慢的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">Linux常用命令总结：10、文件查找之locate和find</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></li></ul>
 
 
 
