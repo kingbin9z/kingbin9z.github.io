@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers%E8%AF%A6%E8%A7%A3/</loc>
+    <lastmod>2017-09-17T12:41:19.161Z</lastmod>
+    <data>
+        <display>
+        <title>TCP_Wrappers(hosts.alow和hosts.deny)详解</title>
+        <pubTime>2017-09-17T12:38:02.000Z</pubTime>
+        
+        <tag>Linux系统安全</tag>
+         
+        <tag>访问控制</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://blog.wangbinzhou.com/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.wangbinzhou.com/2017/09/04/CentOS7%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</loc>
     <lastmod>2017-09-17T11:20:23.590Z</lastmod>
     <data>

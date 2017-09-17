@@ -3,6 +3,94 @@
   
     
     <entry>
+      <title><![CDATA[TCP_Wrappers(hosts.alow和hosts.deny)详解]]></title>
+      <url>/2017/09/17/TCP-Wrappers%E8%AF%A6%E8%A7%A3/</url>
+      <content type="html"><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。<br>原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。<br><a id="more"></a></p>
+<h4 id="判断进程是否支持librap控制"><a href="#判断进程是否支持librap控制" class="headerlink" title="判断进程是否支持librap控制"></a>判断进程是否支持librap控制</h4><p>某进程是否接受libwrap的控制取决于发起此进程的程序在编译时是否针对libwrap进行编译的<br>判断服务程序是否能够由tcp_wrapper进行访问控制的方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ldd /PATH/TO/PROGRAM|grep libwrap.so</div><div class="line">strings PATH/TO/PROGRAM|grep libwrap.so</div></pre></td></tr></table></figure></p>
+<p>以SSHD服务为例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#which sshd</span></div><div class="line">/usr/sbin/sshd</div><div class="line">[root@CentOS7 ~]<span class="comment">#ldd /usr/sbin/sshd | grep libwrap.so</span></div><div class="line">        libwrap.so.0 =&gt; /lib64/libwrap.so.0 (0x00007f4ebdd29000)</div></pre></td></tr></table></figure></p>
+<p>_可以看到，SSHD服务调用的库里面有<code>libwrap.so</code>，所以SSHD能够由<code>TCP_Wrapper</code>进行控制_  </p>
+<h4 id="TCP-Wrappers的使用"><a href="#TCP-Wrappers的使用" class="headerlink" title="TCP_Wrappers的使用"></a>TCP_Wrappers的使用</h4><h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">man 5 hosts_access</div><div class="line">man 5 hosts_options</div></pre></td></tr></table></figure>
+<h5 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#ls /etc/hosts.</span></div><div class="line">hosts.allow  hosts.deny</div></pre></td></tr></table></figure>
+<p>检查顺序：hosts.allow ==&gt; hosts.deny (默认允许)  </p>
+<blockquote>
+<p>注意：一旦前面规则匹配，直接生效，将不再继续  </p>
+</blockquote>
+<h5 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">daemon_list@host: client_list [ :options :option… ]</div></pre></td></tr></table></figure>
+<h6 id="Daemon-list-host格式"><a href="#Daemon-list-host格式" class="headerlink" title="Daemon_list@host格式"></a>Daemon_list@host格式</h6><ul>
+<li>单个应用程序的二进制文件名，而非服务名，例如vsftpd</li>
+<li>以逗号或空格分隔的应用程序文件名列表，如<br>:sshd,vsftpd  </li>
+<li>ALL表示所有接受tcp_wrapper控制的服务程序</li>
+<li>主机有多个IP，可用@hostIP来实现控制如： <code>in.telnetd@192.168.0.254</code></li>
+</ul>
+<h6 id="客户端Client-list格式"><a href="#客户端Client-list格式" class="headerlink" title="客户端Client_list格式"></a>客户端Client_list格式</h6><ul>
+<li>以逗号或空格分隔的客户端列表  </li>
+<li>基于IP地址：  <ul>
+<li>192.168.10.1  </li>
+<li>192.168.1.  </li>
+</ul>
+</li>
+<li>基于主机名：  <ul>
+<li>www.magedu.com  </li>
+<li>.magedu.com 较少用  </li>
+</ul>
+</li>
+<li>基于网络/掩码：  <ul>
+<li>192.168.0.0/255.255.255.0  </li>
+<li>192.168.1.0/24（CentOS7及以上支持）  </li>
+</ul>
+</li>
+<li>基于网络组（NIS 域）： @mynetwork  </li>
+<li>内置ACL：  <ul>
+<li>ALL  </li>
+<li>LOCAL  </li>
+<li>KNOWN  </li>
+<li>UNKNOWN  </li>
+<li>PARANOID  </li>
+</ul>
+</li>
+</ul>
+<h6 id="EXCEPT用法"><a href="#EXCEPT用法" class="headerlink" title="EXCEPT用法"></a>EXCEPT用法</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vsftpd: 172.16. EXCEPT 172.16.100.0/24 EXCEPT 172.16.100.1</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Note:同样的语法，分别配置到<code>hosts.allow</code>和<code>hosts.deny</code>里的效果是完全不同的！  </p>
+</blockquote>
+<h6 id="options-选项"><a href="#options-选项" class="headerlink" title="[:options]选项"></a>[:options]选项</h6><p>参考：<code>man 5 hosts_options</code>  </p>
+<ul>
+<li><p>deny 主要用在/etc/hosts.allow定义“拒绝”规则如：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/hosts.allow</span></div><div class="line">vsftpd: 172.16. :deny</div></pre></td></tr></table></figure>
+</li>
+<li><p>allow 主要用在/etc/hosts.deny定义“允许” 规则如： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vsftpd:172.16. :allow</div></pre></td></tr></table></figure>
+</li>
+<li><p>spawn 启动一个外部程序完成执行的操作  </p>
+</li>
+<li>twist 实际动作是拒绝访问,使用指定的操作替换当前服务,标准I/O和ERROR发送到客户端,默认至/dev/null  </li>
+</ul>
+<h6 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tcpdmatch [-d] daemon[@host] client</div></pre></td></tr></table></figure>
+<p>-d 测试当前目录下的hosts.allow和hosts.deny  </p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><h5 id="示例1："><a href="#示例1：" class="headerlink" title="示例1："></a>示例1：</h5><p>只允许192.168.1.0/24的主机访问sshd<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/hosts.allow</span></div><div class="line">sshd: 192.168.1.</div><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/hosts.deny</span></div><div class="line">sshd :ALL</div></pre></td></tr></table></figure></p>
+<h5 id="示例2："><a href="#示例2：" class="headerlink" title="示例2："></a>示例2：</h5><p>只允许192.168.1.0/24的主机访问telnet和vsftpd服务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/hosts.allow</span></div><div class="line">vsftpd,in.telnetd: 192.168.1.</div><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/host.deny</span></div><div class="line">vsftpd,in.telnetd: ALL</div></pre></td></tr></table></figure></p>
+<h5 id="示例3："><a href="#示例3：" class="headerlink" title="示例3："></a>示例3：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sshd: ALL :spawn <span class="built_in">echo</span> <span class="string">"<span class="variable">$(date)</span> login attempt from %c to %s,%d"</span> &gt;&gt;/var/<span class="built_in">log</span>/sshd.log</div></pre></td></tr></table></figure>
+<p>说明：<br>在/etc/hosts.allow中添加，允许登录，并记录日志<br>在/etc/hosts.deny中添加，拒绝登录， 并记录日志<br><code>%c</code> 客户端信息<br><code>%s</code> 服务器端信息<br><code>%d</code> 服务名<br><code>%p</code> 守护进程的PI  </p>
+]]></content>
+      
+        <categories>
+            
+            <category> Linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux系统安全 </tag>
+            
+            <tag> 访问控制 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[SSH基于密钥的登录认证]]></title>
       <url>/2017/09/13/SSH%E5%9F%BA%E4%BA%8E%E5%AF%86%E9%92%A5%E7%9A%84%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/</url>
       <content type="html"><![CDATA[<h3 id="SSH简介"><a href="#SSH简介" class="headerlink" title="SSH简介"></a>SSH简介</h3><p>SSH，secure shell, protocol, 安全的远程登录，使用的是tcp/22端口。  </p>

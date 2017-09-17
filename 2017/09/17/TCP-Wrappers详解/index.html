@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="抬头看路，低头拉车！">
-<meta name="keywords" content="Linux命令">
+<meta name="description" content="介绍TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。">
+<meta name="keywords" content="Linux系统安全,访问控制">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux常用命令总结-2、文件管理类命令">
-<meta property="og:url" content="http://blog.wangbinzhou.com/2017/07/25/Linux常用命令总结-2、文件管理类命令/index.html">
+<meta property="og:title" content="TCP_Wrappers(hosts.alow和hosts.deny)详解">
+<meta property="og:url" content="http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers详解/index.html">
 <meta property="og:site_name" content="WangBinZhou">
-<meta property="og:description" content="抬头看路，低头拉车！">
+<meta property="og:description" content="介绍TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-01T01:23:03.155Z">
+<meta property="og:updated_time" content="2017-09-17T12:41:19.161Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux常用命令总结-2、文件管理类命令">
-<meta name="twitter:description" content="抬头看路，低头拉车！">
+<meta name="twitter:title" content="TCP_Wrappers(hosts.alow和hosts.deny)详解">
+<meta name="twitter:description" content="介绍TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Linux常用命令总结-2、文件管理类命令 | WangBinZhou</title>
+<title>TCP_Wrappers(hosts.alow和hosts.deny)详解 | WangBinZhou</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -289,11 +289,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Linux常用命令总结-2、文件管理类命令" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-TCP-Wrappers详解" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/" class="article-date">
-      <time datetime="2017-07-25T01:31:58.000Z" itemprop="datePublished">2017-07-25</time>
+      <a href="/2017/09/17/TCP-Wrappers详解/" class="article-date">
+      <time datetime="2017-09-17T12:38:02.000Z" itemprop="datePublished">2017-09-17</time>
 </a>
 
 
@@ -308,7 +308,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Linux常用命令总结-2、文件管理类命令
+      TCP_Wrappers(hosts.alow和hosts.deny)详解
     </h1>
   
 
@@ -317,13 +317,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux系统安全/">Linux系统安全</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/访问控制/">访问控制</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -333,7 +333,73 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        
+        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。<br>原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。<br><a id="more"></a></p>
+<h4 id="判断进程是否支持librap控制"><a href="#判断进程是否支持librap控制" class="headerlink" title="判断进程是否支持librap控制"></a>判断进程是否支持librap控制</h4><p>某进程是否接受libwrap的控制取决于发起此进程的程序在编译时是否针对libwrap进行编译的<br>判断服务程序是否能够由tcp_wrapper进行访问控制的方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ldd /PATH/TO/PROGRAM|grep libwrap.so</div><div class="line">strings PATH/TO/PROGRAM|grep libwrap.so</div></pre></td></tr></table></figure></p>
+<p>以SSHD服务为例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#which sshd</span></div><div class="line">/usr/sbin/sshd</div><div class="line">[root@CentOS7 ~]<span class="comment">#ldd /usr/sbin/sshd | grep libwrap.so</span></div><div class="line">        libwrap.so.0 =&gt; /lib64/libwrap.so.0 (0x00007f4ebdd29000)</div></pre></td></tr></table></figure></p>
+<p>_可以看到，SSHD服务调用的库里面有<code>libwrap.so</code>，所以SSHD能够由<code>TCP_Wrapper</code>进行控制_  </p>
+<h4 id="TCP-Wrappers的使用"><a href="#TCP-Wrappers的使用" class="headerlink" title="TCP_Wrappers的使用"></a>TCP_Wrappers的使用</h4><h5 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">man 5 hosts_access</div><div class="line">man 5 hosts_options</div></pre></td></tr></table></figure>
+<h5 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#ls /etc/hosts.</span></div><div class="line">hosts.allow  hosts.deny</div></pre></td></tr></table></figure>
+<p>检查顺序：hosts.allow ==&gt; hosts.deny (默认允许)  </p>
+<blockquote>
+<p>注意：一旦前面规则匹配，直接生效，将不再继续  </p>
+</blockquote>
+<h5 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">daemon_list@host: client_list [ :options :option… ]</div></pre></td></tr></table></figure>
+<h6 id="Daemon-list-host格式"><a href="#Daemon-list-host格式" class="headerlink" title="Daemon_list@host格式"></a>Daemon_list@host格式</h6><ul>
+<li>单个应用程序的二进制文件名，而非服务名，例如vsftpd</li>
+<li>以逗号或空格分隔的应用程序文件名列表，如<br>:sshd,vsftpd  </li>
+<li>ALL表示所有接受tcp_wrapper控制的服务程序</li>
+<li>主机有多个IP，可用@hostIP来实现控制如： <code>in.telnetd@192.168.0.254</code></li>
+</ul>
+<h6 id="客户端Client-list格式"><a href="#客户端Client-list格式" class="headerlink" title="客户端Client_list格式"></a>客户端Client_list格式</h6><ul>
+<li>以逗号或空格分隔的客户端列表  </li>
+<li>基于IP地址：  <ul>
+<li>192.168.10.1  </li>
+<li>192.168.1.  </li>
+</ul>
+</li>
+<li>基于主机名：  <ul>
+<li>www.magedu.com  </li>
+<li>.magedu.com 较少用  </li>
+</ul>
+</li>
+<li>基于网络/掩码：  <ul>
+<li>192.168.0.0/255.255.255.0  </li>
+<li>192.168.1.0/24（CentOS7及以上支持）  </li>
+</ul>
+</li>
+<li>基于网络组（NIS 域）： @mynetwork  </li>
+<li>内置ACL：  <ul>
+<li>ALL  </li>
+<li>LOCAL  </li>
+<li>KNOWN  </li>
+<li>UNKNOWN  </li>
+<li>PARANOID  </li>
+</ul>
+</li>
+</ul>
+<h6 id="EXCEPT用法"><a href="#EXCEPT用法" class="headerlink" title="EXCEPT用法"></a>EXCEPT用法</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vsftpd: 172.16. EXCEPT 172.16.100.0/24 EXCEPT 172.16.100.1</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Note:同样的语法，分别配置到<code>hosts.allow</code>和<code>hosts.deny</code>里的效果是完全不同的！  </p>
+</blockquote>
+<h6 id="options-选项"><a href="#options-选项" class="headerlink" title="[:options]选项"></a>[:options]选项</h6><p>参考：<code>man 5 hosts_options</code>  </p>
+<ul>
+<li><p>deny 主要用在/etc/hosts.allow定义“拒绝”规则如：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/hosts.allow</span></div><div class="line">vsftpd: 172.16. :deny</div></pre></td></tr></table></figure>
+</li>
+<li><p>allow 主要用在/etc/hosts.deny定义“允许” 规则如： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vsftpd:172.16. :allow</div></pre></td></tr></table></figure>
+</li>
+<li><p>spawn 启动一个外部程序完成执行的操作  </p>
+</li>
+<li>twist 实际动作是拒绝访问,使用指定的操作替换当前服务,标准I/O和ERROR发送到客户端,默认至/dev/null  </li>
+</ul>
+<h6 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tcpdmatch [-d] daemon[@host] client</div></pre></td></tr></table></figure>
+<p>-d 测试当前目录下的hosts.allow和hosts.deny  </p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><h5 id="示例1："><a href="#示例1：" class="headerlink" title="示例1："></a>示例1：</h5><p>只允许192.168.1.0/24的主机访问sshd<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/hosts.allow</span></div><div class="line">sshd: 192.168.1.</div><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/hosts.deny</span></div><div class="line">sshd :ALL</div></pre></td></tr></table></figure></p>
+<h5 id="示例2："><a href="#示例2：" class="headerlink" title="示例2："></a>示例2：</h5><p>只允许192.168.1.0/24的主机访问telnet和vsftpd服务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/hosts.allow</span></div><div class="line">vsftpd,in.telnetd: 192.168.1.</div><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/host.deny</span></div><div class="line">vsftpd,in.telnetd: ALL</div></pre></td></tr></table></figure></p>
+<h5 id="示例3："><a href="#示例3：" class="headerlink" title="示例3："></a>示例3：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sshd: ALL :spawn <span class="built_in">echo</span> <span class="string">"<span class="variable">$(date)</span> login attempt from %c to %s,%d"</span> &gt;&gt;/var/<span class="built_in">log</span>/sshd.log</div></pre></td></tr></table></figure>
+<p>说明：<br>在/etc/hosts.allow中添加，允许登录，并记录日志<br>在/etc/hosts.deny中添加，拒绝登录， 并记录日志<br><code>%c</code> 客户端信息<br><code>%s</code> 服务器端信息<br><code>%d</code> 服务名<br><code>%p</code> 守护进程的PI  </p>
+
       
     </div>
     
@@ -341,13 +407,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></p>
+        <p><span>本文标题:</span><a href="/2017/09/17/TCP-Wrappers详解/">TCP_Wrappers(hosts.alow和hosts.deny)详解</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
-        <p><span>发布时间:</span>2017-07-25, 09:31:58</p>
-        <p><span>最后更新:</span>2017-08-01, 09:23:03</p>
+        <p><span>发布时间:</span>2017-09-17, 20:38:02</p>
+        <p><span>最后更新:</span>2017-09-17, 20:41:19</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/" title="Linux常用命令总结-2、文件管理类命令">http://blog.wangbinzhou.com/2017/07/25/Linux常用命令总结-2、文件管理类命令/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/07/25/Linux常用命令总结-2、文件管理类命令/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/17/TCP-Wrappers详解/" title="TCP_Wrappers(hosts.alow和hosts.deny)详解">http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers详解/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers详解/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -359,16 +425,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">
-                    Linux常用命令总结-4、文件管理类命令
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">
-                    Linux常用命令总结-1、线上查询及帮助命令
+                <a href="/2017/09/13/SSH基于密钥的登录认证/">
+                    SSH基于密钥的登录认证
                 </a>
             </div>
         
@@ -380,7 +440,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断进程是否支持librap控制"><span class="toc-number">2.</span> <span class="toc-text">判断进程是否支持librap控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-Wrappers的使用"><span class="toc-number">3.</span> <span class="toc-text">TCP_Wrappers的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考文档"><span class="toc-number">3.1.</span> <span class="toc-text">参考文档</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#配置文件"><span class="toc-number">3.2.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#基本语法"><span class="toc-number">3.3.</span> <span class="toc-text">基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Daemon-list-host格式"><span class="toc-number">3.3.1.</span> <span class="toc-text">Daemon_list@host格式</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#客户端Client-list格式"><span class="toc-number">3.3.2.</span> <span class="toc-text">客户端Client_list格式</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#EXCEPT用法"><span class="toc-number">3.3.3.</span> <span class="toc-text">EXCEPT用法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#options-选项"><span class="toc-number">3.3.4.</span> <span class="toc-text">[:options]选项</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#测试工具"><span class="toc-number">3.3.5.</span> <span class="toc-text">测试工具</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例"><span class="toc-number">4.</span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#示例1："><span class="toc-number">4.1.</span> <span class="toc-text">示例1：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#示例2："><span class="toc-number">4.2.</span> <span class="toc-text">示例2：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#示例3："><span class="toc-number">4.3.</span> <span class="toc-text">示例3：</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -416,7 +476,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Linux常用命令总结-2、文件管理类命令　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"TCP_Wrappers(hosts.alow和hosts.deny)详解　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -436,15 +496,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/" title="上一篇: Linux常用命令总结-4、文件管理类命令">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/" title="下一篇: Linux常用命令总结-1、线上查询及帮助命令">
+            <a href="/2017/09/13/SSH基于密钥的登录认证/" title="下一篇: SSH基于密钥的登录认证">
                 <i class="fa fa-angle-right"></i>
             </a>
         
