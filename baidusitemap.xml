@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://blog.wangbinzhou.com/2017/09/22/Bind%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</loc>
+    <lastmod>2017-09-22T05:14:46.744Z</lastmod>
+    <data>
+        <display>
+        <title>Bind的安装和配置使用详解</title>
+        <pubTime>2017-09-22T05:11:01.000Z</pubTime>
+        
+        <tag>DNS</tag>
+         
+        <tag>Bind</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://blog.wangbinzhou.com/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.wangbinzhou.com/2017/09/17/TCP-Wrappers%E8%AF%A6%E8%A7%A3/</loc>
     <lastmod>2017-09-17T13:01:22.699Z</lastmod>
     <data>

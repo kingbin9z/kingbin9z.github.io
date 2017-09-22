@@ -3,6 +3,220 @@
   
     
     <entry>
+      <title><![CDATA[Bind的安装和配置使用详解]]></title>
+      <url>/2017/09/22/Bind%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</url>
+      <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>BIND（Berkeley Internet Name Daemon）是现今互联网上最常使用的DNS服务器软件，使用BIND作为服务器软件的DNS服务器约占所有DNS服务器的九成。BIND现在由互联网系统协会（Internet Systems Consortium）负责开发与维护。 【<a href="https://zh.wikipedia.org/wiki/BIND" target="_blank" rel="external">摘至维基百科 </a>】</p>
+<a id="more"></a>
+<h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><ul>
+<li>CentOS Linux release 7.3.1611 &emsp;<strong>系统版本</strong>  </li>
+<li>bind-9.9.4-37.el7.x86_64 &emsp;<strong>Bind服务版本</strong>  </li>
+<li>bind-utils-9.9.4-37.el7.x86_64 &emsp;<strong>DNS解析命令包组合</strong>  <ul>
+<li>dig  </li>
+<li>host</li>
+<li>nslookup  </li>
+<li>nsupdate  </li>
+</ul>
+</li>
+</ul>
+<h4 id="Bind服务安装和配置项介绍"><a href="#Bind服务安装和配置项介绍" class="headerlink" title="Bind服务安装和配置项介绍"></a>Bind服务安装和配置项介绍</h4><h5 id="Bind的安装"><a href="#Bind的安装" class="headerlink" title="Bind的安装"></a>Bind的安装</h5><p>如果没有特殊需要，推荐使用<code>yum</code>安装。因为通过<code>yum</code>安装时能够解决依赖性、安装的版本也相对比较稳定。   </p>
+<h6 id="安装前前先查看Bind包组信息："><a href="#安装前前先查看Bind包组信息：" class="headerlink" title="安装前前先查看Bind包组信息："></a>安装前前先查看Bind包组信息：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#yum info bind</span></div><div class="line">Loaded plugins: fastestmirror</div><div class="line">Loading mirror speeds from cached hostfile</div><div class="line">Installed Packages</div><div class="line">Name        : <span class="built_in">bind</span></div><div class="line">Arch        : x86_64</div><div class="line">Epoch       : 32</div><div class="line">Version     : 9.9.4</div><div class="line">Release     : 37.el7</div><div class="line">Size        : 4.3 M</div><div class="line">Repo        : installed</div><div class="line">From repo   : cdrom</div><div class="line">Summary     : The Berkeley Internet Name Domain (BIND) DNS (Domain Name System) server</div><div class="line">URL         : http://www.isc.org/products/BIND/</div><div class="line">License     : ISC</div><div class="line">Description : BIND (Berkeley Internet Name Domain) is an implementation of the DNS</div><div class="line">            : (Domain Name System) protocols. BIND includes a DNS server (named),</div><div class="line">            : <span class="built_in">which</span> resolves host names to IP addresses; a resolver library</div><div class="line">            : (routines <span class="keyword">for</span> applications to use when interfacing with DNS); and</div><div class="line">            : tools <span class="keyword">for</span> verifying that the DNS server is operating properly.</div></pre></td></tr></table></figure>
+<h6 id="安装Bind服务："><a href="#安装Bind服务：" class="headerlink" title="安装Bind服务："></a>安装Bind服务：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#yum install -y bind</span></div></pre></td></tr></table></figure>
+<h6 id="查看Bind安装生成的文件目录："><a href="#查看Bind安装生成的文件目录：" class="headerlink" title="查看Bind安装生成的文件目录："></a>查看Bind安装生成的文件目录：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">/etc/logrotate.d/named</div><div class="line">/etc/named</div><div class="line">/etc/named.conf                 //主配置文件</div><div class="line">/etc/named.iscdlv.key</div><div class="line">/etc/named.rfc1912.zones        //区域数据库配置文件</div><div class="line">/etc/named.root.key</div><div class="line">/etc/rndc.conf</div><div class="line">/etc/rndc.key</div><div class="line">/etc/rwtab.d/named</div><div class="line">/etc/sysconfig/named</div><div class="line">/run/named</div><div class="line">/usr/lib/systemd/system/named-setup-rndc.service</div><div class="line">/usr/lib/systemd/system/named.service   //服务脚本</div><div class="line">/usr/lib/tmpfiles.d/named.conf</div><div class="line">/usr/lib64/<span class="built_in">bind</span></div><div class="line">/usr/libexec/generate-rndc-key.sh</div><div class="line">/usr/sbin/arpaname</div><div class="line">/usr/sbin/ddns-confgen</div><div class="line">/usr/sbin/dnssec-checkds</div><div class="line">/usr/sbin/dnssec-coverage</div><div class="line">/usr/sbin/dnssec-dsfromkey</div><div class="line">/usr/sbin/dnssec-importkey</div><div class="line">/usr/sbin/dnssec-keyfromlabel</div><div class="line">/usr/sbin/dnssec-keygen</div><div class="line">/usr/sbin/dnssec-revoke</div><div class="line">/usr/sbin/dnssec-settime</div><div class="line">/usr/sbin/dnssec-signzone</div><div class="line">/usr/sbin/dnssec-verify</div><div class="line">/usr/sbin/genrandom</div><div class="line">/usr/sbin/isc-hmac-fixup</div><div class="line">/usr/sbin/lwresd</div><div class="line">/usr/sbin/named</div><div class="line">/usr/sbin/named-checkconf           //主配置文件语法检查命令</div><div class="line">/usr/sbin/named-checkzone           //区域数据库配置文件语法检查命令</div><div class="line">/usr/sbin/named-compilezone</div><div class="line">/usr/sbin/named-journalprint</div><div class="line">/usr/sbin/nsec3hash</div><div class="line">/usr/sbin/rndc                      //DNS服务控制工具</div><div class="line">/usr/sbin/rndc-confgen</div><div class="line">/usr/share/doc/<span class="built_in">bind</span>-9.9.4           //省略该目录下的若干参考文档</div><div class="line">    ......</div><div class="line">/usr/share/man/man1/arpaname.1.gz   //省略若干man帮助文档</div><div class="line">    ......</div><div class="line">/var/<span class="built_in">log</span>/named.log                  //日志文件</div><div class="line">/var/named</div><div class="line">/var/named/data                     //数据库文件</div><div class="line">/var/named/dynamic</div><div class="line">/var/named/named.ca                 //内置的根节点服务器信息</div><div class="line">/var/named/named.empty</div><div class="line">/var/named/named.localhost</div><div class="line">/var/named/named.loopback</div><div class="line">/var/named/slaves                   //主从配置中的slaves服务器配置</div></pre></td></tr></table></figure>
+<p>可以从配置文件看到，Bind的服务名为<code>named</code><br>启动Bind服务并设置为开机启动：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#systemctl start named</span></div><div class="line">[root@CentOS7 ~]<span class="comment">#systemctl enable named</span></div><div class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/named.service to /usr/lib/systemd/system/named.service.</div></pre></td></tr></table></figure></p>
+<p>查看服务启动后的端口：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#ss -tunl</span></div><div class="line">Netid State      Recv-Q Send-Q                              Local Address:Port                                             Peer Address:Port              </div><div class="line">udp   UNCONN     0      0                                       127.0.0.1:53                                                          *:*                  </div><div class="line">udp   UNCONN     0      0                                             ::1:53                                                         :::*                  </div><div class="line">tcp   LISTEN     0      10                                      127.0.0.1:53                                                          *:*                  </div><div class="line">tcp   LISTEN     0      128                                  192.168.25.7:22                                                          *:*                  </div><div class="line">tcp   LISTEN     0      128                                     127.0.0.1:953                                                         *:*                  </div><div class="line">tcp   LISTEN     0      100                                     127.0.0.1:25                                                          *:*                  </div><div class="line">tcp   LISTEN     0      10                                            ::1:53                                                         :::*                  </div><div class="line">tcp   LISTEN     0      128                                           ::1:953                                                        :::*                  </div><div class="line">tcp   LISTEN     0      100                                           ::1:25                                                         :::*</div></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>NetID</th>
+<th>Port</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP</td>
+<td>53</td>
+<td>负责主从同步</td>
+</tr>
+<tr>
+<td>UDP</td>
+<td>53</td>
+<td>负责主从同步和客户端查询  </td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>953</td>
+<td>提供辅助性的管理功能</td>
+</tr>
+</tbody>
+</table>
+<h5 id="Bind主配置文件介绍"><a href="#Bind主配置文件介绍" class="headerlink" title="Bind主配置文件介绍"></a>Bind主配置文件介绍</h5><ul>
+<li><p><strong>/etc/named.conf  &emsp;主配置文件</strong>  </p>
+<ul>
+<li>全局配置：<code>option {}；</code>  </li>
+<li>日志子系统配置：<code>logging {};</code>  </li>
+<li>区域定义：<code>zone &quot;ZONE_NAME&quot; IN {};</code>（本机能够为哪些zone进行解析，就要定义哪<br>些zone）  </li>
+</ul>
+</li>
+<li><p><strong>/etc/named.rfc1912.zones  &emsp;区域配置文件</strong>   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">zone <span class="string">"ZONE_NAME"</span> IN &#123;</div><div class="line"><span class="built_in">type</span> &#123;master|slave|hint|forward&#125;;</div><div class="line">file <span class="string">"ZONE_NAME.zone"</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>/var/named/ZONE_NAME.zone &emsp;区域解析库文件</strong>  </p>
+</li>
+</ul>
+<h6 id="主配置文件详解"><a href="#主配置文件详解" class="headerlink" title="主配置文件详解"></a>主配置文件详解</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/named.conf</span></div><div class="line">//</div><div class="line">// named.conf</div><div class="line">//</div><div class="line">// Provided by Red Hat <span class="built_in">bind</span> package to configure the ISC BIND named(8) DNS</div><div class="line">// server as a caching only nameserver (as a localhost DNS resolver only).</div><div class="line">//</div><div class="line">// See /usr/share/doc/<span class="built_in">bind</span>*/sample/ <span class="keyword">for</span> example named configuration files.</div><div class="line">//</div><div class="line">// See the BIND Administrator<span class="string">'s Reference Manual (ARM) for details about the</span></div><div class="line">// configuration located in /usr/share/doc/bind-&#123;version&#125;/Bv9ARM.html</div><div class="line"></div><div class="line">options &#123;</div><div class="line">        listen-on port 53 &#123; 127.0.0.1; &#125;;   #默认监听端口和监听地址，因为Bind需要对外提供服务，所以监听地址需要修改为外网口IP或localhost(本机所有IP)</div><div class="line">        listen-on-v6 port 53 &#123; ::1; &#125;;      #IPv6监听端口和监听地址</div><div class="line">        directory       "/var/named";       #DNS区域解析库存放目录</div><div class="line">        dump-file       "/var/named/data/cache_dump.db";</div><div class="line">        statistics-file "/var/named/data/named_stats.txt";</div><div class="line">        memstatistics-file "/var/named/data/named_mem_stats.txt";</div><div class="line">        allow-query     &#123; localhost; &#125;;     #允许DNS解析查询的对象，默认localhost只能本机查询，对外提供服务需要修改为any</div><div class="line"></div><div class="line">        /* </div><div class="line">         - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.</div><div class="line">         - If you are building a RECURSIVE (caching) DNS server, you need to enable </div><div class="line">           recursion. </div><div class="line">         - If your recursive DNS server has a public IP address, you MUST enable access </div><div class="line">           control to limit queries to your legitimate users. Failing to do so will</div><div class="line">           cause your server to become part of large scale DNS amplification </div><div class="line">           attacks. Implementing BCP38 within your network would greatly</div><div class="line">           reduce such attack surface </div><div class="line">        */</div><div class="line">        recursion yes;</div><div class="line"></div><div class="line">        dnssec-enable yes;          #建议改为no</div><div class="line">        dnssec-validation yes;      #建议改为no</div><div class="line"></div><div class="line">        /* Path to ISC DLV key */</div><div class="line">        bindkeys-file "/etc/named.iscdlv.key";</div><div class="line"></div><div class="line">        managed-keys-directory "/var/named/dynamic";</div><div class="line"></div><div class="line">        pid-file "/run/named/named.pid";</div><div class="line">        session-keyfile "/run/named/session.key";</div><div class="line">&#125;;</div><div class="line"></div><div class="line">logging &#123;</div><div class="line">        channel default_debug &#123;</div><div class="line">                file "data/named.run";</div><div class="line">                severity dynamic;</div><div class="line">        &#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">zone "." IN &#123;                       #区域配置文件，可以在此按照该格式填写，也可以定义在/etc/named.rfc1912.zones中</div><div class="line">        type hint;</div><div class="line">        file "named.ca";</div><div class="line">&#125;;</div><div class="line"></div><div class="line">include "/etc/named.rfc1912.zones";     #区域配置文件</div><div class="line">include "/etc/named.root.key";</div></pre></td></tr></table></figure>
+<p>根据需求，对主配置文件进行微调；  </p>
+<blockquote>
+<p>注意：任何服务程序如果期望其能够通过网络被其它主机访问，至少应该监听在一个能与外部主机通信的IP地址上;  </p>
+</blockquote>
+<h6 id="区域配置文件"><a href="#区域配置文件" class="headerlink" title="区域配置文件"></a>区域配置文件</h6><p>在区域文件中定义自己的域名：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/named.rfc1912.zones</span></div><div class="line">        ....省略若干默认配置....</div><div class="line">zone <span class="string">"wangbinzhou.com"</span> IN &#123;</div><div class="line">        <span class="built_in">type</span> master;                    <span class="comment">#定义区域类型</span></div><div class="line">        file <span class="string">"wangbinzhou.com.zone"</span>;    <span class="comment">#定义在/var/named/下的域数据库</span></div><div class="line">        allow-update &#123; none; &#125;;         <span class="comment">#是否允许slave服务器同步更新数据</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><strong>type类型：</strong>  </p>
+<ul>
+<li>master：定义为主DNS服务器  </li>
+<li>slave：在主从DNS架构中，定义为slave服务器  </li>
+<li>hint：指定为根域  </li>
+<li>forward：是否允许转发  </li>
+</ul>
+<p><strong>allow-update可选项：</strong>  </p>
+<ul>
+<li>none: 不允许任何同步更新；  </li>
+<li>any：允许任何slave服务器同步更新，包括能够通信的未知主机；  </li>
+<li>Slave_IP: 指定可以同步更新的slave服务器；  </li>
+</ul>
+<h6 id="创建区域解析库文件"><a href="#创建区域解析库文件" class="headerlink" title="创建区域解析库文件"></a>创建区域解析库文件</h6><p>根据区域配置文件<code>zone</code>中定义的<code>file</code>,在目录<code>/var/name</code>中创建对应的区域解析库文件<br>区域解析库文件的语法格式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">name [TTL] IN rr_type value</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#vim /var/named/wangbinzhou.com.zone </span></div><div class="line"><span class="variable">$TTL</span> 1D</div><div class="line">@       IN SOA  dns1 admin.wangbinzhou.com. (</div><div class="line">                                        2017092001      ; serial</div><div class="line">                                        1D              ; refresh</div><div class="line">                                        1H              ; retry</div><div class="line">                                        1W              ; expire</div><div class="line">                                        3H )            ; minimum</div><div class="line">        NS      dns1</div><div class="line">dns1    A       192.168.25.70</div><div class="line">websrv  A       192.168.25.20</div><div class="line">www     CNAME   websrv</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>注释</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$TTL 1D</td>
+<td>全局的生存有效期</td>
+<td>如果每项没有单独设置有效期，则默认使用全局生存有效期</td>
+<td></td>
+</tr>
+<tr>
+<td>2017092001</td>
+<td>serial</td>
+<td>区域解析库版本号，slave根据该参数值的变化确定是否同步区域解析库。每次修改master区域解析库时，需要增大该版本号的数值；  </td>
+</tr>
+<tr>
+<td>1D</td>
+<td>refresh</td>
+<td>slave向master更新同步区域解析库的周期</td>
+<td></td>
+</tr>
+<tr>
+<td>1H</td>
+<td>retry</td>
+<td>slave向master更新同步区域解析库失败后的重试时间</td>
+<td></td>
+</tr>
+<tr>
+<td>1W</td>
+<td>expire</td>
+<td>slave如果超过该时间一直未成功同步区域解析库，则slave的区域解析库就过期</td>
+<td></td>
+</tr>
+<tr>
+<td>3H</td>
+<td>minimum</td>
+<td>客户端向服务器查询不存在的域名时，服务器给出否定结果的缓存有效期</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>解析记录类型：</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>RR_Type(解析记录类型)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A记录</td>
+<td>将域名指向一个IPv4地址（例如：10.10.10.10），需要增加A记录  </td>
+</tr>
+<tr>
+<td>CNAME记录</td>
+<td>如果将域名指向一个域名，实现与被指向域名相同的访问效果，需要增加CNAME记录  </td>
+</tr>
+<tr>
+<td>MX记录</td>
+<td>建立电子邮箱服务，将指向邮件服务器地址，需要设置MX记录  </td>
+</tr>
+<tr>
+<td>NS记录</td>
+<td>域名解析服务器记录，如果要将子域名指定某个域名服务器来解析，需要设置NS记录  </td>
+</tr>
+<tr>
+<td>TXT记录</td>
+<td>可任意填写（可为空），通常用做SPF记录（反垃圾邮件）使用  </td>
+</tr>
+<tr>
+<td>AAAA记录</td>
+<td>将主机名（或域名）指向一个IPv6地址（例如：ff03:0:0:0:0:0:0:c1），需要添加AAAA记录  </td>
+</tr>
+<tr>
+<td>SOA记录</td>
+<td>起始授权记录；一个区域解析库有且仅能有一个SOA记录，而必须为解析库的第一条记录；  </td>
+</tr>
+<tr>
+<td>PTR记录</td>
+<td>反向解析记录，实现将IP解析为域名，需要增加PTR记录  </td>
+</tr>
+</tbody>
+</table>
+<h6 id="检查配置文件并启动服务"><a href="#检查配置文件并启动服务" class="headerlink" title="检查配置文件并启动服务"></a>检查配置文件并启动服务</h6><p>主配置文件语法检查：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 /var/named]<span class="comment">#named-checkconf</span></div></pre></td></tr></table></figure></p>
+<p>没有任何输出说明语法没有问题；  </p>
+<p>区域解析库语法检查：<br>使用格式：<code>named-checkzone  域名  对应的解析库文件</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#named-checkzone wangbinzhou.com /var/named/wangbinzhou.com.zone </span></div><div class="line">zone wangbinzhou.com/IN: loaded serial 2017092001</div><div class="line">OK</div></pre></td></tr></table></figure></p>
+<p>重载配置文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#rndc reload</span></div><div class="line">server reload successful</div></pre></td></tr></table></figure></p>
+<p>测试服务是否正常：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#dig www.wangbinzhou.com @192.168.25.7</span></div><div class="line"></div><div class="line">; &lt;&lt;&gt;&gt; DiG 9.9.4-RedHat-9.9.4-37.el7 &lt;&lt;&gt;&gt; www.wangbinzhou.com @192.168.25.7</div><div class="line">;; global options: +cmd</div><div class="line">;; Got answer:</div><div class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 12493</div><div class="line">;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 2</div><div class="line"></div><div class="line">;; OPT PSEUDOSECTION:</div><div class="line">; EDNS: version: 0, flags:; udp: 4096</div><div class="line">;; QUESTION SECTION:</div><div class="line">;www.wangbinzhou.com.           IN      A</div><div class="line"></div><div class="line">;; ANSWER SECTION:</div><div class="line">www.wangbinzhou.com.    86400   IN      CNAME   websrv.wangbinzhou.com.</div><div class="line">websrv.wangbinzhou.com. 86400   IN      A       192.168.25.20</div><div class="line"></div><div class="line">;; AUTHORITY SECTION:</div><div class="line">wangbinzhou.com.        86400   IN      NS      dns1.wangbinzhou.com.</div><div class="line"></div><div class="line">;; ADDITIONAL SECTION:</div><div class="line">dns1.wangbinzhou.com.   86400   IN      A       192.168.25.70</div><div class="line"></div><div class="line">;; Query time: 0 msec</div><div class="line">;; SERVER: 192.168.25.7<span class="comment">#53(192.168.25.7)</span></div><div class="line">;; WHEN: Fri Sep 22 11:18:04 CST 2017</div><div class="line">;; MSG SIZE  rcvd: 120</div></pre></td></tr></table></figure></p>
+<p>在<code>ANSWER SECTION:</code>字段中，可以看到<code>www.wangbinzhou.com</code>的解析记录类型和对应的<code>value</code>同我们区域解析库中的设置一样；  </p>
+<h4 id="相关命令"><a href="#相关命令" class="headerlink" title="相关命令"></a>相关命令</h4><h5 id="bind-utils中的解析命令"><a href="#bind-utils中的解析命令" class="headerlink" title="bind-utils中的解析命令"></a>bind-utils中的解析命令</h5><ul>
+<li>dig  </li>
+<li>host  </li>
+<li>nslookup  </li>
+</ul>
+<h6 id="dig"><a href="#dig" class="headerlink" title="dig"></a>dig</h6><p>dig用于测试dns系统，不会查询hosts文件进行解析<br><em>语法：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dig [-t <span class="built_in">type</span>] name [@SERVER] [query options]</div></pre></td></tr></table></figure></p>
+<p><code>-t type</code>: 指定查询的解析记录类型，可选项；<br><code>name</code>：指定要查询的域名；<br><code>@SERVER</code>: 指定查询时使用的DNS服务器，可选项，不指定默认使用本机设置的DNS；<br><code>query options</code>: 指定查询选项；  </p>
+<p><em>查询选项：</em><br><code>+[no]trace</code>：跟踪解析过程<br><code>+[no]recurse</code>：进行递归解析  </p>
+<p>测试反向解析：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dig -x IP @SERVER</div></pre></td></tr></table></figure></p>
+<p>模拟区域传送：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dig -t axfr ZONE_NAME @SERVER</div><div class="line">dig -t axfr wangbinzhou.com @192.168.25.70</div></pre></td></tr></table></figure></p>
+<h6 id="host"><a href="#host" class="headerlink" title="host"></a>host</h6><p><em>语法：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">host [-t <span class="built_in">type</span>] name [SERVER]</div></pre></td></tr></table></figure></p>
+<p><em>示例：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#host www.wangbinzhou.com 192.168.25.7</span></div><div class="line">Using domain server:</div><div class="line">Name: 192.168.25.7</div><div class="line">Address: 192.168.25.7<span class="comment">#53</span></div><div class="line">Aliases: </div><div class="line"></div><div class="line">www.wangbinzhou.com is an <span class="built_in">alias</span> <span class="keyword">for</span> websrv.wangbinzhou.com.</div><div class="line">websrv.wangbinzhou.com has address 192.168.25.20</div></pre></td></tr></table></figure></p>
+<h6 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h6><p><em>语法：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nslookup [-option] [name | -] [SERVER]</div></pre></td></tr></table></figure></p>
+<p>交互式模式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nslookup&gt;  </div><div class="line">    server IP: 指明使用哪个DNS服务器进行查询；</div><div class="line">    <span class="built_in">set</span> q=RR_TYPE: 指明查询的资源记录类型；</div><div class="line">    NAME: 要查询的域名；</div></pre></td></tr></table></figure></p>
+<p><em>示例：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#nslookup </span></div><div class="line">&gt; server 192.168.25.7</div><div class="line">Default server: 192.168.25.7</div><div class="line">Address: 192.168.25.7<span class="comment">#53</span></div><div class="line">&gt; <span class="built_in">set</span> q=A</div><div class="line">&gt; www.wangbinzhou.com</div><div class="line">Server:         192.168.25.7</div><div class="line">Address:        192.168.25.7<span class="comment">#53</span></div><div class="line"></div><div class="line">www.wangbinzhou.com     canonical name = websrv.wangbinzhou.com.</div><div class="line">Name:   websrv.wangbinzhou.com</div><div class="line">Address: 192.168.25.20</div><div class="line">&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="rndc"><a href="#rndc" class="headerlink" title="rndc"></a>rndc</h5><p>Bind程序包中自带的DNS服务控制工具，使用TCP的953端口；<br><em>语法：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rndc COMMAND</div></pre></td></tr></table></figure></p>
+<p><em>COMMAND选项：</em><br><code>reload</code>: 重载主配置文件和区域解析库文件<br><code>reload zonename</code>: 重载区域解析库文件<br><code>retransfer zonename</code>: 手动启动区域传送，而不管序列号是否增加<br><code>notify zonename</code>: 重新对区域传送发通知<br><code>reconfig</code>: 重载主配置文件<br><code>querylog</code>: 开启或关闭查询日志文件/var/log/message<br><code>trace</code>: 递增debug一个级别<br><code>trace LEVEL</code>: 指定使用的级别<br><code>notrace</code>： 将调试级别设置为 0<br><code>flush</code>：清空DNS服务器的所有缓存记录  </p>
+]]></content>
+      
+        <categories>
+            
+            <category> Linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> DNS </tag>
+            
+            <tag> Bind </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[TCP_Wrappers(hosts.allow和hosts.deny)详解]]></title>
       <url>/2017/09/17/TCP-Wrappers%E8%AF%A6%E8%A7%A3/</url>
       <content type="html"><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>TCP Wrapper是一个基于主机的网络访问控制系统，属于工作在传输层的TCP协议。用于对有状态连接的特定服务进行安全检测并实现访问控制。<br>原始代码是1990年左右由荷兰人Wietse Venema编写的，目的是监视埃因霍温理工大学数学和计算机科学系的Unix工作站上的黑客行动。<br><a id="more"></a></p>
