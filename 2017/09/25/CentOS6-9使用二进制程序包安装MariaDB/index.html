@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="WangBinZhou" />
+
+
+
+<meta name="description" content="简介MariaDB二进制压缩包命名格式形如：mariadb-版本名-操作系统名.tar.gz，请根据您的操作系统下载正确的版本。   环境说明 CentOS release 6.9   mariadb-10.2.8-linux-x86_64.tar.gz    在MariaDB官网下载最新的稳定版MariaDB二进制程序">
+<meta name="keywords" content="Linux,MariaDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS6.9使用二进制程序包安装MariaDB">
+<meta property="og:url" content="http://blog.wangbinzhou.com/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/index.html">
+<meta property="og:site_name" content="WangBinZhou">
+<meta property="og:description" content="简介MariaDB二进制压缩包命名格式形如：mariadb-版本名-操作系统名.tar.gz，请根据您的操作系统下载正确的版本。   环境说明 CentOS release 6.9   mariadb-10.2.8-linux-x86_64.tar.gz    在MariaDB官网下载最新的稳定版MariaDB二进制程序">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/201709/mariadb/01.gif">
+<meta property="og:updated_time" content="2017-09-25T09:39:20.940Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS6.9使用二进制程序包安装MariaDB">
+<meta name="twitter:description" content="简介MariaDB二进制压缩包命名格式形如：mariadb-版本名-操作系统名.tar.gz，请根据您的操作系统下载正确的版本。   环境说明 CentOS release 6.9   mariadb-10.2.8-linux-x86_64.tar.gz    在MariaDB官网下载最新的稳定版MariaDB二进制程序">
+<meta name="twitter:image" content="http://ovnpik36u.bkt.clouddn.com/201709/mariadb/01.gif">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="WangBinZhou" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>CentOS6.9使用二进制程序包安装MariaDB | WangBinZhou</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?3c05068834beb5df940fd3ca767f2305";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">WangBinZhou</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">王彬州</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/随笔">随笔</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:2501228271@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2501228271" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bind/">Bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DNS/">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux系统安全/">Linux系统安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssh-client/">openssh-client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/访问控制/">访问控制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.zhyu512.com/">Zhyu512</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://blog.yyclinux.com/">顽媃啊</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.weidong.io/">WeiDong.z</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">反应慢半拍的金牛男</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">WangBinZhou</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">WangBinZhou</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">王彬州</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/随笔">随笔</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:2501228271@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2501228271" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-CentOS6-9使用二进制程序包安装MariaDB" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/" class="article-date">
+      <time datetime="2017-09-25T09:35:13.000Z" itemprop="datePublished">2017-09-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CentOS6.9使用二进制程序包安装MariaDB
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/MariaDB/">MariaDB</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MariaDB/">MariaDB</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>MariaDB二进制压缩包命名格式形如：mariadb-版本名-操作系统名.tar.gz，请根据您的操作系统下载正确的版本。  </p>
+<h5 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h5><ul>
+<li><strong>CentOS release 6.9</strong>  </li>
+<li><strong>mariadb-10.2.8-linux-x86_64.tar.gz</strong>  </li>
+</ul>
+<p>在<a href="https://downloads.mariadb.org/mariadb/" target="_blank" rel="external">MariaDB官网</a>下载最新的稳定版MariaDB二进制程序<br><img src="http://ovnpik36u.bkt.clouddn.com/201709/mariadb/01.gif" alt="image">  </p>
+<a id="more"></a>
+<h4 id="安装MariaDB"><a href="#安装MariaDB" class="headerlink" title="安装MariaDB"></a>安装MariaDB</h4><h5 id="准备数据目录"><a href="#准备数据目录" class="headerlink" title="准备数据目录"></a>准备数据目录</h5><p>以/app/data为例，建议使用逻辑卷<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]#chown mysql:mysql /app/data/</div></pre></td></tr></table></figure></p>
+<h5 id="创建mysql的组和用户"><a href="#创建mysql的组和用户" class="headerlink" title="创建mysql的组和用户"></a>创建mysql的组和用户</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#groupadd -r -g 306 mysql</span></div><div class="line">[root@MyCentOS6 ~]<span class="comment">#useradd -r -g 306 -u 306 -m -d /app/data mysql</span></div></pre></td></tr></table></figure>
+<h5 id="解压二进制程序包并创建软连接"><a href="#解压二进制程序包并创建软连接" class="headerlink" title="解压二进制程序包并创建软连接"></a>解压二进制程序包并创建软连接</h5><p>解压二进制程序包到<code>/usr/local/</code>目录下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~/downloads]<span class="comment">#tar xvf mariadb-10.2.8-linux-x86_64.tar.gz -C /usr/local/</span></div></pre></td></tr></table></figure></p>
+<p>进入<code>/usr/local/</code>目录后，创建软连接<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~/downloads]<span class="comment">#cd /usr/local/</span></div><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>]<span class="comment">#ls</span></div><div class="line">bin  etc  games  include  lib  lib64  libexec  mariadb-10.2.8-linux-x86_64  sbin  share  src</div><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>]<span class="comment">#ln -sv mariadb-10.2.8-linux-x86_64/ mysql</span></div><div class="line">`mysql<span class="string">' -&gt; `mariadb-10.2.8-linux-x86_64/'</span></div></pre></td></tr></table></figure></p>
+<p>修改<code>/usr/local/mysql</code>目录及目录下所有文件的属组，默认属组root<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>]<span class="comment">#chown -R root:mysql /usr/local/mysql/</span></div><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>]<span class="comment">#ll mysql/</span></div><div class="line">total 200</div><div class="line">drwxrwxr-x  2 root mysql  4096 May  3 02:05 bin</div><div class="line">-rw-r--r--  1 root mysql 17987 Aug 17 18:05 COPYING</div><div class="line">-rw-r--r--  1 root mysql 86263 Aug 17 18:05 COPYING.thirdparty</div><div class="line">-rw-r--r--  1 root mysql  2275 Aug 17 18:05 CREDITS</div><div class="line">drwxrwxr-x  3 root mysql  4096 Aug 18 04:16 data</div><div class="line">-rw-r--r--  1 root mysql  8245 Aug 17 18:05 EXCEPTIONS-CLIENT</div><div class="line">drwxrwxr-x  3 root mysql  4096 Aug 18 04:15 include</div><div class="line">-rw-r--r--  1 root mysql  8694 Aug 17 18:05 INSTALL-BINARY</div><div class="line">drwxrwxr-x  4 root mysql  4096 May  3 02:05 lib</div><div class="line">drwxrwxr-x  4 root mysql  4096 Aug 18 04:16 man</div><div class="line">drwxrwxr-x 11 root mysql  4096 Aug 18 04:16 mysql-test</div><div class="line">-rw-r--r--  1 root mysql  2371 Aug 17 18:05 README.md</div><div class="line">-rw-r--r--  1 root mysql 19510 Aug 17 18:05 README-wsrep</div><div class="line">drwxrwxr-x  2 root mysql  4096 Aug 18 04:16 scripts</div><div class="line">drwxrwxr-x 30 root mysql  4096 Aug 18 04:16 share</div><div class="line">drwxrwxr-x  4 root mysql  4096 Aug 18 04:16 sql-bench</div><div class="line">drwxrwxr-x  3 root mysql  4096 Aug 18 04:16 support-files</div></pre></td></tr></table></figure></p>
+<h5 id="设置服务启动脚本"><a href="#设置服务启动脚本" class="headerlink" title="设置服务启动脚本"></a>设置服务启动脚本</h5><p>将程序包自带的启动脚本复制到<code>/etc/rc.d/init.d/</code>目录下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>/mysql]<span class="comment">#cp support-files/mysql.server /etc/rc.d/init.d/mysqld</span></div></pre></td></tr></table></figure></p>
+<p>设置服务开机自启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>/mysql]<span class="comment">#chkconfig --add mysqld </span></div><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>/mysql]<span class="comment">#chkconfig --list mysqld</span></div><div class="line">mysqld          0:off   1:off   2:on    3:on    4:on    5:on    6:off</div></pre></td></tr></table></figure></p>
+<h5 id="设置数据库配置文件"><a href="#设置数据库配置文件" class="headerlink" title="设置数据库配置文件"></a>设置数据库配置文件</h5><p>根据服务器配置，合理选择数据库配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>/mysql]<span class="comment">#mkdir /etc/mysql</span></div><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>/mysql]<span class="comment">#cp support-files/my-large.cnf /etc/mysql/my.cnf</span></div></pre></td></tr></table></figure></p>
+<p>设置数据库配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>/mysql]<span class="comment">#vim /etc/mysql/my.cnf </span></div><div class="line"><span class="comment"># Example MariaDB config file for large systems.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># This is for a large system with memory = 512M where the system runs mainly</span></div><div class="line"><span class="comment"># MariaDB.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># MariaDB programs look for option files in a set of</span></div><div class="line"><span class="comment"># locations which depend on the deployment platform.</span></div><div class="line"><span class="comment"># You can copy this option file to one of those</span></div><div class="line"><span class="comment"># locations. For information about these locations, do:</span></div><div class="line"><span class="comment"># 'my_print_defaults --help' and see what is printed under</span></div><div class="line"><span class="comment"># Default options are read from the following files in the given order:</span></div><div class="line"><span class="comment"># More information at: http://dev.mysql.com/doc/mysql/en/option-files.html</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># In this file, you can use all long options that a program supports.</span></div><div class="line"><span class="comment"># If you want to know which options a program supports, run the program</span></div><div class="line"><span class="comment"># with the "--help" option.</span></div><div class="line"></div><div class="line"><span class="comment"># The following options will be passed to all MariaDB clients</span></div><div class="line">[client]</div><div class="line"><span class="comment">#password       = your_password</span></div><div class="line">port            = 3306</div><div class="line">socket          = /tmp/mysql.sock</div><div class="line"></div><div class="line"><span class="comment"># Here follows entries for some specific programs</span></div><div class="line"></div><div class="line"><span class="comment"># The MariaDB server</span></div><div class="line">[mysqld]</div><div class="line">port            = 3306</div><div class="line">socket          = /tmp/mysql.sock</div><div class="line">skip-external-locking</div><div class="line">key_buffer_size = 256M</div><div class="line">max_allowed_packet = 1M</div><div class="line">table_open_cache = 256</div><div class="line">sort_buffer_size = 1M</div><div class="line">read_buffer_size = 1M</div><div class="line">read_rnd_buffer_size = 4M</div><div class="line">myisam_sort_buffer_size = 64M</div><div class="line">thread_cache_size = 8</div><div class="line">query_cache_size= 16M</div><div class="line"><span class="comment"># Try number of CPU's*2 for thread_concurrency</span></div><div class="line">thread_concurrency = 4      //并发线程数；数值为CPU核心数x2</div><div class="line">datadir = /app/data         //指定数据目录</div><div class="line">innodb_file_per_table = on  //将表存放为单独的文件</div><div class="line">skip_name_resolve = on      //跳过名称反解，提高连接速度</div><div class="line">....省略若干内容....</div></pre></td></tr></table></figure></p>
+<p>修改或添加带注释的最后四行内容。  </p>
+<h5 id="创建数据库系统文件"><a href="#创建数据库系统文件" class="headerlink" title="创建数据库系统文件"></a>创建数据库系统文件</h5><p>使用<code>/usr/local/mysql/scripts/mysql_install_db</code>脚本为数据库指定运行用户和数据存放目录，并生成原始数据<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>/mysql]<span class="comment">#scripts/mysql_install_db --user=mysql --datadir=/app/data/</span></div><div class="line">Installing MariaDB/MySQL system tables <span class="keyword">in</span> <span class="string">'/app/data/'</span> ...</div><div class="line">OK</div><div class="line"></div><div class="line">To start mysqld at boot time you have to copy</div><div class="line">support-files/mysql.server to the right place <span class="keyword">for</span> your system</div><div class="line"></div><div class="line">PLEASE REMEMBER TO SET A PASSWORD FOR THE MariaDB root USER !</div><div class="line">To <span class="keyword">do</span> so, start the server, <span class="keyword">then</span> issue the following commands:</div><div class="line"></div><div class="line"><span class="string">'./bin/mysqladmin'</span> -u root password <span class="string">'new-password'</span></div><div class="line"><span class="string">'./bin/mysqladmin'</span> -u root -h MyCentOS6.9 password <span class="string">'new-password'</span></div><div class="line"></div><div class="line">Alternatively you can run:</div><div class="line"><span class="string">'./bin/mysql_secure_installation'</span></div><div class="line"></div><div class="line"><span class="built_in">which</span> will also give you the option of removing the <span class="built_in">test</span></div><div class="line">databases and anonymous user created by default.  This is</div><div class="line">strongly recommended <span class="keyword">for</span> production servers.</div><div class="line"></div><div class="line">See the MariaDB Knowledgebase at http://mariadb.com/kb or the</div><div class="line">MySQL manual <span class="keyword">for</span> more instructions.</div><div class="line"></div><div class="line">You can start the MariaDB daemon with:</div><div class="line"><span class="built_in">cd</span> <span class="string">'.'</span> ; ./bin/mysqld_safe --datadir=<span class="string">'/app/data/'</span></div><div class="line"></div><div class="line">You can <span class="built_in">test</span> the MariaDB daemon with mysql-test-run.pl</div><div class="line"><span class="built_in">cd</span> <span class="string">'./mysql-test'</span> ; perl mysql-test-run.pl</div><div class="line"></div><div class="line">Please report any problems at http://mariadb.org/jira</div><div class="line"></div><div class="line">The latest information about MariaDB is available at http://mariadb.org/.</div><div class="line">You can find additional information about the MySQL part at:</div><div class="line">http://dev.mysql.com</div><div class="line">Consider joining MariaDB<span class="string">'s strong and vibrant community:</span></div><div class="line">https://mariadb.org/get-involved/</div></pre></td></tr></table></figure></p>
+<p>查看指定的数据存储目录下生成的文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 /usr/<span class="built_in">local</span>/mysql]<span class="comment">#ls /app/data/</span></div><div class="line">aria_log.00000001  aria_log_control  ib_buffer_pool  ibdata1  ib_logfile0  ib_logfile1  mysql  performance_schema  <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<h5 id="创建日志文件"><a href="#创建日志文件" class="headerlink" title="创建日志文件"></a>创建日志文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#touch /var/log/mysqld.log</span></div><div class="line">[root@MyCentOS6 ~]<span class="comment">#chown mysql /var/log/mysqld.log</span></div></pre></td></tr></table></figure>
+<h5 id="启动MariaDB服务"><a href="#启动MariaDB服务" class="headerlink" title="启动MariaDB服务"></a>启动MariaDB服务</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#service mysqld start</span></div><div class="line">Starting MySQL.170925 16:01:58 mysqld_safe Logging to <span class="string">'/var/log/mysqld.log'</span>.</div><div class="line">170925 16:01:58 mysqld_safe Starting mysqld daemon with databases from /app/data</div><div class="line"> SUCCESS!</div></pre></td></tr></table></figure>
+<p> 成功启动！  </p>
+<h5 id="设置PATH路径"><a href="#设置PATH路径" class="headerlink" title="设置PATH路径"></a>设置PATH路径</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#vim /etc/profile.d/mysql.sh</span></div><div class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/mysql/bin:<span class="variable">$PATH</span></div><div class="line">[root@MyCentOS6 ~]<span class="comment">#. /etc/profile.d/mysql.sh</span></div></pre></td></tr></table></figure>
+<h4 id="安全初始化"><a href="#安全初始化" class="headerlink" title="安全初始化"></a>安全初始化</h4><p>使用MariaDB自带的脚本，对MariaDB的远程登录、root账号密码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#mysql_secure_installation </span></div><div class="line"></div><div class="line">NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB</div><div class="line">      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!</div><div class="line"></div><div class="line">In order to <span class="built_in">log</span> into MariaDB to secure it, we<span class="string">'ll need the current</span></div><div class="line">password for the root user.  If you've just installed MariaDB, and</div><div class="line">you haven<span class="string">'t set the root password yet, the password will be blank,</span></div><div class="line">so you should just press enter here.</div><div class="line"></div><div class="line">Enter current password for root (enter for none):       //初始没有密码，所以直接敲回车</div><div class="line">OK, successfully used password, moving on...</div><div class="line"></div><div class="line">Setting the root password ensures that nobody can log into the MariaDB</div><div class="line">root user without the proper authorisation.</div><div class="line"></div><div class="line">Set root password? [Y/n] y          //设置root密码</div><div class="line">New password: </div><div class="line">Re-enter new password: </div><div class="line">Password updated successfully!</div><div class="line">Reloading privilege tables..</div><div class="line"> ... Success!</div><div class="line"></div><div class="line"></div><div class="line">By default, a MariaDB installation has an anonymous user, allowing anyone</div><div class="line">to log into MariaDB without having to have a user account created for</div><div class="line">them.  This is intended only for testing, and to make the installation</div><div class="line">go a bit smoother.  You should remove them before moving into a</div><div class="line">production environment.</div><div class="line"></div><div class="line">Remove anonymous users? [Y/n] y         //安全起见，选择移除匿名用户</div><div class="line"> ... Success!</div><div class="line"></div><div class="line">Normally, root should only be allowed to connect from 'localhost<span class="string">'.  This</span></div><div class="line">ensures that someone cannot guess at the root password from the network.</div><div class="line"></div><div class="line">Disallow root login remotely? [Y/n] y       //拒绝root用户远程登录，根据个人需要设置</div><div class="line"> ... Success!</div><div class="line"></div><div class="line">By default, MariaDB comes with a database named '<span class="built_in">test</span><span class="string">' that anyone can</span></div><div class="line">access.  This is also intended only for testing, and should be removed</div><div class="line">before moving into a production environment.</div><div class="line"></div><div class="line">Remove test database and access to it? [Y/n] n      //是否删除系统自带的测试数据库</div><div class="line"> ... skipping.</div><div class="line"></div><div class="line">Reloading the privilege tables will ensure that all changes made so far</div><div class="line">will take effect immediately.</div><div class="line"></div><div class="line">Reload privilege tables now? [Y/n] y    //是否加载特权表？选择加载可以使上面的设置立即生效</div><div class="line"> ... Success!</div><div class="line"></div><div class="line">Cleaning up...</div><div class="line"></div><div class="line">All done!  If you've completed all of the above steps, your MariaDB</div><div class="line">installation should now be secure.</div><div class="line"></div><div class="line">Thanks <span class="keyword">for</span> using MariaDB!</div></pre></td></tr></table></figure></p>
+<p>使用设置的root密码登录数据库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[root@MyCentOS6 ~]<span class="comment">#mysql -uroot -p</span></div><div class="line">Enter password: </div><div class="line">Welcome to the MariaDB monitor.  Commands end with ; or \g.</div><div class="line">Your MariaDB connection id is 16</div><div class="line">Server version: 10.2.8-MariaDB-log MariaDB Server</div><div class="line"></div><div class="line">Copyright (c) 2000, 2017, Oracle, MariaDB Corporation Ab and others.</div><div class="line"></div><div class="line">Type <span class="string">'help;'</span> or <span class="string">'\h'</span> <span class="keyword">for</span> <span class="built_in">help</span>. Type <span class="string">'\c'</span> to clear the current input statement.</div><div class="line"></div><div class="line">MariaDB [(none)]&gt; SHOW DATABASES;</div><div class="line">+--------------------+</div><div class="line">| Database           |</div><div class="line">+--------------------+</div><div class="line">| <span class="comment">#mysql50#.gnome2   |</span></div><div class="line">| information_schema |</div><div class="line">| mysql              |</div><div class="line">| performance_schema |</div><div class="line">| <span class="built_in">test</span>               |</div><div class="line">+--------------------+</div><div class="line">5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.04 sec)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/">CentOS6.9使用二进制程序包安装MariaDB</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
+        <p><span>发布时间:</span>2017-09-25, 17:35:13</p>
+        <p><span>最后更新:</span>2017-09-25, 17:39:20</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/" title="CentOS6.9使用二进制程序包安装MariaDB">http://blog.wangbinzhou.com/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/09/22/Bind的安装和配置使用详解/">
+                    Bind的安装和配置使用详解
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#环境说明"><span class="toc-number">1.1.</span> <span class="toc-text">环境说明</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装MariaDB"><span class="toc-number">2.</span> <span class="toc-text">安装MariaDB</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#准备数据目录"><span class="toc-number">2.1.</span> <span class="toc-text">准备数据目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#创建mysql的组和用户"><span class="toc-number">2.2.</span> <span class="toc-text">创建mysql的组和用户</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#解压二进制程序包并创建软连接"><span class="toc-number">2.3.</span> <span class="toc-text">解压二进制程序包并创建软连接</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#设置服务启动脚本"><span class="toc-number">2.4.</span> <span class="toc-text">设置服务启动脚本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#设置数据库配置文件"><span class="toc-number">2.5.</span> <span class="toc-text">设置数据库配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#创建数据库系统文件"><span class="toc-number">2.6.</span> <span class="toc-text">创建数据库系统文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#创建日志文件"><span class="toc-number">2.7.</span> <span class="toc-text">创建日志文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#启动MariaDB服务"><span class="toc-number">2.8.</span> <span class="toc-text">启动MariaDB服务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#设置PATH路径"><span class="toc-number">2.9.</span> <span class="toc-text">设置PATH路径</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全初始化"><span class="toc-number">3.</span> <span class="toc-text">安全初始化</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"CentOS6.9使用二进制程序包安装MariaDB　| WangBinZhou　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/09/22/Bind的安装和配置使用详解/" title="下一篇: Bind的安装和配置使用详解">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/">CentOS6.9使用二进制程序包安装MariaDB</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/22/Bind的安装和配置使用详解/">Bind的安装和配置使用详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/TCP-Wrappers详解/">TCP_Wrappers(hosts.allow和hosts.deny)详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/机器人三定律/">机器人三定律</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/Windows10启用Linux子系统/">Windows10启用Linux子系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/CentOS7启动流程图-转载/">CentOS7启动流程图--转载</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/CentOS7内核编译安装/">CentOS7内核编译安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-启动相关的破坏性实验/">CentOS6.9启动系列--启动相关的破坏性实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-为Grub设置密码/">CentOS6.9启动系列--为Grub设置密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/牛顿第一定律-很有哲理！/">牛顿第一定律--很有哲理！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/Linux常用命令总结-11、Linux计划任务/">Linux常用命令总结-11、Linux计划任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/好好敲实验吧，别再瞎折腾了！不做死就不会死！！/">好好敲实验吧，别再瞎折腾了！不做死就不会死！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/CentOS系列使用Tab命令补全/">CentOS系列使用Tab命令补全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/">CentOS7网卡命名方式详解及修改为传统eth格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/内网ssh连接速度很慢的解决方案/">内网ssh连接速度很慢的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">Linux常用命令总结：10、文件查找之locate和find</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017 WangBinZhou
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-106402527-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+             post: ".article-entry a[href], .copyright a[href]", 
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

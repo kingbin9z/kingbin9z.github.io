@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>http://blog.wangbinzhou.com/2017/09/25/CentOS6-9%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%A8%8B%E5%BA%8F%E5%8C%85%E5%AE%89%E8%A3%85MariaDB/</loc>
+    <lastmod>2017-09-25T09:39:20.940Z</lastmod>
+    <data>
+        <display>
+        <title>CentOS6.9使用二进制程序包安装MariaDB</title>
+        <pubTime>2017-09-25T09:35:13.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>MariaDB</tag>
+         
+         
+           
+             
+              <breadCrumb title="MariaDB" url="http://blog.wangbinzhou.com/categories/MariaDB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.wangbinzhou.com/2017/09/22/Bind%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</loc>
-    <lastmod>2017-09-22T05:14:46.744Z</lastmod>
+    <lastmod>2017-09-22T05:19:56.427Z</lastmod>
     <data>
         <display>
         <title>Bind的安装和配置使用详解</title>

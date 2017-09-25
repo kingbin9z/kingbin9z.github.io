@@ -1,1 +1,1 @@
-http://blog.wangbinzhou.com/2017/09/22/Bind的安装和配置使用详解/
+http://blog.wangbinzhou.com/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/
