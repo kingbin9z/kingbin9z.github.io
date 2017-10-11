@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://blog.wangbinzhou.com/2017/10/11/%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89CA%E9%85%8D%E7%BD%AEHTTPS%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2017-10-11T02:13:46.929Z</lastmod>
+    <lastmod>2017-10-11T02:22:54.134Z</lastmod>
     <data>
         <display>
         <title>搭建私有CA配置HTTPS服务</title>
@@ -38,9 +38,9 @@
         <title>CentOS6.9使用二进制程序包安装MariaDB</title>
         <pubTime>2017-09-25T09:35:13.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>MariaDB</tag>
+         
+        <tag>Linux</tag>
          
          
            
