@@ -1,1 +1,1 @@
-http://blog.wangbinzhou.com/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/
+http://blog.wangbinzhou.com/2017/10/11/搭建私有CA配置HTTPS服务/
