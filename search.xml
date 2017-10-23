@@ -13,6 +13,7 @@
 <li><strong>P</strong>HP、<strong>P</strong>erl或<strong>P</strong>ython  </li>
 </ul>
 <p>在这里，我们主要演示Linux、Httpd、MariaDB和PHP的组合的编译安装。  </p>
+<a id="more"></a>
 <p><strong>HTTPD和PHP的结合方式：</strong>  </p>
 <ul>
 <li><strong>modules:</strong> 把PHP编译成httpd的DSO对象；  <ul>
