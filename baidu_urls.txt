@@ -1,1 +1,1 @@
-http://blog.wangbinzhou.com/2017/10/11/搭建私有CA配置HTTPS服务/
+http://blog.wangbinzhou.com/2017/10/23/CentOS6编译安装LAMP/
