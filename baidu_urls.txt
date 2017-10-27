@@ -1,1 +1,1 @@
-http://blog.wangbinzhou.com/2017/10/23/CentOS6编译安装LAMP/
+http://blog.wangbinzhou.com/2017/10/27/Nginx/

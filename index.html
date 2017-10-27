@@ -211,7 +211,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bind/">Bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DNS/">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LAMP/">LAMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux实验/">Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux系统安全/">Linux系统安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssh-client/">openssh-client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/访问控制/">访问控制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bind/">Bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DNS/">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LAMP/">LAMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux实验/">Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux系统安全/">Linux系统安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssh-client/">openssh-client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/访问控制/">访问控制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -293,6 +293,629 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/10/27/Nginx/" class="article-date">
+      <time datetime="2017-10-27T14:40:03.000Z" itemprop="datePublished">2017-10-27</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/27/Nginx/">Nginx</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h4><p>Nginx（发音同engine x）是一个 Web服务器，也可以用作反向代理，负载平衡器和 HTTP缓存。该软件由 Igor Sysoev 创建，并于2004年首次公开发布。同名公司成立于2011年，以提供支持。Nginx 是免费的开源软件，根据类似 BSD许可证的条款发布。大部分 Web服务器通常使用 NGINX 作为负载均衡器。  </p>
+<h5 id="Nginx的特性"><a href="#Nginx的特性" class="headerlink" title="Nginx的特性"></a>Nginx的特性</h5><ul>
+<li>高可靠性  </li>
+<li>支持热部署：不停机更新配置文件，升级版本，更换日志文件  </li>
+<li>低内存消耗：10000个keep-alive连接模式下的非活动连接，仅需要2.5M内存  </li>
+<li>event-driven, aio, mmap, sendfile  </li>
+</ul>
+<h5 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h5><ul>
+<li>静态资源的web服务器  <ul>
+<li>HTML, 图片, js, css, txt等静态资源</li>
+</ul>
+</li>
+<li>http协议反向代理服务器  </li>
+<li>pop3/IMAP4协议反向代理服务器  </li>
+<li>结合FastCGI(LNMP)/uWSGI(Python)/SCGI等协议反向代理动态资源请求    </li>
+<li>TCP/UDP协议的请求转发(反向代理)  </li>
+</ul>
+<h5 id="WEB服务的相关功能"><a href="#WEB服务的相关功能" class="headerlink" title="WEB服务的相关功能"></a>WEB服务的相关功能</h5><ul>
+<li>虚拟机（Server）  </li>
+<li>支持Keep-alive和管道连接  </li>
+<li>访问日志（支持基于日志缓冲提高性能）  </li>
+<li>Url Rewirte  </li>
+<li>路径别名  </li>
+<li>基于IP及用户的访问控制  </li>
+<li>支持速率限制及并发数限制  </li>
+<li>重新配置和在线升级而无须终端客户的工作进程  </li>
+<li>Memcached 的GET接口  </li>
+</ul>
+<h5 id="Nginx的程序架构"><a href="#Nginx的程序架构" class="headerlink" title="Nginx的程序架构"></a>Nginx的程序架构</h5><p><img src="http://ovnpik36u.bkt.clouddn.com/201710/nginx/NginxFramework.png" alt="image"><br><strong>Nginx的程序架构</strong><br>Master/Worker结构  </p>
+<ul>
+<li>一个Maser进程负责加载和分析配置文件、管理worker进程、平滑升级  </li>
+<li>一个或多个worker进程处理并响应用户请求  </li>
+<li>缓存相关的进程：  <ul>
+<li>cache loader:载入缓存对象  </li>
+<li>cache manager：管理缓存对象  </li>
+</ul>
+</li>
+</ul>
+<h5 id="Nginx模块"><a href="#Nginx模块" class="headerlink" title="Nginx模块"></a>Nginx模块</h5><p>nginx高度模块化，但其模块早期不支持DSO机制； 1.9.11版本支持动态装载和卸载  </p>
+<h6 id="模块分类"><a href="#模块分类" class="headerlink" title="模块分类"></a>模块分类</h6><ul>
+<li>核心模块：Core module  </li>
+<li>标准模块：  <ul>
+<li>HTTP模块：ngx<em>http</em>*<ul>
+<li>HTTP Core modules 默认功能  </li>
+<li>HTTP Optional modules 需编译时指定  </li>
+</ul>
+</li>
+<li>Mail模块：ngx<em>mail</em>*  </li>
+<li>Stream模块：ngx<em>stream</em>*  </li>
+</ul>
+</li>
+<li>第三方模块  </li>
+</ul>
+<h4 id="Nginx的安装"><a href="#Nginx的安装" class="headerlink" title="Nginx的安装"></a>Nginx的安装</h4><h5 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://nginx.org/packages/centos/7/x86_64/RPMS</div></pre></td></tr></table></figure>
+<h5 id="Fedora-EPEL"><a href="#Fedora-EPEL" class="headerlink" title="Fedora-EPEL"></a>Fedora-EPEL</h5><p>在CentOS的官方yum源里并没有提供Nginx软件包，所以我们需要配置<code>Fedora-EPEL</code>源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://mirrors.aliyun.com/epel/7/x86_64/</div></pre></td></tr></table></figure></p>
+<h5 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h5><p>编译前先安装依赖的开发包<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install pcre-devel openssl-devel zlib-devel</div></pre></td></tr></table></figure></p>
+<p>创建Nginx程序管理用户<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">useradd -r nginx</div></pre></td></tr></table></figure></p>
+<p>编译安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/<span class="built_in">local</span>/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/<span class="built_in">log</span>/nginx/error.log --http-log-path=/var/<span class="built_in">log</span>/nginx/access.log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_dav_module --with-http_stub_status_module --with-threads --with-file-aio</div><div class="line">make &amp;&amp; make instll</div></pre></td></tr></table></figure></p>
+<h5 id="编译安装选项"><a href="#编译安装选项" class="headerlink" title="编译安装选项"></a>编译安装选项</h5><ul>
+<li><p>指定安装路径  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--prefix=/etc/nginx</div></pre></td></tr></table></figure>
+</li>
+<li><p>指明Nginx程序文件的安装路径  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--sbin-path=/usr/sbin/nginx</div></pre></td></tr></table></figure>
+</li>
+<li><p>指明主配置文件安装路径  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--conf-path=/etc/nginx/nginx.conf</div></pre></td></tr></table></figure>
+</li>
+<li><p>指定错误日志文件安装位置  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--error-log-path=/var/<span class="built_in">log</span>/nginx/error.log</div></pre></td></tr></table></figure>
+</li>
+<li><p>访问日志文件安装位置  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--http-log-path=/var/<span class="built_in">log</span>/nginx/access.log</div></pre></td></tr></table></figure>
+</li>
+<li><p>指明pid文件安装位置  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--pid-path=/var/run/nginx.pid</div></pre></td></tr></table></figure>
+</li>
+<li><p>指定锁文件安装位置  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--lock-path=/var/run/nginx.lock</div></pre></td></tr></table></figure>
+</li>
+<li><p>客户端body部分的临时文件存放路径<br>如果服务器允许客户端使用put方法提交大数据时，临时存放的磁盘路径  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--http-client-body-temp-path=/var/cache/nginx/client_temp</div></pre></td></tr></table></figure>
+</li>
+<li><p>作为代理服务器，服务器响应报文的临时文件存放路径  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--http-proxy-temp-path=/var/cache/nginx/proxy_temp</div></pre></td></tr></table></figure>
+</li>
+<li><p>作为fastcgi代理服务器，服务器响应报文的临时文件存放路径  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp</div></pre></td></tr></table></figure>
+</li>
+<li><p>作为uwsgi代理服务器，服务器响应报文的临时文件存放路径  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--http-uwsigi-temp-path=/var/cache/nginx/uwsgi_temp</div></pre></td></tr></table></figure>
+</li>
+<li><p>作为scgi反代服务器，服务器响应报文的临时文件存放路径  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--http-scgi-temp-path=/var/cache/nginx/scgi_temp</div></pre></td></tr></table></figure>
+</li>
+<li><p>指明以哪个身份运行worker进程，主控master进程一般由root运行  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">--user=nginx</div><div class="line">--group=nginx</div></pre></td></tr></table></figure>
+</li>
+<li><p>把指定模块编译进来  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--with-http_ssl_module</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Nginx目录结构和命令"><a href="#Nginx目录结构和命令" class="headerlink" title="Nginx目录结构和命令"></a>Nginx目录结构和命令</h4><h5 id="Nginx的目录结构"><a href="#Nginx的目录结构" class="headerlink" title="Nginx的目录结构"></a>Nginx的目录结构</h5><p>以CentOS7.3上安装的Nginx-1.10.2为例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">[root@centos7 ~]<span class="comment">#rpm -ql nginx</span></div><div class="line">/etc/logrotate.d/nginx                          -</div><div class="line">/etc/nginx/fastcgi.conf                          |</div><div class="line">/etc/nginx/fastcgi.conf.default                  |</div><div class="line">/etc/nginx/fastcgi_params                        |</div><div class="line">/etc/nginx/fastcgi_params.default                |</div><div class="line">/etc/nginx/koi-utf                               |   </div><div class="line">/etc/nginx/koi-win                               ||</div><div class="line">/etc/nginx/mime.types                            ||&#125;&gt; 配置文件相关</div><div class="line">/etc/nginx/mime.types.default                    ||</div><div class="line">/etc/nginx/nginx.conf                            |</div><div class="line">/etc/nginx/nginx.conf.default                    |</div><div class="line">/etc/nginx/scgi_params                           |</div><div class="line">/etc/nginx/scgi_params.default                   |</div><div class="line">/etc/nginx/uwsgi_params                          |</div><div class="line">/etc/nginx/uwsgi_params.default                  |</div><div class="line">/etc/nginx/win-utf                              -</div><div class="line">/usr/bin/nginx-upgrade</div><div class="line">/usr/lib/systemd/system/nginx.service           Systemctl服务管理脚本</div><div class="line">/usr/lib64/nginx/modules</div><div class="line">/usr/sbin/nginx                                 Nginx主程序</div><div class="line">/usr/share/doc/nginx-1.10.2</div><div class="line">/usr/share/doc/nginx-1.10.2/CHANGES</div><div class="line">/usr/share/doc/nginx-1.10.2/README</div><div class="line">/usr/share/doc/nginx-1.10.2/README.dynamic</div><div class="line">/usr/share/doc/nginx-1.10.2/UPGRADE-NOTES-1.6-to-1.10</div><div class="line">/usr/share/licenses/nginx-1.10.2</div><div class="line">/usr/share/licenses/nginx-1.10.2/LICENSE</div><div class="line">/usr/share/man/man3/nginx.3pm.gz</div><div class="line">/usr/share/man/man8/nginx-upgrade.8.gz</div><div class="line">/usr/share/man/man8/nginx.8.gz</div><div class="line">/usr/share/nginx/html/404.html</div><div class="line">/usr/share/nginx/html/50x.html</div><div class="line">/usr/share/nginx/html/index.html</div><div class="line">/usr/share/nginx/html/nginx-logo.png</div><div class="line">/usr/share/nginx/html/poweredby.png</div><div class="line">/usr/share/vim/vimfiles/ftdetect/nginx.vim</div><div class="line">/usr/share/vim/vimfiles/indent/nginx.vim</div><div class="line">/usr/share/vim/vimfiles/syntax/nginx.vim</div><div class="line">/var/lib/nginx</div><div class="line">/var/lib/nginx/tmp</div><div class="line">/var/<span class="built_in">log</span>/nginx                                  日志目录</div></pre></td></tr></table></figure></p>
+<h5 id="Nginx命令"><a href="#Nginx命令" class="headerlink" title="Nginx命令"></a>Nginx命令</h5><p><code>/usr/sbin/nginx</code>:默认为启动nginx<br>常用参数<br><code>-h</code>: 查看帮助选项<br><code>-t</code>: 测试nginx语法错误<br><code>-c filename</code>：指定配置文件（default:/etc/nginx/nginx.conf）<br><code>-s signal</code>: 发送信号给master进程，signal可为：<code>stop</code>, <code>quit</code>, <code>reopen</code>, <code>reload</code><br><code>-g directives</code>: 在命令行中指明全局指令  </p>
+<h4 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h4><p>正常运行必备的配置：<a href="http://nginx.org/en/docs/ngx_core_module.html" target="_blank" rel="external">帮助文档</a>  </p>
+<ul>
+<li>user  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Syntax:     user  user  [group];</div><div class="line">Default:    user  nobody  nobody;</div><div class="line">Context:    main</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>指定worker进程的运行身份，如果不指定，默认和用户名同名  </p>
+<ul>
+<li>pid /PATH/TO/PID_FILE<br>  指定存储nginx主进程PID的文件路径  </li>
+<li>include file | mask<br>  指明包含进来的其他配置文件片段  </li>
+<li>load_module file<br>  模块加载配置文件：/usr/share/nginx/modules/*.conf<br>  指明要装载的动态模块路径：/usr/lib64/nginx/modules  </li>
+</ul>
+<h5 id="配置文件的组成部分"><a href="#配置文件的组成部分" class="headerlink" title="配置文件的组成部分"></a>配置文件的组成部分</h5><ul>
+<li>主配置文件：nginx.conf  </li>
+<li>子配置文件：include conf.d/*.conf  </li>
+<li>fastcgi, uwsgi, scgi等协议相关的配置文件  </li>
+<li>mime.types: 支持的mime类型  </li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>[x] 指令必须以分行结尾  </li>
+<li>[x] 支持使用配置变量  <ul>
+<li>自建变量：由Nginx模块引入，可直接引用  </li>
+<li>自定义变量：由用户使用set命令定义<br>  <code>set variable_name value;</code>  </li>
+<li>引用变量：<code>$variable_name</code>  </li>
+</ul>
+</li>
+</ul>
+<h5 id="Nginx主配置文件结构"><a href="#Nginx主配置文件结构" class="headerlink" title="Nginx主配置文件结构"></a>Nginx主配置文件结构</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">main block：主配置段，即全局配置段，对http,mail都有效  </div><div class="line">    event &#123;  </div><div class="line">            ...  </div><div class="line">                &#125; 事件驱动相关的配置  </div><div class="line">http &#123;  </div><div class="line">        ...  </div><div class="line">            &#125; http/https 协议相关配置段  </div><div class="line">mail &#123;  </div><div class="line">        ...  </div><div class="line">        &#125; mail 协议相关配置段  </div><div class="line">stream &#123;  </div><div class="line">            ...  </div><div class="line">                &#125; stream 服务器相关配置段</div></pre></td></tr></table></figure>
+<h6 id="Main全局配置段常见的配置指令分类"><a href="#Main全局配置段常见的配置指令分类" class="headerlink" title="Main全局配置段常见的配置指令分类"></a>Main全局配置段常见的配置指令分类</h6><ul>
+<li>正常运行必备的配置  </li>
+<li>优化性能相关的配置  </li>
+<li>用于调试及定位问题相关的配置  </li>
+<li>事件驱动相关的配置<br><a href="http://nginx.org/en/docs/" target="_blank" rel="external">配置帮助文档</a>  </li>
+</ul>
+<h6 id="http协议相关的配置结构"><a href="#http协议相关的配置结构" class="headerlink" title="http协议相关的配置结构"></a>http协议相关的配置结构</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line">        ...</div><div class="line">        ... 各server的公共配置</div><div class="line">        server &#123; 每个server用于定义一个虚拟主机</div><div class="line">                ...</div><div class="line">            &#125;</div><div class="line">        server &#123;</div><div class="line">                ...</div><div class="line">                server_name 虚拟主机名</div><div class="line">                root 主目录</div><div class="line">                <span class="built_in">alias</span> 路径别名</div><div class="line">                location [OPERATOR] URL &#123; 指定URL的特性</div><div class="line">                ...</div><div class="line">                    <span class="keyword">if</span> CONDITION &#123;</div><div class="line">                    ...</div><div class="line">                        &#125;</div><div class="line">                &#125;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="性能优化相关的配置："><a href="#性能优化相关的配置：" class="headerlink" title="性能优化相关的配置："></a>性能优化相关的配置：</h6><ul>
+<li>worker_processes number | auto<br>worker进程的数量；通常应该为当前主机的cpu的物理核心数  </li>
+<li><p>worker_cpu_affinity cpumask …<br>worker_cpu_affinity auto [cpumask] 提高缓存命中率  </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CPU MASK： 00000001： 0号CPU</div><div class="line">00000010： 1号CPU</div><div class="line">10000000： 8号CPU</div><div class="line">worker_cpu_affinity 0001 0010 0100 1000;</div><div class="line">worker_cpu_affinity 0101 1010;</div></pre></td></tr></table></figure>
+</li>
+<li><p>worker_priority number<br>指定worker进程的nice值，设定worker进程优先级： [-20,20]  </p>
+</li>
+<li>worker_rlimit_nofile number<br>worker进程所能够打开的文件数量上限,如65535  </li>
+</ul>
+<h6 id="事件驱动相关的配置"><a href="#事件驱动相关的配置" class="headerlink" title="事件驱动相关的配置"></a>事件驱动相关的配置</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">events &#123;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>worker_connections number<br>每个worker进程所能够打开的最大并发连接数数量，如10240<br>总最大并发数： worker_processes * worker_connections  </li>
+<li>use method<br>指明并发连接请求的处理方法,默认自动选择最优方法<br>use epoll;  </li>
+<li>ccept_mutex on | off 互斥<br>处理新的连接请求的方法； on指由各个worker轮流处理新请求， Off指每个新请求的到达都会通知(唤醒)所有的worker进程，但只有一个进程可获得连接，造成“惊群”，影响性能，默认on</li>
+</ul>
+<h6 id="调试和定位问题"><a href="#调试和定位问题" class="headerlink" title="调试和定位问题"></a>调试和定位问题</h6><ul>
+<li>daemon on|off<br>是否以守护进程方式运行nignx，默认是守护进程方式  </li>
+<li>master_process on|off<br>是否以master/worker模型运行nginx；默认为on,off 将不启动worker  </li>
+<li>error_log file [level]<br>错误日志文件及其级别；出于调试需要， 可设定为debug；但debug仅在编译时使用了“–with-debug”选项时才有效<br>方式： file /path/logfile;<br>stderr:发送到标准错误<br>syslog:server-address[,parameter=values]:发送到syslog<br>memory:size 内存<br>level:debug|info|notice|warn|error|crit|alter|emerg  </li>
+</ul>
+<h5 id="ngx-http-core-module"><a href="#ngx-http-core-module" class="headerlink" title="ngx_http_core_module"></a>ngx_http_core_module</h5><ol>
+<li>与套接字相关的配置   <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">server &#123; ... &#125;</div><div class="line">配置一个虚拟主机</div><div class="line">server &#123;</div><div class="line">listen address[:PORT]|PORT;</div><div class="line">server_name SERVER_NAME;</div><div class="line">root /PATH/TO/DOCUMENT_ROOT;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>listen PORT|address[:port]|unix:/PATH/TO/SOCKET_FILE<br> listen address[:port] [default_server] [ssl] [http2 | spdy]<br> [backlog=number] [rcvbuf=size] [sndbuf=size]<br> default_server 设定为默认虚拟主机<br> ssl 限制仅能够通过ssl连接提供服务<br> backlog=number 超过并发连接数后，新请求进入后援队列的长度<br> rcvbuf=size 接收缓冲区大小<br> sndbuf=size 发送缓冲区大小  </p>
+<blockquote>
+<p>注意：<br>(1) 基于port；<br>listen PORT; 指令监听在不同的端口<br>(2) 基于ip的虚拟主机<br>listen IP:PORT; IP 地址不同<br>(3) 基于hostname<br>server_name fqdn; 指令指向不同的主机名  </p>
+</blockquote>
+</li>
+<li><p>server_name name …;  </p>
+</li>
+</ol>
+<ul>
+<li>虚拟主机的主机名称后可跟多个由空白字符分隔的字符串  </li>
+<li><p>支持*通配任意长度的任意字符  </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">server_name *.magedu.com www.magedu.*</div></pre></td></tr></table></figure>
+</li>
+<li><p>支持~起始的字符做正则表达式模式匹配，性能原因慎用  </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">server_name ~^www\d+\.magedu\.com$</div></pre></td></tr></table></figure>
+<p>  <code>\d</code> 表示 <code>[0-9]</code>  </p>
+</li>
+<li>匹配优先级机制从高到低：<br>(1) 首先是字符串精确匹配 如： www.magedu.com<br>(2) 左侧<em>通配符 如： </em>.magedu.com<br>(3) 右侧<em>通配符 如： www.magedu.</em><br>(4) 正则表达式 如： ~^.*.magedu.com$<br>(5) default_server  </li>
+</ul>
+<ol>
+<li><p>tcp_nodelay on | off;<br>在keepalived模式下的连接是否启用TCP_NODELAY选项<br>当为off时，延迟发送，合并多个请求后再发送<br>默认On时，不延迟发送<br>可用于： http, server, location   </p>
+</li>
+<li><p>sendfile on | off;<br>是否启用sendfile功能，在内核中封装报文直接发送<br>默认Off  </p>
+</li>
+<li><p>server_tokens on | off | build | string<br> 是否在响应报文的Server首部显示nginx版本<br> 定义路径相关的配置  </p>
+</li>
+<li><p>root<br>设置web资源的路径映射；用于指明请求的URL所对应的文档的目录路径，可用于http, server, location, if in location  </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">...</div><div class="line">root /data/www/vhost1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 示例  </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://www.magedu.com/images/logo.jpg</div><div class="line">    --&gt; /data/www/vhosts/images/logo.jpg</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>location [ = | ~ | ~* | ^~ ] uri { ... }</code><br> location @name { … }<br>在一个server中location配置段可存在多个，用于实现从uri到文件系统的路径映射； ngnix会根据用户请求的URI来检查定义的所有location，并找出一个最佳匹配，而后应用其配置<br> 示例：  </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">server &#123;...</div><div class="line">        server_name www.magedu.com;</div><div class="line">        location /images/ &#123;</div><div class="line">        root /data/imgs/;</div><div class="line">            &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://www.magedu.com/images/logo.jpg</div><div class="line">--&gt; /data/imgs/images/logo.jpg</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><p><code>=</code>：对URI做精确匹配；  </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location = / &#123;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  <a href="http://www.magedu.com/" target="_blank" rel="external">http://www.magedu.com/</a> 匹配<br>  <a href="http://www.magedu.com/index.html" target="_blank" rel="external">http://www.magedu.com/index.html</a> 不匹配  </p>
+</li>
+<li><code>^~</code>：对URI的最左边部分做匹配检查，不区分字符大小写  </li>
+<li><code>~</code>：对URI做正则表达式模式匹配，区分字符大小写  </li>
+<li><code>~*</code>：对URI做正则表达式模式匹配，不区分字符大小写  </li>
+<li><code>不带符号</code>：匹配起始于此uri的所有的uri  </li>
+<li>匹配优先级从高到低：<br>  =, ^~, ～/～*, 不带符号  </li>
+</ul>
+<ol>
+<li>alias path;<br>路径别名，文档映射的另一种机制；仅能用于location上下文<br>示例：<br><a href="http://www.magedu.com/bbs/index.php" target="_blank" rel="external">http://www.magedu.com/bbs/index.php</a>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">location /bbs/ &#123;</div><div class="line"><span class="built_in">alias</span> /web/forum/;</div><div class="line">&#125; --&gt; /web/forum/index.html</div><div class="line">location /bbs/ &#123;</div><div class="line">root /web/forum/;</div><div class="line">&#125; --&gt; /web/forum/bbs/index.html</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>注意： location中使用root指令和alias指令的意义不同<br>  (a) root，给定的路径对应于location中的/uri/左侧的/<br>  (b) alias，给定的路径对应于location中的/uri/右侧的/  </p>
+</blockquote>
+<ol>
+<li><p>index file …;<br>指定默认网页资源，注意： ngx_http_index_module模块  </p>
+</li>
+<li><p>error_page code … [=[response]] uri;<br>模块： ngx_http_core_module<br>定义错误页， 以指定的响应状态码进行响应<br>可用位置： http, server, location, if in location  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error_page 404 /404.html</div><div class="line">error_page 404 =200 /404.html</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><code>try_files file ... uri;</code><br><code>try_files file ... =code;</code><br>按顺序检查文件是否存在，返回第一个找到的文件或文件夹（结尾加斜线表示为文件夹），如果所有的文件或文件夹都找不到，会进行一个内部重定向到最后一个参数。只有最后一个参数可以引起一个内部重定向，之前的参数只设置内部URI的指向。最后一个参数是回退URI且必须存在，否则会出现内部500错误  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">location /images/ &#123; try_files <span class="variable">$uri</span> /images/default.gif; &#125;</div><div class="line">location / &#123; try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/index.html <span class="variable">$uri</span>.html =404; &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>定义客户端请求的相关配置</strong>  </p>
+<ol>
+<li><p>keepalive_timeout timeout [header_timeout];<br>设定保持连接超时时长， 0表示禁止长连接， 默认为75s  </p>
+</li>
+<li><p>keepalive_requests number;<br>在一次长连接上所允许请求的资源的最大数量,默认为100  </p>
+</li>
+<li><p>keepalive_disable none | browser …<br>对哪种浏览器禁用长连接  </p>
+</li>
+<li><p>send_timeout time;<br>向客户端发送响应报文的超时时长，此处是指两次写操作<br>之间的间隔时长，而非整个响应过程的传输时长  </p>
+</li>
+<li><p>client_body_buffer_size size;<br>用于接收每个客户端请求报文的body部分的缓冲区大小；默认为16k；超出此大小时，其将被暂存到磁盘上的由<br>client_body_temp_path指令所定义的位置  </p>
+</li>
+<li><p>client_body_temp_path path [level1 [level2[level3]]];<br>设定用于存储客户端请求报文的body部分的临时存储路径及子目录结构和数量<br>目录名为16进制的数字；  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">client_body_temp_path /var/tmp/client_body 1 2 2</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>1 1级目录占1位16进制，即2^4=16个目录 0-f<br>2 2级目录占2位16进制，即2^8=256个目录 00-ff<br>2 3级目录占2位16进制， 即2^8=256个目录 00-ff  </p>
+<p><strong>对客户端进行限制的相关配置</strong>  </p>
+<ol>
+<li><p>limit_rate rate;<br>限制响应给客户端的传输速率，单位是bytes/second<br>默认值0表示无限制  </p>
+</li>
+<li><p>limit_except method … { … }，仅用于location<br>限制客户端使用除了指定的请求方法之外的其它方法<br>method:GET, HEAD, POST, PUT, DELETE MKCOL, COPY, MOVE, OPTIONS, PROPFIND,PROPPATCH, LOCK, UNLOCK, PATCH</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">limit_except GET &#123;</div><div class="line">allow 192.168.1.0/24;</div><div class="line">deny all;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>除了GET和HEAD 之外其它方法仅允许192.168.1.0/24网段主机使用  </p>
+<p><strong>文件操作优化的配置</strong>  </p>
+<ol>
+<li><p>aio on | off | threads[=pool];<br>是否启用aio功能  </p>
+</li>
+<li><p>directio size | off;<br>是否同步（直接）写磁盘，而非写缓存，在Linux主机启用<br>O_DIRECT标记， 则文件大于等于给定大小时使用，例如directio 4m  </p>
+</li>
+<li><p>open_file_cache off;<br>open_file_cache max=N [inactive=time];<br>nginx可以缓存以下三种信息：  </p>
+</li>
+</ol>
+<ul>
+<li>文件元数据：文件的描述符、文件大小和最近一次的修改时间  </li>
+<li>打开的目录结构  </li>
+<li>没有找到的或者没有权限访问的文件的相关信息<br><code>max=N</code>：可缓存的缓存项上限；达到上限后会使用LRU算法实现管理<br><code>inactive=time</code>：缓存项的非活动时长，在此处指定的时长内未被命中的或命中的次数少于open_file_cache_min_uses指令所指定的次数的缓存项即为非活动项， 将被删除  </li>
+</ul>
+<ol>
+<li><p>open_file_cache_errors on | off;<br>是否缓存查找时发生错误的文件一类的信息,默认值为off  </p>
+</li>
+<li><p>open_file_cache_min_uses number;<br>open_file_cache指令的inactive参数指定的时长内，至少被命中此处指定的次数方可被归类为活动项,默认值为1  </p>
+</li>
+<li><p>open_file_cache_valid time;<br>缓存项有效性的检查频率,默认值为60s  </p>
+</li>
+</ol>
+<h5 id="ngx-http-access-module"><a href="#ngx-http-access-module" class="headerlink" title="ngx_http_access_module"></a>ngx_http_access_module</h5><p>实现基于IP的访问控制功能  </p>
+<ul>
+<li>allow address | CIDR | unix: | all;  </li>
+<li>deny address | CIDR | unix: | all;<br>http, server, location, limit_except<br>自上而下检查，一旦匹配，将生效，条件严格的置前<br>示例：    <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location / &#123;</div><div class="line">deny 192.168.1.1;</div><div class="line">allow 192.168.1.0/24;</div><div class="line">allow 10.1.1.0/16;</div><div class="line">allow 2001:0db8::/32;</div><div class="line">deny all;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="ngx-http-auth-basic-module"><a href="#ngx-http-auth-basic-module" class="headerlink" title="ngx_http_auth_basic_module"></a>ngx_http_auth_basic_module</h5><p>实现基于用户的访问控制，使用basic机制进行用户认证  </p>
+<ul>
+<li>auth_basic string | off;  </li>
+<li>auth_basic_user_file file;    <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">location /admin/ &#123;</div><div class="line">auth_basic <span class="string">"Admin Area"</span>;</div><div class="line">auth_basic_user_file /etc/nginx/.ngxpasswd;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>用户口令：  </p>
+<ul>
+<li>明文文本：格式<code>name:password:comment</code>  </li>
+<li>加密文本：由htpasswd命令实现<br>  httpd-tools所提供  </li>
+</ul>
+<h5 id="ngx-http-stub-status-module"><a href="#ngx-http-stub-status-module" class="headerlink" title="ngx_http_stub_status_module"></a>ngx_http_stub_status_module</h5><p>用于输出nginx的基本状态信息<br>输出信息示例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Active connections: 291</div><div class="line">server accepts handled requests</div><div class="line">16630948 16630948 31070465</div></pre></td></tr></table></figure></p>
+<p>对应上面accepts,handled,requests三个值<br>Reading: 6 Writing: 179 Waiting: 106<br>Active connections:当前状态，活动状态的连接数<br>accepts：统计总值，已经接受的客户端请求的总数<br>handled：统计总值，已经处理完成的客户端请求的总数<br>requests：统计总值，客户端发来的总的请求数<br>Reading：当前状态，正在读取客户端请求报文首部的连接的连接数<br>Writing：当前状态，正在向客户端发送响应报文过程中的连接数<br>Waiting：当前状态，正在等待客户端发出请求的空闲连接数<br><code>stub_status;</code><br>示例：<br>    <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">location /status &#123;</div><div class="line">stub_status;</div><div class="line">allow 172.16.0.0/16;</div><div class="line">deny all;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h5 id="ngx-http-log-module"><a href="#ngx-http-log-module" class="headerlink" title="ngx_http_log_module"></a>ngx_http_log_module</h5><p>指定日志格式记录请求  </p>
+<ul>
+<li>log_format name string …;<br>  string可以使用nginx核心模块及其它模块内嵌的变量  </li>
+<li><p>access_log path [format [buffer=size] [gzip[=level]]<br>  [flush=time] [if=condition]];  </p>
+<pre><code>access_log off;  
+访问日志文件路径，格式及相关的缓冲的配置  
+    buffer=size   
+    flush=time  
+</code></pre><p>  示例：  </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">log_format compression <span class="string">'$remote_addr-$remote_user [$time_local] '</span></div><div class="line"><span class="string">'"$request" $status $bytes_sent '</span></div><div class="line"><span class="string">'"$http_referer" "$http_user_agent" "$gzip_ratio"'</span>;</div><div class="line">access_log /spool/logs/nginx-access.log compression buffer=32k;</div></pre></td></tr></table></figure>
+</li>
+<li><p>open_log_file_cache max=N [inactive=time]<br>  [min_uses=N] [valid=time];<br>  open_log_file_cache off;<br>  缓存各日志文件相关的元数据信息<br>  max：缓存的最大文件描述符数量<br>  min_uses：在inactive指定的时长内访问大于等于此值方可被当作活动项<br>  inactive：非活动时长<br>  valid：验正缓存中各缓存项是否为活动项的时间间隔  </p>
+</li>
+</ul>
+<h5 id="ngx-http-gzip-module"><a href="#ngx-http-gzip-module" class="headerlink" title="ngx_http_gzip_module"></a>ngx_http_gzip_module</h5><p>用gzip方法压缩响应数据，节约带宽  </p>
+<ol>
+<li><p>gzip on | off;<br>启用或禁用gzip压缩  </p>
+</li>
+<li><p>gzip_comp_level level;<br>压缩比由低到高： 1 到 9 ;默认： 1  </p>
+</li>
+<li><p>gzip_disable regex …;<br>匹配到客户端浏览器不执行压缩  </p>
+</li>
+<li><p>gzip_min_length length;<br>启用压缩功能的响应报文大小阈值  </p>
+</li>
+<li><p>gzip_http_version 1.0 | 1.1;<br>设定启用压缩功能时，协议的最小版本,默认： 1.1  </p>
+</li>
+<li><p>gzip_buffers number size;<br>支持实现压缩功能时缓冲区数量及每个缓存区的大小,默认： 32 4k 或 16 8k  </p>
+</li>
+<li><p>gzip_types mime-type …;<br>指明仅对哪些类型的资源执行压缩操作；即压缩过滤器,默认包含有text/html，不用显示指定，否则出错  </p>
+</li>
+<li><p>gzip_vary on | off;<br>如果启用压缩，是否在响应报文首部插入”Vary: AcceptEncoding”  </p>
+</li>
+<li><p>gzip_proxied off | expired | no-cache | no-store | private | no_last_modified | no_etag | auth | any …;<br>nginx对于代理服务器请求的响应报文，在何种条件下启用压缩功能<br>off：对被代理的请求不启用压缩<br>expired,no-cache, no-store， private：对代理服务器请求的响应报文首部Cache-Control值任何一个，启用压缩功能<br>示例：  </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">gzip on;</div><div class="line">gzip_comp_level 6;</div><div class="line">gzip_min_length 64;</div><div class="line">gzip_proxied any;</div><div class="line">gzip_types text/xml text/css application/javascript;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="ngx-http-ssl-module"><a href="#ngx-http-ssl-module" class="headerlink" title="ngx_http_ssl_module"></a>ngx_http_ssl_module</h5><ol>
+<li>ssl on | off;<br>为指定虚拟机启用HTTPS protocol， 建议用listen指令代替  </li>
+<li>ssl_certificate file;<br>当前虚拟主机使用PEM格式的证书文件  </li>
+<li>ssl_certificate_key file;<br>当前虚拟主机上与其证书匹配的私钥文件  </li>
+<li>ssl_protocols [SSLv2] [SSLv3] [TLSv1] [TLSv1.1] [TLSv1.2];<br>支持ssl协议版本，默认为后三个  </li>
+<li>ssl_session_cache off | none | [builtin[:size]] [shared:name:size];<br>builtin[:size]：使用OpenSSL内建缓存，为每worker进程私有<br>[shared:name:size]：在各worker之间使用一个共享的缓存  </li>
+<li>ssl_session_timeout time;<br>客户端连接可以复用ssl session cache中缓存的ssl参数的有效时长，默认5m<br>示例：   <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">listen 443 ssl;</div><div class="line">server_name www.magedu.com;</div><div class="line">root /vhosts/ssl/htdocs;</div><div class="line">ssl on;</div><div class="line">ssl_certificate /etc/nginx/ssl/nginx.crt;</div><div class="line">ssl_certificate_key /etc/nginx/ssl/nginx.key;</div><div class="line">ssl_session_cache shared:sslcache:20m;</div><div class="line">ssl_session_timeout 10m;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="ngx-http-rewrite-module"><a href="#ngx-http-rewrite-module" class="headerlink" title="ngx_http_rewrite_module"></a>ngx_http_rewrite_module</h5><p>The ngx_http_rewrite_module module is used to change request URI using PCRE regular expressions,return redirects, and conditionally select configurations.<br>将用户请求的URI基于PCRE regex所描述的模式进行检查，而后完成重定向替换<br>示例：<br>    <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://www.magedu.com/hn</div><div class="line">        --&gt; http://www.magedu.com/henan</div><div class="line">http://www.magedu.com</div><div class="line">        --&gt; https://www.magedu.com/</div></pre></td></tr></table></figure></p>
+<ul>
+<li>rewrite regex replacement [flag]<br>将用户请求的URI基于regex所描述的模式进行检查，匹配到时将其替换为replacement指定的新的URI<br>注意：如果在同一级配置块中存在多个rewrite规则，那么会自下而下逐个检查；被某条件规则替换完成后，会重新一轮的替换检查<br>隐含有循环机制,但不超过10次；如果超过，提示500响应码， [flag]所表示的标志位用于控制此循环机制<br>如果replacement是以<a href="http://或https://开头，则替换结果会直接以重向返回给客户端" target="_blank" rel="external">http://或https://开头，则替换结果会直接以重向返回给客户端</a><br>301：永久重定向  </li>
+<li><p>[flag]：<br>last：重写完成后停止对当前URI在当前location中后续的其它重写操作，而后对新的URI启动新一轮重写检查；提前重启新一轮循环<br>break：重写完成后停止对当前URI在当前location中后续的其它重写操作，而后直接跳转至重写规则配置块之后的其它配置；结束循环，建议在location中使用<br>redirect：临时重定向，重写完成后以临时重定向方式直接返回重写后生成的新URI给客户端，由客户端重新发起请求；不能以<a href="http://或https://开头，使用相对路径，状态码：" target="_blank" rel="external">http://或https://开头，使用相对路径，状态码：</a> 302<br>permanent:重写完成后以永久重定向方式直接返回重写后生成的新URI给客户端，由客户端重新发起请求，状态码：301  </p>
+</li>
+<li><p>return  </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">return</span> code [text];</div><div class="line"><span class="built_in">return</span> code URL;</div><div class="line"><span class="built_in">return</span> URL;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>停止处理，并返回给客户端指定的响应码  </p>
+<ul>
+<li><p>rewrite_log on | off;<br>是否开启重写日志, 发送至error_log（notice level）  </p>
+</li>
+<li><p>set $variable value;<br>用户自定义变量<br>注意：变量定义和调用都要以$开头  </p>
+</li>
+<li><p>if (condition) { … }<br>引入新的上下文,条件满足时，执行配置块中的配置指令； server, location  </p>
+</li>
+<li>condition：  <ul>
+<li>比较操作符：  <ul>
+<li><code>==</code> 相同  </li>
+<li><code>!=</code> 不同  </li>
+<li><code>~</code> 模式匹配，区分字符大小写  </li>
+<li><code>~*</code>模式匹配，不区分字符大小写  </li>
+<li><code>!~</code>模式不匹配，区分字符大小写  </li>
+<li><code>!~*</code>模式不匹配，不区分字符大小写  </li>
+</ul>
+</li>
+<li>文件及目录存在性判断：  <ul>
+<li><code>-e, !-e</code> 存在（包括文件，目录，软链接）  </li>
+<li><code>-f, !-f</code> 文件  </li>
+<li><code>-d, !-d</code> 目录  </li>
+<li><code>-x, !-x</code> 执行  </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="ngx-http-referer-module"><a href="#ngx-http-referer-module" class="headerlink" title="ngx_http_referer_module"></a>ngx_http_referer_module</h5><p>The ngx_http_referer_module module is used to block access to a site for requests with invalid values in the “Referer” header field. 可防止盗链  </p>
+<ul>
+<li>valid_referers none|blocked|server_names|string …;<br>定义referer首部的合法可用值，不能匹配的将是非法值  <ul>
+<li>none：请求报文首部没有referer首部  </li>
+<li>blocked：请求报文有referer首部，但无有效值  </li>
+<li>server_names：参数，其可以有值作为主机名或主机名模式  </li>
+<li>arbitrary_string：任意字符串，但可使用*作通配符  </li>
+<li>regular expression：被指定的正则表达式模式匹配到的字符串,要使用~开头，例如： ~.*.magedu.com  </li>
+</ul>
+</li>
+</ul>
+<p>示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">valid_referers none block server_names *.magedu.com *.mageedu.com magedu.* mageedu.* ~\.magedu\.;</div><div class="line"><span class="keyword">if</span> (<span class="variable">$invalid_referer</span>) &#123;</div><div class="line">    <span class="built_in">return</span> 403;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h5 id="ngx-http-proxy-module"><a href="#ngx-http-proxy-module" class="headerlink" title="ngx_http_proxy_module"></a>ngx_http_proxy_module</h5><p>The ngx_http_proxy_module module allows passing requests to another server.</p>
+<ol>
+<li>proxy_pass URL;<br>Context:location, if in location, limit_except<br>注意： proxy_pass后面的路径不带uri时，其会将location的uri传递给后端主机  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    ...</div><div class="line">    server_name HOSTNAME;</div><div class="line">        location /uri/ &#123;</div><div class="line">        proxy_pass http://host[:port]; 最后没有/</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上面示例： <a href="http://HOSTNAME/uri" target="_blank" rel="external">http://HOSTNAME/uri</a> –&gt; <a href="http://host/uri" target="_blank" rel="external">http://host/uri</a><br><a href="http://host[:port]/" target="_blank" rel="external">http://host[:port]/</a> 意味着： <a href="http://HOSTNAME/uri" target="_blank" rel="external">http://HOSTNAME/uri</a> –&gt; <a href="http://host/" target="_blank" rel="external">http://host/</a><br><code>proxy_pass</code>后面的路径是一个uri时，其会将location的uri替换为proxy_pass的uri<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    ...</div><div class="line">    server_name HOSTNAME;</div><div class="line">        location /uri/ &#123;</div><div class="line">        proxy_pass http://host/new_uri/;</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><a href="http://HOSTNAME/uri/" target="_blank" rel="external">http://HOSTNAME/uri/</a> –&gt; <a href="http://host/new_uri/" target="_blank" rel="external">http://host/new_uri/</a>  </p>
+<p>如果location定义其uri时使用了正则表达式的模式，则proxy_pass之后必须不能使用uri; 用户请求时传递的uri将直接附加代理到的服务的之后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">...</div><div class="line">    server_name HOSTNAME;</div><div class="line">        location ~|~* /uri/ &#123;</div><div class="line">        proxy_pass http://host; 不能加/</div><div class="line">    &#125;</div><div class="line">        ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><a href="http://HOSTNAME/uri/" target="_blank" rel="external">http://HOSTNAME/uri/</a> –&gt; <a href="http://host/uri/" target="_blank" rel="external">http://host/uri/</a>  </p>
+<ol>
+<li>proxy_set_header field value;<br>设定发往后端主机的请求报文的请求首部的值  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Context: http, server, location</div><div class="line">proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>标准格式如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">X-Forwarded-For: client1, proxy1, proxy2</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>proxy_cache_path;<br>定义可用于proxy功能的缓存； Context:http  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proxy_cache_path path [levels=levels] [use_temp_path=on|off] keys_zone=name:size [inactive=time] [max_size=size] [manager_files=number] [manager_sleep=time] [manager_threshold=time] [loader_files=number] [loader_sleep=time] [loader_threshold=time] [purger=on|off] [purger_files=number] [purger_sleep=time] [purger_threshold=time];</div></pre></td></tr></table></figure>
+</li>
+<li><p>proxy_cache zone | off; 默认off<br>指明调用的缓存，或关闭缓存机制； Context:http,server, location  </p>
+</li>
+<li><p>proxy_cache_key string;<br>缓存中用于“键”的内容<br>默认值： proxy_cache_key $scheme$proxy_host$request_uri;  </p>
+</li>
+<li><p>proxy_cache_valid [code …] time;<br>定义对特定响应码的响应内容的缓存时长<br>定义在http{…}中<br>示例:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">proxy_cache_valid 200 302 10m;</div><div class="line">proxy_cache_valid 404 1m;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>示例：<br>在http配置定义缓存<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">proxy_cache_path /var/cache/nginx/proxy_cache</div><div class="line">levels=1:1:1 keys_zone=proxycache:20m</div><div class="line">inactive=120s max_size=1g;</div></pre></td></tr></table></figure></p>
+<p>调用缓存功能，需要定义在相应的配置段，如server{…}；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">proxy_cache proxycache;</div><div class="line">proxy_cache_key <span class="variable">$request_uri</span>;</div><div class="line">proxy_cache_valid 200 302 301 1h;</div><div class="line">proxy_cache_valid any 1m;</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>proxy_cache_use_stale;<br>proxy_cache_use_stale error | timeout | invalid_header | updating | http_500 | http_502 | http_503 | http_504 | http_403 | http_404 | off …<br>在被代理的后端服务器出现哪种情况下，可以真接使用过期的缓存响应客户端  </p>
+</li>
+<li><p>proxy_cache_methods GET | HEAD | POST …;<br>对哪些客户端请求方法对应的响应进行缓存， GET和HEAD方法总是被缓存  </p>
+</li>
+<li><p>proxy_hide_header field;<br>By default, nginx does not pass the header fields “Date”, “Server”, “X-Pad”, and “X-Accel-…” from the response of a proxied server to a client. 用于隐藏后端服务器特定的响应首部  </p>
+</li>
+<li><p>proxy_connect_timeout time;<br>定义与后端服务器建立连接的超时时长，如超时会出现502错误，默认为60s，一般不建议超出75s  </p>
+</li>
+<li><p>proxy_send_timeout time;<br>把请求发送给后端服务器的超时时长；默认为60s  </p>
+</li>
+<li><p>proxy_read_timeout time;<br>等待后端服务器发送响应报文的超时时长， 默认为60s  </p>
+</li>
+</ol>
+<h5 id="ngx-http-headers-module"><a href="#ngx-http-headers-module" class="headerlink" title="ngx_http_headers_module"></a>ngx_http_headers_module</h5><p>向由代理服务器响应给客户端的响应报文添加自定义首部，或修改指定首部的值  </p>
+<ol>
+<li><p>add_header name value [always];<br> 添加自定义首部  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">add_header X-Via <span class="variable">$server_addr</span>;</div><div class="line">add_header X-Cache <span class="variable">$upstream_cache_status</span>;</div><div class="line">add_header X-Accel <span class="variable">$server_name</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>add_trailer name value [always];<br> 添加自定义响应信息的尾部  </p>
+</li>
+</ol>
+<h5 id="ngx-http-fastcgi-module模块"><a href="#ngx-http-fastcgi-module模块" class="headerlink" title="ngx_http_fastcgi_module模块"></a>ngx_http_fastcgi_module模块</h5><p>转发请求到FastCGI服务器，不支持php模块方式  </p>
+<ol>
+<li><p>fastcgi_pass address;<br>address为后端的fastcgi server的地址可用位置： location, if in location  </p>
+</li>
+<li><p>fastcgi_index name;<br>fastcgi默认的主页资源<br>示例： fastcgi_index index.php;  </p>
+</li>
+<li><p>fastcgi_param parameter value [if_not_empty];<br>设置传递给 FastCGI服务器的参数值，可以是文本，变量或组合  </p>
+</li>
+</ol>
+<p>示例1：  </p>
+<ul>
+<li>在后端服务器先配置fpm server和mariadb-server  </li>
+<li>在前端nginx服务上做以下配置：  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location ~* \.php$ &#123;</div><div class="line">fastcgi_pass 后端fpm服务器IP:9000;</div><div class="line">fastcgi_index index.php;</div><div class="line">fastcgi_param SCRIPT_FILENAME /usr/share/nginx/html<span class="variable">$fastcgi_script_name</span>;</div><div class="line">include fastcgi_params;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>示例2：<br>通过/pm_status和/ping来获取fpm server状态信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">location ~* ^/(pm_status|ping)$ &#123;</div><div class="line">include fastcgi_params;</div><div class="line">fastcgi_pass 后端fpm服务器IP:9000;</div><div class="line">fastcgi_param SCRIPT_FILENAME</div><div class="line"><span class="variable">$fastcgi_script_name</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>fastcgi_cache_path path [levels=levels] [use_temp_path=on|off] keys_zone=name:size [inactive=time] [max_size=size] [manager_files=number] [manager_sleep=time] [manager_threshold=time] [loader_files=number] [loader_sleep=time] [loader_threshold=time] [purger=on|off] [purger_files=number] [purger_sleep=time] [purger_threshold=time];  </li>
+</ol>
+<ul>
+<li>定义fastcgi的缓存；  <ul>
+<li>path 缓存位置为磁盘上的文件系统  </li>
+<li>max_size=size  磁盘path路径中用于缓存数据的缓存空间上限  </li>
+<li>levels=levels：缓存目录的层级数量，以及每一级的目录数量<br>  levels=ONE:TWO:THREE<br>示例： leves=1:2:2    </li>
+<li>keys_zone=name:size<br>  k/v映射的内存空间的名称及大小  </li>
+<li>inactive=time<br>  非活动时长  </li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p>fastcgi_cache zone | off;<br>调用指定的缓存空间来缓存数据<br>可用位置： http, server, location  </p>
+</li>
+<li><p>fastcgi_cache_key string;<br>定义用作缓存项的key的字符串<br>示例： fastcgi_cache_key $request_rui;  </p>
+</li>
+<li><p>fastcgi_cache_methods GET | HEAD | POST …;<br>为哪些请求方法使用缓存  </p>
+</li>
+<li><p>fastcgi_cache_min_uses number;<br>缓存空间中的缓存项在inactive定义的非活动时间内至少要被访问到此处所指定的次数方可被认作活动项  </p>
+</li>
+<li><p>fastcgi_keep_conn on | off;<br>收到后端服务器响应后， fastcgi服务器是否关闭连接，建议启用长连接  </p>
+</li>
+<li><p>fastcgi_cache_valid [code …] time;<br>不同的响应码各自的缓存时长  </p>
+</li>
+</ol>
+<p>示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">    http &#123;</div><div class="line">    fastcgi_cache_path /var/cache/nginx/fcgi_cache levels=1:2:1 keys_zone=fcgicache:20m inactive=120s;</div><div class="line">    ...</div><div class="line">        server &#123;</div><div class="line">            location ~* \.php$ &#123;</div><div class="line">            ...</div><div class="line">            fastcgi_cache fcgicache;</div><div class="line">            fastcgi_cache_key <span class="variable">$request_uri</span>;</div><div class="line">            fastcgi_cache_valid 200 302 10m;</div><div class="line">            fastcgi_cache_valid 301 1h;</div><div class="line">            fastcgi_cache_valid any 1m;</div><div class="line">        ...</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h5 id="ngx-http-upstream-module模块"><a href="#ngx-http-upstream-module模块" class="headerlink" title="ngx_http_upstream_module模块"></a>ngx_http_upstream_module模块</h5><p>用于将多个服务器定义成服务器组，而由proxy_pass,fastcgi_pass等指令进行引用  </p>
+<ol>
+<li><p>upstream name { … }<br>定义后端服务器组，会引入一个新的上下文<br>默认调度算法是wrr  </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Context: http</div><div class="line">upstream httpdsrvs &#123;</div><div class="line">server ...</div><div class="line">server...</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>server address [parameters];<br>在upstream上下文中server成员，以及相关的参数； Context:upstream  </p>
+</li>
+</ol>
+<ul>
+<li>address的表示格式：  <ul>
+<li>unix:/PATH/TO/SOME_SOCK_FILE  </li>
+<li>IP[:PORT]  </li>
+<li>HOSTNAME[:PORT]  </li>
+</ul>
+</li>
+<li>parameters：  <ul>
+<li>weight=number 权重，默认为1  </li>
+<li>max_conns 连接后端报务器最大并发活动连接数， 1.11.5后支持  </li>
+<li>max_fails=number 失败尝试最大次数；超出此处指定的次数时， server将被标记为不可用,默认为1  </li>
+<li>fail_timeout=time 后端服务器标记为不可用状态的连接超时时长，默认10s  </li>
+<li>backup 将服务器标记为“备用”，即所有服务器均不可用时才启用  </li>
+<li>down 标记为“不可用”，配合ip_hash使用，实现灰度发布  </li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p>ip_hash 源地址hash调度方法  </p>
+</li>
+<li><p>least_conn 最少连接调度算法，当server拥有不同的权重时其为wlc，当所有后端主机连接数相同时，则使用wrr，适用于长连接  </p>
+</li>
+<li><p>hash key [consistent] 基于指定的key的hash表来实现对请求的调度，此处的key可以直接文本、变量或二者组合作用：将请求分类，同一类请求将发往同一个upstream server，使用consistent参数， 将使用ketama一致性hash算法，适用于后端是Cache服务器（如varnish）时使用  </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">hash</span> <span class="variable">$request_uri</span> consistent;</div><div class="line"><span class="built_in">hash</span> <span class="variable">$remote_addr</span>;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>keepalive 连接数N;<br>为每个worker进程保留的空闲的长连接数量,可节约nginx端口，并减少连接管理的消耗  </p>
+</li>
+<li><p>health_check [parameters];<br>健康状态检测机制；只能用于location上下文常用参数：  </p>
+</li>
+</ol>
+<ul>
+<li>interval=time检测的频率，默认为5秒  </li>
+<li>fails=number：判定服务器不可用的失败检测次数；默认为1次  </li>
+<li>passes=number：判定服务器可用的失败检测次数；默认为1次  </li>
+<li>uri=uri：做健康状态检测测试的目标uri；默认为/  </li>
+<li>match=NAME：健康状态检测的结果评估调用此处指定的match配置块  </li>
+</ul>
+<p><strong>注意：仅对nginx plus有效</strong>  </p>
+<ol>
+<li>match name { … }<br>对backend server做健康状态检测时，定义其结果判断机制；只能用于http上下文<br>常用的参数：  </li>
+</ol>
+<ul>
+<li>status code[ code …]: 期望的响应状态码  </li>
+<li>header HEADER[operator value]：期望存在响应首部，也可对期望的响应首部的值基于比较操作符和值进行比较  </li>
+<li>body：期望响应报文的主体部分应该有的内容  </li>
+</ul>
+<p><strong>注意：仅对nginx plus有效</strong>  </p>
+<h5 id="ngx-stream-core-module"><a href="#ngx-stream-core-module" class="headerlink" title="ngx_stream_core_module"></a>ngx_stream_core_module</h5><ul>
+<li>nginx的其它的二次发行版：<br>Tengine：由淘宝网发起的Web服务器项目。它在Nginx的基础上，针对大访问量网站的需求，添加了很多高级功能和特性。Tengine的性能和稳定性已经在大型的网站如淘宝网，天猫商城等得到了很好的检验。它的最终目标是打造一个高效、稳定、安全、易用的Web平台。从2011年12月开始， Tengine成为一个开源项目，官网 <a href="http://tengine.taobao.org/" target="_blank" rel="external">http://tengine.taobao.org/</a><br>OpenResty：基于 Nginx 与 Lua 语言的高性能 Web平台  </li>
+<li>ngx_stream_core_module模块<br>模拟反代基于tcp或udp的服务连接，即工作于传输层的反代或调度器  </li>
+</ul>
+<ol>
+<li>stream { … }<br>定义stream相关的服务； Context:main  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">stream &#123;</div><div class="line">    upstream telnetsrvs &#123;</div><div class="line">        server 192.168.22.2:23;</div><div class="line">        server 192.168.22.3:23;</div><div class="line">        least_conn;</div><div class="line">    &#125;</div><div class="line">    server &#123;</div><div class="line">        listen 10.1.0.6:23;</div><div class="line">        proxy_pass telnetsrvs;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>listen   <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">listen address:port [ssl] [udp] [proxy_protocol] [backlog=number] [<span class="built_in">bind</span>] [ipv6only=on|off] [reuseport] [so_keepalive=on|off|[keepidle]:[keepintvl]:[keepcnt]];</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="ngx-stream-proxy-module模块"><a href="#ngx-stream-proxy-module模块" class="headerlink" title="ngx_stream_proxy_module模块"></a>ngx_stream_proxy_module模块</h5><p>可实现代理基于TCP， UDP (1.9.13), UNIX-domain sockets的数据流  </p>
+<ul>
+<li>proxy_pass address;<br>指定后端服务器地址  </li>
+<li>proxy_timeout timeout;<br>无数据传输时，保持连接状态的超时时长,默认为10m  </li>
+<li>proxy_connect_timeout time;<br>设置nginx与被代理的服务器尝试建立连接的超时时长,默认为60s  </li>
+</ul>
+<p>示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">stream &#123;</div><div class="line">    upstream telnetsrvs &#123;</div><div class="line">        server 192.168.10.130:23;</div><div class="line">        server 192.168.10.131:23;</div><div class="line">        <span class="built_in">hash</span> <span class="variable">$remote_addr</span> consistent;</div><div class="line">    &#125;</div><div class="line">    server &#123;</div><div class="line">        listen 172.16.100.10:2323;</div><div class="line">        proxy_pass telnetsrvs;</div><div class="line">        proxy_timeout 60s;</div><div class="line">        proxy_connect_timeout 10s;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/nginx/">nginx</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-CentOS6编译安装LAMP" class="article article-type-post" itemscope itemprop="blogPost">
   
