@@ -120,7 +120,7 @@
         <li class="mobile-menu-item">
           
           
-            首页
+            Home
           
         </li>
       </a>
@@ -129,7 +129,7 @@
         <li class="mobile-menu-item">
           
           
-            归档
+            Archives
           
         </li>
       </a>
@@ -150,7 +150,7 @@
           <a class="menu-item-link" href="/">
             
             
-              首页
+              Home
             
           </a>
         </li>
@@ -159,7 +159,7 @@
           <a class="menu-item-link" href="/archives/">
             
             
-              归档
+              Archives
             
           </a>
         </li>
@@ -201,7 +201,7 @@
     
     
   <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">文章目录</h2>
+    <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx介绍"><span class="toc-text">Nginx介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx的特性"><span class="toc-text">Nginx的特性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#基本功能"><span class="toc-text">基本功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#WEB服务的相关功能"><span class="toc-text">WEB服务的相关功能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx的程序架构"><span class="toc-text">Nginx的程序架构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx模块"><span class="toc-text">Nginx模块</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#模块分类"><span class="toc-text">模块分类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx的安装"><span class="toc-text">Nginx的安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#官方"><span class="toc-text">官方</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Fedora-EPEL"><span class="toc-text">Fedora-EPEL</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#编译安装"><span class="toc-text">编译安装</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#编译安装选项"><span class="toc-text">编译安装选项</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx目录结构和命令"><span class="toc-text">Nginx目录结构和命令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx的目录结构"><span class="toc-text">Nginx的目录结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx命令"><span class="toc-text">Nginx命令</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx配置"><span class="toc-text">Nginx配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#配置文件的组成部分"><span class="toc-text">配置文件的组成部分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Nginx主配置文件结构"><span class="toc-text">Nginx主配置文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Main全局配置段常见的配置指令分类"><span class="toc-text">Main全局配置段常见的配置指令分类</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#http协议相关的配置结构"><span class="toc-text">http协议相关的配置结构</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#性能优化相关的配置："><span class="toc-text">性能优化相关的配置：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#事件驱动相关的配置"><span class="toc-text">事件驱动相关的配置</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#调试和定位问题"><span class="toc-text">调试和定位问题</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-core-module"><span class="toc-text">ngx_http_core_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-access-module"><span class="toc-text">ngx_http_access_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-auth-basic-module"><span class="toc-text">ngx_http_auth_basic_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-stub-status-module"><span class="toc-text">ngx_http_stub_status_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-log-module"><span class="toc-text">ngx_http_log_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-gzip-module"><span class="toc-text">ngx_http_gzip_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-ssl-module"><span class="toc-text">ngx_http_ssl_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-rewrite-module"><span class="toc-text">ngx_http_rewrite_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-referer-module"><span class="toc-text">ngx_http_referer_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-proxy-module"><span class="toc-text">ngx_http_proxy_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-headers-module"><span class="toc-text">ngx_http_headers_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-fastcgi-module模块"><span class="toc-text">ngx_http_fastcgi_module模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-http-upstream-module模块"><span class="toc-text">ngx_http_upstream_module模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-stream-core-module"><span class="toc-text">ngx_stream_core_module</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ngx-stream-proxy-module模块"><span class="toc-text">ngx_stream_proxy_module模块</span></a></li></ol></li></ol>
     </div>
@@ -780,15 +780,15 @@
 
   <div class="post-copyright">
     <p class="copyright-item">
-      <span>原文作者: </span>
+      <span>Author: </span>
       <a href="http://blog.wangbinzhou.com">WangBinZhou</a>
     </p>
     <p class="copyright-item">
-      <span>原文链接: </span>
+      <span>Link: </span>
       <a href="http://blog.wangbinzhou.com/2017/10/27/Nginx/">http://blog.wangbinzhou.com/2017/10/27/Nginx/</a>
     </p>
     <p class="copyright-item">
-      <span>许可协议: </span>
+      <span>License: </span>
       
       <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
     </p>
@@ -816,7 +816,7 @@
     
       <a class="next" href="/2017/10/23/CentOS6编译安装LAMP/">
         <span class="next-text nav-default">CentOS6编译安装LAMP</span>
-        <span class="prev-text nav-mobile">下一篇</span>
+        <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
     
@@ -882,11 +882,11 @@
 
 <div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
