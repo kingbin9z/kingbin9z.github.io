@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.wangbinzhou.com/categories/index.html</loc>
+    
+    <lastmod>2017-10-29T04:36:52.325Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.wangbinzhou.com/tags/index-1.html</loc>
+    
+    <lastmod>2017-10-29T04:21:13.265Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.wangbinzhou.com/2017/10/27/Nginx/</loc>
     
-    <lastmod>2017-10-27T14:42:29.357Z</lastmod>
+    <lastmod>2017-10-29T03:27:39.358Z</lastmod>
     
   </url>
   

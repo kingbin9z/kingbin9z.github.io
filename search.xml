@@ -6,6 +6,7 @@
       <title><![CDATA[Nginx]]></title>
       <url>/2017/10/27/Nginx/</url>
       <content type="html"><![CDATA[<h4 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h4><p>Nginx（发音同engine x）是一个 Web服务器，也可以用作反向代理，负载平衡器和 HTTP缓存。该软件由 Igor Sysoev 创建，并于2004年首次公开发布。同名公司成立于2011年，以提供支持。Nginx 是免费的开源软件，根据类似 BSD许可证的条款发布。大部分 Web服务器通常使用 NGINX 作为负载均衡器。  </p>
+<a id="more"></a>
 <h5 id="Nginx的特性"><a href="#Nginx的特性" class="headerlink" title="Nginx的特性"></a>Nginx的特性</h5><ul>
 <li>高可靠性  </li>
 <li>支持热部署：不停机更新配置文件，升级版本，更换日志文件  </li>
