@@ -3,6 +3,26 @@
 
 
     
+  <url>
+    <loc>http://blog.wangbinzhou.com/2017/09/08/CentOS7%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%9B%BE-%E8%BD%AC%E8%BD%BD/</loc>
+    <lastmod>2017-10-29T06:33:25.868Z</lastmod>
+    <data>
+        <display>
+        <title>CentOS7启动流程图--转载</title>
+        <pubTime>2017-09-08T11:57:54.000Z</pubTime>
+        
+        <tag>Linux原理</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://blog.wangbinzhou.com/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
     
   <url>
@@ -80,9 +100,9 @@
         <title>CentOS6.9使用二进制程序包安装MariaDB</title>
         <pubTime>2017-09-25T09:35:13.000Z</pubTime>
         
-        <tag>Linux</tag>
-         
         <tag>MariaDB</tag>
+         
+        <tag>Linux</tag>
          
          
            
@@ -152,26 +172,6 @@
            
              
               <breadCrumb title="实验" url="http://blog.wangbinzhou.com/categories/%E5%AE%9E%E9%AA%8C/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.wangbinzhou.com/2017/09/08/CentOS7%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%9B%BE-%E8%BD%AC%E8%BD%BD/</loc>
-    <lastmod>2017-09-17T11:19:42.800Z</lastmod>
-    <data>
-        <display>
-        <title>CentOS7启动流程图--转载</title>
-        <pubTime>2017-09-08T11:57:54.000Z</pubTime>
-        
-        <tag>Linux原理</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="http://blog.wangbinzhou.com/categories/Linux/"/>
           
         </display>
     </data>
