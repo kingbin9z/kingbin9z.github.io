@@ -211,7 +211,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bind/">Bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DNS/">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LAMP/">LAMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LVS/">LVS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux实验/">Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux系统安全/">Linux系统安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssh-client/">openssh-client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/访问控制/">访问控制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bind/">Bind</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DNS/">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LAMP/">LAMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Linux实验/">Linux, Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux原理/">Linux原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux命令/">Linux命令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux子系统/">Linux子系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux实验/">Linux实验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux系统安全/">Linux系统安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssh-client/">openssh-client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sshd/">sshd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yum源和yum仓库/">yum源和yum仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/访问控制/">访问控制</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
                     </div>
                 </section>
                 
@@ -293,93 +293,6 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
-  
-    <article id="post-CentOS7网卡命名方式详解及修改为传统eth格式" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/" class="article-date">
-      <time datetime="2017-08-20T13:11:12.000Z" itemprop="datePublished">2017-08-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/">CentOS7网卡命名方式详解及修改为传统eth格式</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>CentOS系统传统的网卡命名是使用以太网<code>eth[0,1,2,...]</code>和<code>wlan[0,1,2,...]</code>来命名的。但是到了CentOS 7系列，CentOS系统抛弃了传统的命名方式、采用了新的网卡命名机制来命名。新的命名机制避免了网卡名的冲突，但是也不给我们对系统网络的统一管理带来了不便，在这里我们详细介绍一下CentOS 7系列的网卡命名机制，以及修改回传统命名方式的方法。  </p>
-<h4 id="网卡命名机制"><a href="#网卡命名机制" class="headerlink" title="网卡命名机制"></a>网卡命名机制</h4><p>CentOS 7系统对网络设备的命名方式：  </p>
-<ol>
-<li>如果Firmware或BIOS为主板上集成的设备提供的索引信息可用，且可预测则根据此索引进行命名，例如eno1；  </li>
-<li>如果Firmware或BIOS为PCI-E扩展槽所提供的索引信息可用，且可预测，则根据此索引进行命名，例如ens1；  </li>
-<li>如果硬件接口的物理位置信息可用，则根据此信息进行命名，例如enp2s0；  </li>
-<li>如果用户显式启用，也可根据MAC地址进行命名，enx2387a2387a1dc56；  </li>
-<li>上述均可不用时，则使用传统的<code>eth</code>命名机制；  </li>
-</ol>
-<p>上述命名机制中，有的需要biosdevname程序的参与；  </p>
-<h4 id="网卡名称组成格式："><a href="#网卡名称组成格式：" class="headerlink" title="网卡名称组成格式："></a>网卡名称组成格式：</h4><h5 id="网卡名称的前两个字符"><a href="#网卡名称的前两个字符" class="headerlink" title="网卡名称的前两个字符"></a>网卡名称的前两个字符</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">en：ethernet    以太网</div><div class="line">wl: wlan        无线局域网</div><div class="line">ww: wwan        无线广域网</div></pre></td></tr></table></figure>
-<h5 id="网卡名称的第三个字符根据设备类型选择："><a href="#网卡名称的第三个字符根据设备类型选择：" class="headerlink" title="网卡名称的第三个字符根据设备类型选择："></a>网卡名称的第三个字符根据设备类型选择：</h5><p><code>o&lt;index&gt;</code>: 集成设备的设备索引号；<br><code>s&lt;slot&gt;</code>: 扩展插槽的索引号；<br><code>x&lt;MAC&gt;</code>: 基于MAC地址的命名；<br><code>p&lt;bus&gt;s&lt;slot&gt;</code>: enp2s1  </p>
-<h4 id="网卡设备的命名过程："><a href="#网卡设备的命名过程：" class="headerlink" title="网卡设备的命名过程："></a>网卡设备的命名过程：</h4><h5 id="第一步："><a href="#第一步：" class="headerlink" title="第一步："></a>第一步：</h5><p><code>udev</code>，辅助工具程序<code>/lib/udev/rename_device</code>,<code>/usr/lib/udev/rules.d/60-net.rules</code>  </p>
-<h5 id="第二歩："><a href="#第二歩：" class="headerlink" title="第二歩："></a>第二歩：</h5><p><code>biosdevname</code> 会根据<code>/usr/lib/udev/rules.d/71-biosdevname.rules</code>  </p>
-<h5 id="第三步："><a href="#第三步：" class="headerlink" title="第三步："></a>第三步：</h5><p>通过检测网络接口设备，根据<code>/usr/lib/udev/rules.d/75-net-description</code><br>ID_NET_NAME_ONBOARD, ID_NET_NAME_SLOT, ID_NET_NAME_PATH  </p>
-<h4 id="修改回传统的命名方式："><a href="#修改回传统的命名方式：" class="headerlink" title="修改回传统的命名方式："></a>修改回传统的命名方式：</h4><p>配置前查看网卡命名：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#ifconfig</span></div><div class="line">ens32: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</div><div class="line">        inet 172.18.234.200  netmask 255.255.0.0  broadcast 172.18.255.255</div><div class="line">        inet6 fe80::20c:29ff:fe06:99e7  prefixlen 64  scopeid 0x20&lt;link&gt;</div><div class="line">        ether 00:0c:29:06:99:e7  txqueuelen 1000  (Ethernet)</div><div class="line">        RX packets 2875  bytes 237906 (232.3 KiB)</div><div class="line">        RX errors 0  dropped 0  overruns 0  frame 0</div><div class="line">        TX packets 12  bytes 888 (888.0 B)</div><div class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</div><div class="line"></div><div class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</div><div class="line">        inet 127.0.0.1  netmask 255.0.0.0</div><div class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</div><div class="line">        loop  txqueuelen 1  (Local Loopback)</div><div class="line">        RX packets 0  bytes 0 (0.0 B)</div><div class="line">        RX errors 0  dropped 0  overruns 0  frame 0</div><div class="line">        TX packets 0  bytes 0 (0.0 B)</div><div class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</div></pre></td></tr></table></figure></p>
-<h5 id="1-编辑-etc-default-grub配置文件"><a href="#1-编辑-etc-default-grub配置文件" class="headerlink" title="(1) 编辑/etc/default/grub配置文件"></a>(1) 编辑/etc/default/grub配置文件</h5><p>找到<code>GRUB_CMDLINE_LINUX</code>修改如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vim /etc/default/grub</div><div class="line">GRUB_TIMEOUT=5</div><div class="line">GRUB_DISTRIBUTOR=<span class="string">"<span class="variable">$(sed 's, release .*$,,g' /etc/system-release)</span>"</span></div><div class="line">GRUB_DEFAULT=saved</div><div class="line">GRUB_DISABLE_SUBMENU=<span class="literal">true</span></div><div class="line">GRUB_TERMINAL_OUTPUT=<span class="string">"console"</span></div><div class="line">GRUB_COMLINE_LINUX=<span class="string">"net.ifnames=0 rhgb quiet"</span></div><div class="line">GRUB_DISABLE_RECOVERY=<span class="string">"true"</span></div></pre></td></tr></table></figure></p>
-<h5 id="2-为grub2生成其配置文件"><a href="#2-为grub2生成其配置文件" class="headerlink" title="(2) 为grub2生成其配置文件"></a>(2) 为grub2生成其配置文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub2-mkconfig -o /etc/grub2.cfg</div></pre></td></tr></table></figure>
-<h5 id="3-重启系统"><a href="#3-重启系统" class="headerlink" title="(3) 重启系统"></a>(3) 重启系统</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reboot</div></pre></td></tr></table></figure>
-<p>检查是否网卡名称修改为eth的传统命名：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#ifconfig</span></div><div class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</div><div class="line">        inet 172.18.251.228  netmask 255.255.0.0  broadcast 172.18.255.255</div><div class="line">        inet6 fe80::4463:d483:3b87:1c36  prefixlen 64  scopeid 0x20&lt;link&gt;</div><div class="line">        ether 00:0c:29:06:99:e7  txqueuelen 1000  (Ethernet)</div><div class="line">        RX packets 42  bytes 3400 (3.3 KiB)</div><div class="line">        RX errors 0  dropped 0  overruns 0  frame 0</div><div class="line">        TX packets 13  bytes 1490 (1.4 KiB)</div><div class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</div><div class="line"></div><div class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</div><div class="line">        inet 127.0.0.1  netmask 255.0.0.0</div><div class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</div><div class="line">        loop  txqueuelen 1  (Local Loopback)</div><div class="line">        RX packets 0  bytes 0 (0.0 B)</div><div class="line">        RX errors 0  dropped 0  overruns 0  frame 0</div><div class="line">        TX packets 0  bytes 0 (0.0 B)</div><div class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</div></pre></td></tr></table></figure></p>
-<h5 id="4-删除原来的网络配置文件ens32后创建新配置文件eth0，完成后重启网络服务即可"><a href="#4-删除原来的网络配置文件ens32后创建新配置文件eth0，完成后重启网络服务即可" class="headerlink" title="(4) 删除原来的网络配置文件ens32后创建新配置文件eth0，完成后重启网络服务即可"></a>(4) 删除原来的网络配置文件ens32后创建新配置文件eth0，完成后重启网络服务即可</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#cd /etc/sysconfig/network-scripts/</span></div><div class="line">[root@CentOS7 /etc/sysconfig/network-scripts]<span class="comment">#mv ifcfg-ens32 /tmp/</span></div><div class="line">[root@CentOS7 /etc/sysconfig/network-scripts]<span class="comment">#vim ifcfg-eth0</span></div><div class="line">TYPE=<span class="string">"Ethernet"</span></div><div class="line">BOOTPROTO=<span class="string">"static"</span></div><div class="line">IPADDR=<span class="string">"172.18.1.200"</span></div><div class="line">PREFIX=16</div><div class="line">GATEWAY=172.18.0.1</div><div class="line">DNS1=172.18.0.1</div><div class="line">DNS2=114.114.114.114</div><div class="line">DEFROUTE=<span class="string">"yes"</span></div><div class="line">PEERDNS=<span class="string">"yes"</span></div><div class="line">PEERROUTES=<span class="string">"yes"</span></div><div class="line">IPV4_FAILURE_FATAL=<span class="string">"no"</span></div><div class="line">NAME=<span class="string">"eth0"</span></div><div class="line">UUID=<span class="string">"4c86fd71-0281-4d10-a331-6ff63b387ec9"</span></div><div class="line">DEVICE=<span class="string">"eth0"</span></div><div class="line">ONBOOT=<span class="string">"yes"</span></div><div class="line">[root@CentOS7 ~]<span class="comment">#systemctl restart network</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>Note: ifcfg-ens32 文件最好删除掉，否则重启 network 服务时会报错。</p>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux/">Linux</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
   
     <article id="post-内网ssh连接速度很慢的解决方案" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -796,6 +709,61 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
     </div>
 
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Linux常用命令总结-8、vim文本编辑器" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/" class="article-date">
+      <time datetime="2017-07-25T05:54:44.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
       
       <div class="clearfix"></div>
     </div>

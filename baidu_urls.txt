@@ -1,1 +1,1 @@
-http://blog.wangbinzhou.com/2017/12/29/LVS之DR类型实验/
+http://blog.wangbinzhou.com/2017/10/27/Nginx/
