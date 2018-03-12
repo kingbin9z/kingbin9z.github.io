@@ -3,10 +3,43 @@
   
     
     <entry>
+      <title><![CDATA[tcpdump抓包]]></title>
+      <url>/2018/03/12/tcpdump%E6%8A%93%E5%8C%85/</url>
+      <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tcpdump tcp -i ens33 -t -s 0 -c 100 and dst port ! 22 and src net 192.168.25.0/24 -w ./target.cap</div></pre></td></tr></table></figure>
+<ol>
+<li>tcp: ip icmp arp rarp 和tcp、udp、icmp这些选项都要放到第一个参数的位置，用来过滤数据包的类型  </li>
+<li>-i ens33: 指定抓取流量的接口  </li>
+<li>-t: 不显示时间戳  </li>
+<li>-s 0: 抓取数据包时默认抓取长度为68字节。加上-s 0后可阳抓到完整的数据包  </li>
+<li>-c 100: 只抓取100个数据包  </li>
+<li>dsp port ! 22: 不抓取目标端口是22的数据包  </li>
+<li>src net 192.168.25.0/24: 数据包的源网络地址为192.168.25.0/24</li>
+<li>-w ./target.cap: 保存成cap文件，方便用wireshark分析 </li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Keepalived配置文件详解]]></title>
+      <url>/2017/12/31/Keepalived%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[LVS之NAT类型实验]]></title>
       <url>/2017/12/29/LVS%E4%B9%8BNAT%E7%B1%BB%E5%9E%8B%E5%AE%9E%E9%AA%8C/</url>
-      <content type="html"><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>由 于IPv4中IP地址空间的日益紧张和安全方面的原因，很多网络使用保留IP地址（10.0.0.0/255.0.0.0、 172.16.0.0/255.128.0.0和192.168.0.0/255.255.0.0）。这些地址不在Internet上使用，而是专门为内部网络预留的。当内部网络中的主机要访问Internet或被Internet访问时，就需要 采用网络地址转换（Network Address Translation, 以下简称NAT），将内部地址转化为Internets上可用的外部地址。NAT的工作原理是报文头（目标地址、源地址和端口等）被正确改写后，客户相信 它们连接一个IP地址，而不同IP地址的服务器组也认为它们是与客户直接相连的。由此，可以用NAT方法将不同IP地址的并行网络服务变成在一个IP地址上的一个虚拟服务。  </p>
-<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>VS/NAT的体系结构如图所示。在一组服务器前有一个调度器，它们是通过Switch/HUB相连接的。这些服务器 提供相同的网络服务、相同的内容，即不管请求被发送到哪一台服务器，执行结果是一样的。服务的内容可以复制到每台服务器的本地硬盘上，可以通过网络文件系 统（如NFS）共享，也可以通过一个分布式文件系统来提供。<br>客户通过Virtual IP Address(虚拟服务器的地址)访问网络服务时，请求报文到达调度器，调度器根据连接调度算法从一组真实的服务器中选出一台服务器，将报文的目标地址Virtual IP Address改写成选定服务器的地址，报文的目标端口改写成选定服务器的相应端口，最后将修改后的报文发送给选出的服务器。同时，调度器在连接Hash表中记录这个连接，当这个连接的下一个报文到达时，从连接Hash表中可以得到原选定服务器的地址和端口，进行同样的改写操作，并将报文传给原选定的服务器。当来自真实的服务器的响应报文经过调度器时，调度器将报文的源地址和源端口改为Virtual IP Address和相应的端口，再把报文发给用户。<br><a id="more"></a></p>
+      <content type="html"><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>由 于IPv4中IP地址空间的日益紧张和安全方面的原因，很多网络使用保留IP地址（10.0.0.0/255.0.0.0、 172.16.0.0/255.128.0.0和192.168.0.0/255.255.0.0）。这些地址不在Internet上使用，而是专门为内部网络预留的。当内部网络中的主机要访问Internet或被Internet访问时，就需要 采用网络地址转换（Network Address Translation, 以下简称NAT），将内部地址转化为Internets上可用的外部地址。NAT的工作原理是报文头（目标地址、源地址和端口等）被正确改写后，客户相信 它们连接一个IP地址，而不同IP地址的服务器组也认为它们是与客户直接相连的。由此，可以用NAT方法将不同IP地址的并行网络服务变成在一个IP地址上的一个虚拟服务。<br><a id="more"></a></p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>VS/NAT的体系结构如图所示。在一组服务器前有一个调度器，它们是通过Switch/HUB相连接的。这些服务器 提供相同的网络服务、相同的内容，即不管请求被发送到哪一台服务器，执行结果是一样的。服务的内容可以复制到每台服务器的本地硬盘上，可以通过网络文件系 统（如NFS）共享，也可以通过一个分布式文件系统来提供。<br>客户通过Virtual IP Address(虚拟服务器的地址)访问网络服务时，请求报文到达调度器，调度器根据连接调度算法从一组真实的服务器中选出一台服务器，将报文的目标地址Virtual IP Address改写成选定服务器的地址，报文的目标端口改写成选定服务器的相应端口，最后将修改后的报文发送给选出的服务器。同时，调度器在连接Hash表中记录这个连接，当这个连接的下一个报文到达时，从连接Hash表中可以得到原选定服务器的地址和端口，进行同样的改写操作，并将报文传给原选定的服务器。当来自真实的服务器的响应报文经过调度器时，调度器将报文的源地址和源端口改为Virtual IP Address和相应的端口，再把报文发给用户。  </p>
 <h4 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h4><p><img src="http://ovnpik36u.bkt.clouddn.com/201710/lvs/Lvs-nat.png" alt="image">  </p>
 <h5 id="Lvs配置"><a href="#Lvs配置" class="headerlink" title="Lvs配置"></a>Lvs配置</h5><p>安装lvs管理程序包<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@lvs ~]<span class="comment">#yum install -y ipvsadm</span></div></pre></td></tr></table></figure></p>
 <p>查看并开启Lvs服务器的转发功能<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#cat /proc/sys/net/ipv4/ip_forward</span></div><div class="line">0</div><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/sysctl.conf</span></div><div class="line">net.ipv4.ip_forward = 1     //添加该项</div><div class="line">[root@CentOS7 ~]<span class="comment">#sysctl -p</span></div><div class="line">net.ipv4.ip_forward = 1</div><div class="line">[root@CentOS7 ~]<span class="comment">#cat /proc/sys/net/ipv4/ip_forward</span></div><div class="line">1</div></pre></td></tr></table></figure></p>

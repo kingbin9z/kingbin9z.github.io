@@ -294,6 +294,184 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Linux常用命令总结：10、文件查找之locate和find" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/" class="article-date">
+      <time datetime="2017-08-01T01:00:09.000Z" itemprop="datePublished">2017-08-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">Linux常用命令总结：10、文件查找之locate和find</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>&emsp;&emsp;在日常生活中，有时候我们需要在Linux系统上查找符合特定条件的文件，可以通过命令<code>locate</code>和<code>find</code>来查找。<br><strong>区别：</strong><br><code>locate</code>: 非实时查找，每天会定时更新生成一个数据库，通过数据库查找；<br><code>find</code>: 实时查找；  </p>
+<h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><p>&emsp;&emsp;<code>locate</code>命令依赖于系统系统在较为空闲时自动构建（周期性任务）的一个文件索引数据库<code>/var/lib/mlocate/mlocate.db</code>进行查找文件。索引构建过程需要遍历整个根文件系统，极消耗资源。管理员可以通过命令<code>updatedb</code>手动更新数据库。<br><strong>工作特点：</strong>  </p>
+<ul>
+<li>查找速度快；  </li>
+<li>模糊查找；</li>
+<li>非实时查找；</li>
+<li>搜索的是文件的全路径，不仅仅是文件名；</li>
+<li>可能只搜索用户具备读取和执行权限的目录；<br><strong>用法：</strong>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">locate [OPTION]... PATTERN...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>常用参数：</strong><br><code>-i</code>: 不区分大小写的搜索；<br><code>-n N</code>: 只列举前N个匹配项目；<br><code>-r</code>: 使用正则表达式搜索；<br><strong>示例：</strong><br><code>locate conf</code>: 搜索名称或路径中带有“conf”的文件；<br><code>locate -r &#39;\.conf$&#39;</code>: 使用正则表达式来搜索以“.conf”结尾的文件；  </p>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>&emsp;&emsp;实时查找工具，通过遍历指定路径完成文件查找；  </p>
+<h5 id="工作特点"><a href="#工作特点" class="headerlink" title="工作特点"></a>工作特点</h5><ul>
+<li>查找速度略慢；  </li>
+<li>精确查找；  </li>
+<li>实时查找；  </li>
+<li>可能只搜素用户具备读取和执行权限的目录；  </li>
+</ul>
+<h5 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find [OPTIOON]...[查找路径] [查找条件] [处理动作]</div></pre></td></tr></table></figure>
+<p>查找路径：指定具体目标路径；默认为当前目录；<br>查找条件：指定的查找标准，可以是文件名、大小、类型、权限等标准进行；默认为找出指定路径下的所有文件；<br>处理动作：对符合条件的文件做操作，默认输出至屏幕；  </p>
+<h6 id="查找条件："><a href="#查找条件：" class="headerlink" title="查找条件："></a>查找条件：</h6><p>指定搜索层级：<br><code>-maxdepth level</code>：最大搜索目录深度，指定目录为1级；<br><code>-mindepth level</code>：最小搜索目录深度；<br>根据文件名和inode查找：<br><code>-name &quot;文件名称&quot;</code>: 支持使用glob:<code>*,?,[],[^]</code>;<br><code>-iname &quot;文件名称&quot;</code>：不区分字母大小写；<br><code>inum n</code>: 按inode好查找；<br><code>-samefile name</code>: 相同inode号的文件；<br><code>-links n</code>: 链接数为n的文件；<br><code>-regex &quot;PATTERN&quot;</code>: 以PATTERN匹配整个文件路径字符串，而不仅仅是文件名称；<br>根据属主、属组查找：<br><code>-user USERNAME</code>:查找属主为指定用户（UID）的文件；<br><code>-group GRPNAME</code>:查找属组为指定组（GID）的文件；<br><code>uid UserID</code>:查找属主为指定的UID号的文件；<br><code>gid GroupID</code>:查找属组为指定的GID号的文件；<br><code>-nouser</code>:查找没有属主的文件；<br><code>-nogroup</code>:  查找没有属组的文件；<br>根据文件类型查找：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-<span class="built_in">type</span> TYPE:  </div><div class="line">            f: 普通文件</div><div class="line">            d: 目录文件</div><div class="line">            l: 符号链接文件</div><div class="line">            s: 套接字文件</div><div class="line">            b：块设备文件</div><div class="line">            c: 字符设备文件</div><div class="line">            p: 管道文件</div></pre></td></tr></table></figure></p>
+<p>组合条件：<br>&emsp;&emsp;&emsp;&emsp;与：<code>-a</code><br>&emsp;&emsp;&emsp;&emsp;或：<code>-o</code><br>&emsp;&emsp;&emsp;&emsp;非：<code>-not,!</code><br>德·摩根定律：<br>&emsp;&emsp;&emsp;&emsp;&emsp;<code>(非 A) 或 (非 B) = 非(A 且 B)</code><br>&emsp;&emsp;&emsp;&emsp;&emsp;<code>(非 A) 且 (非 B) = 非(A 或 B)</code><br>&emsp;&emsp;示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">!A -a !B = !(A - oB)</div><div class="line">!A -O !B = !(A -a B)</div></pre></td></tr></table></figure></p>
+<p>find示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">find -name snow.png     //搜索名为snow.png的文件</div><div class="line">find -iname snow.png    //不区分大小写地搜索名为snow.png、Snow.png、SNOW.PNG等等的文件</div><div class="line">find / -name <span class="string">"*.txt"</span>    //搜索/目录下.txt后缀的文件</div><div class="line">find /var -name <span class="string">"*log*"</span>     //搜索名称包含<span class="built_in">log</span>字符的文件</div><div class="line">find -user joe -group joe   //搜索被用户joe以及群组joe所拥有的文件</div><div class="line">find -user joe -not -group joe</div><div class="line">find -user joe -o -user jane</div><div class="line">find -not \( -user joe -o -user jane \)</div><div class="line">find / -user joe -o -uid 500</div></pre></td></tr></table></figure></p>
+<p>&emsp;找出/tmp目录下，属主不是root，且文件名不以f开头的文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">find /tmp \( -not -user root -a -not -name <span class="string">'f*'</span> \) -ls</div><div class="line">find /tmp -not \( -user root -o -name <span class="string">'f*'</span> \) -ls</div></pre></td></tr></table></figure></p>
+<p>&emsp;排除目录：<br>&emsp;&emsp;<em>示例：查找/etc/下，除/etc/sane.d目录的其他所有.conf后缀的文件</em><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">find /etc -path <span class="string">'/etc/sane.d'</span> -a -prune -o -name <span class="string">"*.conf"</span></div><div class="line">find /etc \(-path <span class="string">'/etc/sane.d'</span> -o -path <span class="string">'/etc/fonts'</span> \) -a prune -o name <span class="string">"*.conf"</span></div></pre></td></tr></table></figure></p>
+<p>根据文件大小来查找：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">-size [+|-]<span class="comment">#UNIT    常用单位:k,M,G,c(byte)</span></div><div class="line"><span class="comment">#UNIT: (#-1,#]</span></div><div class="line">    如： 6k 表示（5k,6k]</div><div class="line">-<span class="comment">#UNIT: [0,#-1]</span></div><div class="line">    如： -6k 表示[0,5k]</div><div class="line">+<span class="comment">#UNIT： (#,∞)</span></div><div class="line">    如： +6k 表示(6k,∞)</div></pre></td></tr></table></figure></p>
+<p>根据时间戳：<br>&emsp;<em>以“天”为单位：</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-atime [+|-]<span class="comment">#,</span></div><div class="line">	<span class="comment">#: [#,#+1)</span></div><div class="line">	+<span class="comment">#: [#+1,∞]</span></div><div class="line">    -<span class="comment">#: [0,#)</span></div><div class="line">    -mtime</div><div class="line">    -ctime</div></pre></td></tr></table></figure></p>
+<p>&emsp;<em>以“分钟”为单位:</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-amin</div><div class="line">-mmin</div><div class="line">-cmin</div></pre></td></tr></table></figure></p>
+<p>根据权限查找：<br><code>-perm [/|-]MODE</code><br>&emsp;<code>MODE</code>: 精确权限匹配<br>&emsp;<code>/MODE</code>：任何一类(u,g,o)对象的权限中只要能一位匹配即可，或关系， + 从centos7开始淘汰<br>&emsp;<code>-MODE</code>：每一类对象都必须同时拥有指定权限，与关系0 表示不关注  </p>
+<blockquote>
+<p>Note:<br>&emsp;&emsp;&emsp;find -perm 755 会匹配权限模式恰好是755的文件<br>&emsp;&emsp;&emsp;只要当任意人有写权限时， find -perm +222就会匹配<br>&emsp;&emsp;&emsp;只有当每个人都有写权限时， find -perm -222才会匹配<br>&emsp;&emsp;&emsp;只有当其它人（other）有写权限时， find -perm -002才会匹配</p>
+</blockquote>
+<h6 id="处理动作："><a href="#处理动作：" class="headerlink" title="处理动作："></a>处理动作：</h6><p><code>-print</code>：默认的处理动作，显示至屏幕<br><code>-ls</code>：类似于对查找到的文件执行“ls -l”命令<br><code>-delete</code>：删除查找到的文件<br><code>-fls file</code>：查找到的所有文件的长格式信息保存至指定文件中<br><code>-ok COMMAND {} \;</code>: 对查找到的每个文件执行由COMMAND指定的命令，对于每个文件执行命令之前，都会交互式要求用户确认<br><code>-exec COMMAND {} \;</code> 对查找到的每个文件执行由COMMAND指定的命令<br><code>{}</code>: 用于引用查找到的文件名称自身find传递查找到的文件至后面指定的命令时，查找到所有符合条件的文件一次性传递给后面的命令  </p>
+<h6 id="参数替换xargs："><a href="#参数替换xargs：" class="headerlink" title="参数替换xargs："></a>参数替换xargs：</h6><p>由于很多命令不支持管道|来传递参数，而日常工作中有这个必要，所以就有了xargs命令。xargs用于产生某个命令的参数， xargs 可以读入 stdin的数据，并且以空格符或回车符将 stdin 的数据分隔成为arguments。  </p>
+<blockquote>
+<p>注意：文件名或者是其他意义的名词内含有空格符的情况有些命令不能接受过多参数，命令执行可能会失败， xargs可以解决.  </p>
+</blockquote>
+<p>&emsp;示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ls f* |xargs rm</div><div class="line">find /sbin -perm +700 |ls -l 这个命令是错误的</div><div class="line">find /sbin -perm +7000 | xargs ls –l</div><div class="line">find和xargs格式： find | xargs COMMAND</div></pre></td></tr></table></figure></p>
+<h5 id="find示例："><a href="#find示例：" class="headerlink" title="find示例："></a>find示例：</h5><p>备份配置文件，添加.orig这个扩展名:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find -name “*.conf” -<span class="keyword">exec</span> cp &#123;&#125; &#123;&#125;.orig \;</div></pre></td></tr></table></figure></p>
+<p>提示删除存在时间超过３天以上的joe的临时文件:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /tmp -ctime +<span class="number">3</span> -user joe -ok rm &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>提示删除存在时间超过３天以上的joe的临时文件:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find ~ -perm <span class="number">-002</span> -<span class="keyword">exec</span> chmod o-w &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>搜索/data目录下权限为644、后缀为“.sh”的普通文件后，把权限修改为755；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /data –type f -perm <span class="number">644</span> -name “*.sh” –<span class="keyword">exec</span> chmod <span class="number">755</span> &#123;&#125; \;</div></pre></td></tr></table></figure></p>
+<p>搜索/home下的目录文件，并列表查看：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find /home –type d -ls</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux常用命令总结/">Linux常用命令总结</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux命令/">Linux命令</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-使用Squid-Stunnel代理上网" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/27/使用Squid-Stunnel代理上网/" class="article-date">
+      <time datetime="2017-07-27T12:51:43.000Z" itemprop="datePublished">2017-07-27</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h5 id="一、简介："><a href="#一、简介：" class="headerlink" title="一、简介："></a><strong>一、简介：</strong></h5><p>&emsp;&emsp;作为一个IT从业者，经常需要到Google上面去查找一些技术相关的资料。但是由于……(此处省略若干字)，我们无法访问谷歌。因为上家单位属于互联网公司的缘故，我接触到了使用Squid + Stunnel科学上网的方式。<br>&emsp;&emsp;关于下面的配置步骤，各位看官如果发现有错误或需要优化的地方，欢迎指正和发表建议！新手上路，请多多关照！</p>
+<h5 id="二、安装环境及原理："><a href="#二、安装环境及原理：" class="headerlink" title="二、安装环境及原理："></a><strong>二、安装环境及原理：</strong></h5><p>&emsp;&emsp;<strong>服务端：</strong>阿里云香港区ECS主机（CentOS 7.3.1611）一台；<br>&emsp;&emsp;<strong>软件：</strong>squid-3.5.20-2.el7_3.3.x86_64&emsp;stunnel-4.56-6.el7.x86_64<br>&emsp;&emsp;<strong>客户端：</strong>stunnel-5.39-win32-installer.exe&emsp;&amp;&emsp;Proxy SwitchyOmega（Chrome扩展程序）<br>&emsp;&emsp;<strong>原理：</strong>当客户端访问谷歌时,Stunnel的客户端通过和服务端建立起加密连接，由Squid代理用户去请求谷歌网站并把请求结果通过Stunnel的加密隧道返回给客户端；</p>
+<h5 id="三、服务端配置："><a href="#三、服务端配置：" class="headerlink" title="三、服务端配置："></a><strong>三、服务端配置：</strong></h5><h6 id="emsp-1、服务端安装配置Squid："><a href="#emsp-1、服务端安装配置Squid：" class="headerlink" title="&emsp;1、服务端安装配置Squid："></a>&emsp;1、服务端安装配置Squid：</h6> <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y squid                   //yum安装Squid</span></div><div class="line"><span class="comment">#vim /etc/squid/squid.conf              //修改配置文件</span></div><div class="line">    <span class="comment"># And finally deny all other access to this proxy</span></div><div class="line">    <span class="comment">#http_access deny all               //注释掉该行</span></div><div class="line">    http_access allow all               //复制上一行，将“deny”改为“allow”</div><div class="line">    <span class="comment"># Squid normally listens to port 3128</span></div><div class="line">    http_port <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3128</span>            //在端口前加入本地回环地址，只允许本地访问；</div></pre></td></tr></table></figure>
+<h6 id="emsp-2、服务端安装Stunnel："><a href="#emsp-2、服务端安装Stunnel：" class="headerlink" title="&emsp;2、服务端安装Stunnel："></a>&emsp;2、服务端安装Stunnel：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#yum install -y stunnel     //yum安装Stunnel</span></div></pre></td></tr></table></figure>
+<h6 id="emsp-3、生成加密代理证书："><a href="#emsp-3、生成加密代理证书：" class="headerlink" title="&emsp;3、生成加密代理证书："></a>&emsp;3、生成加密代理证书：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#cd /etc/stunnel</span></div><div class="line"><span class="comment">#openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem     //生成证书</span></div><div class="line">Generating a <span class="number">2048</span> bit RSA private key</div><div class="line">.....+++</div><div class="line">....+++</div><div class="line">writing new private key to <span class="string">'stunnel.pem'</span></div><div class="line">-----</div><div class="line">You are about to be asked to enter information that will be incorporated</div><div class="line">into your certificate request.</div><div class="line">What you are about to enter <span class="keyword">is</span> what <span class="keyword">is</span> called a Distinguished Name <span class="keyword">or</span> a DN.</div><div class="line">There are quite a few fields but you can leave some blank</div><div class="line">For some fields there will be a default value,</div><div class="line">If you enter <span class="string">'.'</span>, the field will be left blank.</div><div class="line">-----</div><div class="line">Country Name (<span class="number">2</span> letter code) [XX]:CN                            //国家字母代码</div><div class="line">State <span class="keyword">or</span> Province Name (full name) []:BeiJing                   //省份</div><div class="line">Locality Name (eg, city) [Default City]:BeiJing                 //城市</div><div class="line">Organization Name (eg, company) [Default Company Ltd]:          //组织名称</div><div class="line">Organizational Unit Name (eg, section) []:                      //组织单位名称</div><div class="line">Common Name (eg, your name <span class="keyword">or</span> your serve<span class="string">r's hostname) []:       //当前系统的主机名</span></div><div class="line">Email Address []:                                               //邮件地址</div></pre></td></tr></table></figure>
+<p>&emsp;结束后会在/etc/stunnel/目录下生成一个stunnel.pem的文件；</p>
+<h6 id="emsp-4、配置Stunnel："><a href="#emsp-4、配置Stunnel：" class="headerlink" title="&emsp;4、配置Stunnel："></a>&emsp;4、配置Stunnel：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#vim /etc/stunnel/stunnel.conf      //stunnel.conf如果没有可以自行创建；</span></div><div class="line">client = no</div><div class="line">cert = /etc/stunnel/stunnel.pem     //配置加密代理证书</div><div class="line">CAfile = /etc/stunnel/stunnel.pem</div><div class="line">[https]</div><div class="line">accept = <span class="number">34567</span>                      //服务端口</div><div class="line">connect = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3128</span>            //指向本地的Squid服务端口</div></pre></td></tr></table></figure>
+<h6 id="emsp-5、启动服务并检查："><a href="#emsp-5、启动服务并检查：" class="headerlink" title="&emsp;5、启动服务并检查："></a>&emsp;5、启动服务并检查：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#systemctl start squid.service      //启动Squid；</span></div><div class="line"><span class="comment">#stunnel        //启动Stunnel；</span></div><div class="line"><span class="comment">#ss -tunlp      //检测端口判断服务是否启动；</span></div><div class="line">Netid State      Recv-Q Send-Q       Local Address:Port        Peer Address:Port</div><div class="line">tcp   LISTEN     <span class="number">0</span>      <span class="number">128</span>              <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3128</span>                   *:*           //squid服务            </div><div class="line">tcp   LISTEN     <span class="number">0</span>      <span class="number">128</span>                      *:<span class="number">34567</span>                  *:*           //Stunnel服务</div></pre></td></tr></table></figure>
+<h6 id="emsp-6、对公网开放34567端口；"><a href="#emsp-6、对公网开放34567端口；" class="headerlink" title="&emsp;6、对公网开放34567端口；"></a>&emsp;6、对公网开放34567端口；</h6><p>&emsp;在Centos 7的默认防火墙Firewall上放行TCP:34567端口:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#firewall-cmd --zone=public --add-port=34567/tcp --permanent</span></div></pre></td></tr></table></figure></p>
+<p>&emsp;在阿里云控制台里面添加端口映射后，在客户端上面测试是否能够正常访问Stunnel端口：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\wang&gt;telnet Service_IP <span class="number">34567</span></div></pre></td></tr></table></figure></p>
+<p>&emsp;如果命令执行后没有报错，cmd.exe窗口显示的是一个黑屏，说明服务能够正常使用；</p>
+<h5 id="四、客户端配置："><a href="#四、客户端配置：" class="headerlink" title="四、客户端配置："></a><strong>四、客户端配置：</strong></h5><h6 id="emsp-1、安装stunnel-exe客户端后直接运行；"><a href="#emsp-1、安装stunnel-exe客户端后直接运行；" class="headerlink" title="&emsp;1、安装stunnel.exe客户端后直接运行；"></a>&emsp;1、安装stunnel.exe客户端后直接运行；</h6><h6 id="emsp-2、配置Stunnel客户端："><a href="#emsp-2、配置Stunnel客户端：" class="headerlink" title="&emsp;2、配置Stunnel客户端："></a>&emsp;2、配置Stunnel客户端：</h6><p>&emsp;&emsp;在电脑托盘里右键单击Stunnel图标，选择“Edit Configure”后清空预配添加如下配置:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">client=yes</div><div class="line">[https]</div><div class="line">accept=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8088</span>       //在浏览器里面添加的代理地址和端口号；</div><div class="line">connect=Service_IP:<span class="number">34567</span>      //对应服务器的IP和端口；</div></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;我使用的是Chrome浏览器，在里面添加了Proxy SwitchyOmega扩展程序，能够灵活的设置代理上网，也可以添加相应的匹配规则，让需要代理网址的走Stunnel访问，国内的网站正常（不走Stunnel）的访问；</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Squid-Stunnel-代理上网/">Squid/Stunnel/代理上网</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Linux常用命令总结-9、正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -586,116 +764,6 @@
 
 
   
-    <article id="post-Linux常用命令总结-5、重定向和管道" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/25/Linux常用命令总结-5、重定向和管道/" class="article-date">
-      <time datetime="2017-07-25T05:53:13.000Z" itemprop="datePublished">2017-07-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Linux常用命令总结-4、文件管理类命令" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/" class="article-date">
-      <time datetime="2017-07-25T05:52:47.000Z" itemprop="datePublished">2017-07-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -707,7 +775,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2017 WangBinZhou
+                2017-2018 WangBinZhou
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
@@ -749,7 +817,7 @@
                 $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
             }
             else {
-                var backgroundnum = 5;
+                var backgroundnum = 3;
                 var backgroundimg = "url(http://blog.wangbinzhou.com//background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
                 $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
             }

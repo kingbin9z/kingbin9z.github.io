@@ -24,7 +24,7 @@
 <meta property="og:description" content="介绍由 于IPv4中IP地址空间的日益紧张和安全方面的原因，很多网络使用保留IP地址（10.0.0.0/255.0.0.0、 172.16.0.0/255.128.0.0和192.168.0.0/255.255.0.0）。这些地址不在Internet上使用，而是专门为内部网络预留的。当内部网络中的主机要访问Internet或被Internet访问时，就需要 采用网络地址转换（Network Add">
 <meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="http://ovnpik36u.bkt.clouddn.com/201710/lvs/Lvs-nat.png">
-<meta property="og:updated_time" content="2017-12-29T10:47:32.588Z">
+<meta property="og:updated_time" content="2017-12-29T13:30:14.568Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LVS之NAT类型实验">
 <meta name="twitter:description" content="介绍由 于IPv4中IP地址空间的日益紧张和安全方面的原因，很多网络使用保留IP地址（10.0.0.0/255.0.0.0、 172.16.0.0/255.128.0.0和192.168.0.0/255.255.0.0）。这些地址不在Internet上使用，而是专门为内部网络预留的。当内部网络中的主机要访问Internet或被Internet访问时，就需要 采用网络地址转换（Network Add">
@@ -335,8 +335,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>由 于IPv4中IP地址空间的日益紧张和安全方面的原因，很多网络使用保留IP地址（10.0.0.0/255.0.0.0、 172.16.0.0/255.128.0.0和192.168.0.0/255.255.0.0）。这些地址不在Internet上使用，而是专门为内部网络预留的。当内部网络中的主机要访问Internet或被Internet访问时，就需要 采用网络地址转换（Network Address Translation, 以下简称NAT），将内部地址转化为Internets上可用的外部地址。NAT的工作原理是报文头（目标地址、源地址和端口等）被正确改写后，客户相信 它们连接一个IP地址，而不同IP地址的服务器组也认为它们是与客户直接相连的。由此，可以用NAT方法将不同IP地址的并行网络服务变成在一个IP地址上的一个虚拟服务。  </p>
-<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>VS/NAT的体系结构如图所示。在一组服务器前有一个调度器，它们是通过Switch/HUB相连接的。这些服务器 提供相同的网络服务、相同的内容，即不管请求被发送到哪一台服务器，执行结果是一样的。服务的内容可以复制到每台服务器的本地硬盘上，可以通过网络文件系 统（如NFS）共享，也可以通过一个分布式文件系统来提供。<br>客户通过Virtual IP Address(虚拟服务器的地址)访问网络服务时，请求报文到达调度器，调度器根据连接调度算法从一组真实的服务器中选出一台服务器，将报文的目标地址Virtual IP Address改写成选定服务器的地址，报文的目标端口改写成选定服务器的相应端口，最后将修改后的报文发送给选出的服务器。同时，调度器在连接Hash表中记录这个连接，当这个连接的下一个报文到达时，从连接Hash表中可以得到原选定服务器的地址和端口，进行同样的改写操作，并将报文传给原选定的服务器。当来自真实的服务器的响应报文经过调度器时，调度器将报文的源地址和源端口改为Virtual IP Address和相应的端口，再把报文发给用户。<br><a id="more"></a></p>
+        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>由 于IPv4中IP地址空间的日益紧张和安全方面的原因，很多网络使用保留IP地址（10.0.0.0/255.0.0.0、 172.16.0.0/255.128.0.0和192.168.0.0/255.255.0.0）。这些地址不在Internet上使用，而是专门为内部网络预留的。当内部网络中的主机要访问Internet或被Internet访问时，就需要 采用网络地址转换（Network Address Translation, 以下简称NAT），将内部地址转化为Internets上可用的外部地址。NAT的工作原理是报文头（目标地址、源地址和端口等）被正确改写后，客户相信 它们连接一个IP地址，而不同IP地址的服务器组也认为它们是与客户直接相连的。由此，可以用NAT方法将不同IP地址的并行网络服务变成在一个IP地址上的一个虚拟服务。<br><a id="more"></a></p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>VS/NAT的体系结构如图所示。在一组服务器前有一个调度器，它们是通过Switch/HUB相连接的。这些服务器 提供相同的网络服务、相同的内容，即不管请求被发送到哪一台服务器，执行结果是一样的。服务的内容可以复制到每台服务器的本地硬盘上，可以通过网络文件系 统（如NFS）共享，也可以通过一个分布式文件系统来提供。<br>客户通过Virtual IP Address(虚拟服务器的地址)访问网络服务时，请求报文到达调度器，调度器根据连接调度算法从一组真实的服务器中选出一台服务器，将报文的目标地址Virtual IP Address改写成选定服务器的地址，报文的目标端口改写成选定服务器的相应端口，最后将修改后的报文发送给选出的服务器。同时，调度器在连接Hash表中记录这个连接，当这个连接的下一个报文到达时，从连接Hash表中可以得到原选定服务器的地址和端口，进行同样的改写操作，并将报文传给原选定的服务器。当来自真实的服务器的响应报文经过调度器时，调度器将报文的源地址和源端口改为Virtual IP Address和相应的端口，再把报文发给用户。  </p>
 <h4 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h4><p><img src="http://ovnpik36u.bkt.clouddn.com/201710/lvs/Lvs-nat.png" alt="image">  </p>
 <h5 id="Lvs配置"><a href="#Lvs配置" class="headerlink" title="Lvs配置"></a>Lvs配置</h5><p>安装lvs管理程序包<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@lvs ~]<span class="comment">#yum install -y ipvsadm</span></div></pre></td></tr></table></figure></p>
 <p>查看并开启Lvs服务器的转发功能<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@CentOS7 ~]<span class="comment">#cat /proc/sys/net/ipv4/ip_forward</span></div><div class="line">0</div><div class="line">[root@CentOS7 ~]<span class="comment">#vim /etc/sysctl.conf</span></div><div class="line">net.ipv4.ip_forward = 1     //添加该项</div><div class="line">[root@CentOS7 ~]<span class="comment">#sysctl -p</span></div><div class="line">net.ipv4.ip_forward = 1</div><div class="line">[root@CentOS7 ~]<span class="comment">#cat /proc/sys/net/ipv4/ip_forward</span></div><div class="line">1</div></pre></td></tr></table></figure></p>
@@ -359,7 +359,7 @@
         <p><span>本文标题:</span><a href="/2017/12/29/LVS之NAT类型实验/">LVS之NAT类型实验</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">WangBinZhou</a></p>
         <p><span>发布时间:</span>2017-12-29, 16:41:51</p>
-        <p><span>最后更新:</span>2017-12-29, 18:47:32</p>
+        <p><span>最后更新:</span>2017-12-29, 21:30:14</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/12/29/LVS之NAT类型实验/" title="LVS之NAT类型实验">http://blog.wangbinzhou.com/2017/12/29/LVS之NAT类型实验/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.wangbinzhou.com/2017/12/29/LVS之NAT类型实验/　　作者: WangBinZhou" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -373,6 +373,12 @@
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/12/31/Keepalived配置文件详解/">
+                    Keepalived配置文件详解
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -445,7 +451,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2017/12/31/Keepalived配置文件详解/" title="上一篇: Keepalived配置文件详解">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -457,7 +465,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/LVS之NAT类型实验/">LVS之NAT类型实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/LVS之DR类型实验/">LVS之DR类型实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/Nginx/">Nginx</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/23/CentOS6编译安装LAMP/">CentOS6编译安装LAMP</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/11/搭建私有CA配置HTTPS服务/">搭建私有CA配置HTTPS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/">CentOS6.9使用二进制程序包安装MariaDB</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/22/Bind的安装和配置使用详解/">Bind的安装和配置使用详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/TCP-Wrappers详解/">TCP_Wrappers(hosts.allow和hosts.deny)详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/机器人三定律/">机器人三定律</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/Windows10启用Linux子系统/">Windows10启用Linux子系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/CentOS7启动流程图-转载/">CentOS7启动流程图--转载</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/CentOS7内核编译安装/">CentOS7内核编译安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-启动相关的破坏性实验/">CentOS6.9启动系列--启动相关的破坏性实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-为Grub设置密码/">CentOS6.9启动系列--为Grub设置密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/牛顿第一定律-很有哲理！/">牛顿第一定律--很有哲理！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/Linux常用命令总结-11、Linux计划任务/">Linux常用命令总结-11、Linux计划任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/好好敲实验吧，别再瞎折腾了！不做死就不会死！！/">好好敲实验吧，别再瞎折腾了！不做死就不会死！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/CentOS系列使用Tab命令补全/">CentOS系列使用Tab命令补全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/">CentOS7网卡命名方式详解及修改为传统eth格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/内网ssh连接速度很慢的解决方案/">内网ssh连接速度很慢的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">Linux常用命令总结：10、文件查找之locate和find</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/03/12/tcpdump抓包/">tcpdump抓包</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/31/Keepalived配置文件详解/">Keepalived配置文件详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/LVS之NAT类型实验/">LVS之NAT类型实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/LVS之DR类型实验/">LVS之DR类型实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/Nginx/">Nginx</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/23/CentOS6编译安装LAMP/">CentOS6编译安装LAMP</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/11/搭建私有CA配置HTTPS服务/">搭建私有CA配置HTTPS服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/">CentOS6.9使用二进制程序包安装MariaDB</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/22/Bind的安装和配置使用详解/">Bind的安装和配置使用详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/TCP-Wrappers详解/">TCP_Wrappers(hosts.allow和hosts.deny)详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/SSH基于密钥的登录认证/">SSH基于密钥的登录认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/13/机器人三定律/">机器人三定律</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/12/Windows10启用Linux子系统/">Windows10启用Linux子系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/CentOS7启动流程图-转载/">CentOS7启动流程图--转载</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/CentOS7内核编译安装/">CentOS7内核编译安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-启动相关的破坏性实验/">CentOS6.9启动系列--启动相关的破坏性实验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/03/CentOS6-9启动系列-为Grub设置密码/">CentOS6.9启动系列--为Grub设置密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/牛顿第一定律-很有哲理！/">牛顿第一定律--很有哲理！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/24/Linux常用命令总结-11、Linux计划任务/">Linux常用命令总结-11、Linux计划任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/好好敲实验吧，别再瞎折腾了！不做死就不会死！！/">好好敲实验吧，别再瞎折腾了！不做死就不会死！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/21/CentOS系列使用Tab命令补全/">CentOS系列使用Tab命令补全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/CentOS7网卡命名方式详解及修改为传统eth格式/">CentOS7网卡命名方式详解及修改为传统eth格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/内网ssh连接速度很慢的解决方案/">内网ssh连接速度很慢的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/05/yum仓库搭建和yum源配置/">yum仓库搭建和yum源配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/Linux常用命令总结：10、文件查找之locate和find/">Linux常用命令总结：10、文件查找之locate和find</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/使用Squid-Stunnel代理上网/">使用Squid+Stunnel代理上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Linux常用命令总结-9、正则表达式/">Linux常用命令总结-9、正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-8、vim文本编辑器/">Linux常用命令总结-8、vim文本编辑器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-7、文本处理工具/">Linux常用命令总结-7、文本处理工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-6、用户组和权限管理/">Linux常用命令总结-6、用户组和权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-5、重定向和管道/">Linux常用命令总结-5、重定向和管道</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-4、文件管理类命令/">Linux常用命令总结-4、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-2、文件管理类命令/">Linux常用命令总结-2、文件管理类命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-1、线上查询及帮助命令/">Linux常用命令总结-1、线上查询及帮助命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/Linux常用命令总结-目录/">Linux常用命令总结-目录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Linux常用命令总结-3、查看命令历史/">Linux常用命令总结-3、查看命令历史</a></li></ul>
 
 
 
@@ -471,7 +479,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2017 WangBinZhou
+                2017-2018 WangBinZhou
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
@@ -513,7 +521,7 @@
                 $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
             }
             else {
-                var backgroundnum = 5;
+                var backgroundnum = 3;
                 var backgroundimg = "url(http://blog.wangbinzhou.com//background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
                 $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
             }

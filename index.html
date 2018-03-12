@@ -294,6 +294,131 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-tcpdump抓包" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/12/tcpdump抓包/" class="article-date">
+      <time datetime="2018-03-12T10:56:55.000Z" itemprop="datePublished">2018-03-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/tcpdump抓包/">tcpdump抓包</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tcpdump tcp -i ens33 -t -s 0 -c 100 and dst port ! 22 and src net 192.168.25.0/24 -w ./target.cap</div></pre></td></tr></table></figure>
+<ol>
+<li>tcp: ip icmp arp rarp 和tcp、udp、icmp这些选项都要放到第一个参数的位置，用来过滤数据包的类型  </li>
+<li>-i ens33: 指定抓取流量的接口  </li>
+<li>-t: 不显示时间戳  </li>
+<li>-s 0: 抓取数据包时默认抓取长度为68字节。加上-s 0后可阳抓到完整的数据包  </li>
+<li>-c 100: 只抓取100个数据包  </li>
+<li>dsp port ! 22: 不抓取目标端口是22的数据包  </li>
+<li>src net 192.168.25.0/24: 数据包的源网络地址为192.168.25.0/24</li>
+<li>-w ./target.cap: 保存成cap文件，方便用wireshark分析 </li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Keepalived配置文件详解" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/12/31/Keepalived配置文件详解/" class="article-date">
+      <time datetime="2017-12-31T08:36:21.000Z" itemprop="datePublished">2017-12-31</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/31/Keepalived配置文件详解/">Keepalived配置文件详解</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-LVS之NAT类型实验" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -323,8 +448,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>由 于IPv4中IP地址空间的日益紧张和安全方面的原因，很多网络使用保留IP地址（10.0.0.0/255.0.0.0、 172.16.0.0/255.128.0.0和192.168.0.0/255.255.0.0）。这些地址不在Internet上使用，而是专门为内部网络预留的。当内部网络中的主机要访问Internet或被Internet访问时，就需要 采用网络地址转换（Network Address Translation, 以下简称NAT），将内部地址转化为Internets上可用的外部地址。NAT的工作原理是报文头（目标地址、源地址和端口等）被正确改写后，客户相信 它们连接一个IP地址，而不同IP地址的服务器组也认为它们是与客户直接相连的。由此，可以用NAT方法将不同IP地址的并行网络服务变成在一个IP地址上的一个虚拟服务。  </p>
-<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>VS/NAT的体系结构如图所示。在一组服务器前有一个调度器，它们是通过Switch/HUB相连接的。这些服务器 提供相同的网络服务、相同的内容，即不管请求被发送到哪一台服务器，执行结果是一样的。服务的内容可以复制到每台服务器的本地硬盘上，可以通过网络文件系 统（如NFS）共享，也可以通过一个分布式文件系统来提供。<br>客户通过Virtual IP Address(虚拟服务器的地址)访问网络服务时，请求报文到达调度器，调度器根据连接调度算法从一组真实的服务器中选出一台服务器，将报文的目标地址Virtual IP Address改写成选定服务器的地址，报文的目标端口改写成选定服务器的相应端口，最后将修改后的报文发送给选出的服务器。同时，调度器在连接Hash表中记录这个连接，当这个连接的下一个报文到达时，从连接Hash表中可以得到原选定服务器的地址和端口，进行同样的改写操作，并将报文传给原选定的服务器。当来自真实的服务器的响应报文经过调度器时，调度器将报文的源地址和源端口改为Virtual IP Address和相应的端口，再把报文发给用户。<br>
+              <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>由 于IPv4中IP地址空间的日益紧张和安全方面的原因，很多网络使用保留IP地址（10.0.0.0/255.0.0.0、 172.16.0.0/255.128.0.0和192.168.0.0/255.255.0.0）。这些地址不在Internet上使用，而是专门为内部网络预留的。当内部网络中的主机要访问Internet或被Internet访问时，就需要 采用网络地址转换（Network Address Translation, 以下简称NAT），将内部地址转化为Internets上可用的外部地址。NAT的工作原理是报文头（目标地址、源地址和端口等）被正确改写后，客户相信 它们连接一个IP地址，而不同IP地址的服务器组也认为它们是与客户直接相连的。由此，可以用NAT方法将不同IP地址的并行网络服务变成在一个IP地址上的一个虚拟服务。<br>
           
       
     </div>
@@ -574,148 +698,6 @@
 
 
   
-    <article id="post-搭建私有CA配置HTTPS服务" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/11/搭建私有CA配置HTTPS服务/" class="article-date">
-      <time datetime="2017-10-11T02:07:59.000Z" itemprop="datePublished">2017-10-11</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/11/搭建私有CA配置HTTPS服务/">搭建私有CA配置HTTPS服务</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>超文本传输安全协议（英语：Hypertext Transfer Protocol Secure，缩写：HTTPS，常称为HTTP over TLS，HTTP over SSL或HTTP Secure）是一种通过计算机网络进行安全通信的传输协议。HTTPS经由HTTP进行通信，但利用SSL/TLS来加密数据包。HTTPS开发的主要目的，是提供对网站服务器的身份认证，保护交换数据的隐私与完整性。这个协议由网景公司（Netscape）在1994年首次提出，随后扩展到互联网上。   </p>
-<p>HTTPS的主要思想是在不安全的网络上创建一安全信道，并可在使用适当的加密包和服务器证书可被验证且可被信任时，对窃听和中间人攻击提供合理的防护。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux/">Linux</a><a class="article-category-link" href="/categories/Linux/实验/">实验</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux实验/">Linux实验</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/10/11/搭建私有CA配置HTTPS服务/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-CentOS6-9使用二进制程序包安装MariaDB" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/" class="article-date">
-      <time datetime="2017-09-25T09:35:13.000Z" itemprop="datePublished">2017-09-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/">CentOS6.9使用二进制程序包安装MariaDB</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>MariaDB二进制压缩包命名格式形如：mariadb-版本名-操作系统名.tar.gz，请根据您的操作系统下载正确的版本。  </p>
-<h5 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h5><ul>
-<li><strong>CentOS release 6.9</strong>  </li>
-<li><strong>mariadb-10.2.8-linux-x86_64.tar.gz</strong>  </li>
-</ul>
-<p>在<a href="https://downloads.mariadb.org/mariadb/" target="_blank" rel="external">MariaDB官网</a>下载最新的稳定版MariaDB二进制程序<br><img src="http://ovnpik36u.bkt.clouddn.com/201709/mariadb/01.gif" alt="image">  </p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/MariaDB/">MariaDB</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MariaDB/">MariaDB</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/09/25/CentOS6-9使用二进制程序包安装MariaDB/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -727,7 +709,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2017 WangBinZhou
+                2017-2018 WangBinZhou
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
@@ -769,7 +751,7 @@
                 $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
             }
             else {
-                var backgroundnum = 5;
+                var backgroundnum = 3;
                 var backgroundimg = "url(http://blog.wangbinzhou.com//background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
                 $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
             }
